@@ -14,5 +14,4 @@ jobs:
           name: my-checkout-${{ github.run_id }}
           path: ${{ github.workspace }}/**/*
       - name: Super-Linter
-        uses: github/super-linter@v4
-      
+        uses: ./.github/workflows/superlinter.yaml
