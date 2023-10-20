@@ -18,8 +18,6 @@ jobs:
             node-version: 16
             cache: 'npm'
       - run: npm ci
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
           
   run_superlinter:
     needs: cache_checkout
