@@ -1,6 +1,3 @@
-# VERCEL_TOKEN : pZrA8A5eNQST8DngQS9fLmkF
-# VERCEL_PROJECT_ID:  prj_5ZYS5q8cijSFO0IjoMNIHJF3NwhN
-# VERCEL_ORG_ID :    team_LzpixKk4Sgqq5nG2or3EzKAC
 name: Vercel Production Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -20,23 +17,3 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-
-# name: Deploy to Vercel
-
-# on: workflow_call
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Deploy to Vercel
-#         uses: amondnet/vercel-action@v19
-#         with:
-#           vercel-token: ${{ pZrA8A5eNQST8DngQS9fLmkF }}
-#           vercel-org-id: ${{ k1WtHYTmET5tFjadQdOT4ZHT }}  # org ID
-#           vercel-project-id: ${{ prj_5ZYS5q8cijSFO0IjoMNIHJF3NwhN }}  #project ID
-#           vercel-args: '--prod'  # Use this for production
