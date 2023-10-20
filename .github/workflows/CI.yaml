@@ -21,8 +21,3 @@ jobs:
   run_tests:
     needs: cache_checkout
     uses: ./.github/workflows/tests.yaml
-
-  run_deploy:
-    needs: [cache_checkout]
-    uses: ./.github/workflows/deploy.yaml
-
