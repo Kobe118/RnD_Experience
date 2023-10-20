@@ -13,6 +13,11 @@ jobs:
         with:
           name: my-checkout-${{ github.run_id }}
           path: ${{ github.workspace }}/**/*
+      - uses: actions/setup-node@v3
+        with:
+            node-version: 16
+            cache: 'npm'
+      - run: npm ci
           
   run_superlinter:
     needs: cache_checkout
