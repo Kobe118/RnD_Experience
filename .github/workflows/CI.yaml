@@ -13,5 +13,7 @@ jobs:
         with:
           name: my-checkout-${{ github.run_id }}
           path: ${{ github.workspace }}/**/*
-      - name: Super-Linter
-        uses: ./.github/workflows/superlinter.yaml
+          
+  run_superlinter:
+    needs: cache_checkout
+    uses: ./.github/workflows/superlinter.yaml
