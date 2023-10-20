@@ -1,6 +1,6 @@
-# auth token: pZrA8A5eNQST8DngQS9fLmkF
-# projectId:  prj_5ZYS5q8cijSFO0IjoMNIHJF3NwhN
-# org id :    team_LzpixKk4Sgqq5nG2or3EzKAC
+# VERCEL_TOKEN : pZrA8A5eNQST8DngQS9fLmkF
+# VERCEL_PROJECT_ID:  prj_5ZYS5q8cijSFO0IjoMNIHJF3NwhN
+# VERCEL_ORG_ID :    team_LzpixKk4Sgqq5nG2or3EzKAC
 name: Vercel Production Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
