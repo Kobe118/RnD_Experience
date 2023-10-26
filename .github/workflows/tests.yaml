@@ -34,4 +34,4 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: ng test --watch=false --browsers=ChromeHeadless
+        run: npm test
