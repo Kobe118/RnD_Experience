@@ -5,9 +5,7 @@ name: Deployment
 env:
   VERCEL_ORG_ID: "team_LzpixKk4Sgqq5nG2or3EzKAC"
   VERCEL_PROJECT_ID: "prj_5ZYS5q8cijSFO0IjoMNIHJF3NwhN"
-on:
-  push:
-      branches: [ 0tomhoyt-patch-1 ]
+on: workflow_call
 
 jobs:
   Deploy-Production:
