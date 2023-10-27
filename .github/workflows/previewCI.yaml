@@ -1,7 +1,7 @@
-name: CI
+name: previewCI
 on: 
   push:
-    branches: [ master ]
+    branches: [ preview ]
     
   workflow_dispatch:
 jobs:
@@ -27,6 +27,6 @@ jobs:
     uses: ./.github/workflows/tests.yaml
 
   run_deploy:
-    needs: [cache_checkout, run_superlinter, run_tests]
-    uses: ./.github/workflows/deploy.yaml
+    needs: [cache_checkout, run_tests]
+    uses: ./.github/workflows/preview_deploy.yaml
     secrets: inherit
