@@ -29,4 +29,10 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   }
+  {
+  "rules": {
+    "semi": "off",
+    "@typescript-eslint/semi": "error"
+  }
+}
 }
