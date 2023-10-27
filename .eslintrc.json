@@ -1,0 +1,26 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  
+  "rules":{
+    "no-var": "warn",
+    "semi": ["error", "always"]
+  }, 
+  
+  "overrides":[{
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    }]
+}
+    
