@@ -17,10 +17,10 @@
     "semi": ["error", "always"]
   }, 
   
-  "overrides":{
+  "overrides":[{
       "files": "*.json",
       "parser": "jsonc-eslint-parser",
       "rules": {}
-    }
+    }]
 }
     
