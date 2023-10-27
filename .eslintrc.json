@@ -12,9 +12,14 @@
     "node": true
   },
 
+  "plugins": [
+        "json"
+    ],
+  
   "rules":{
+    "json/*": ["error", "allowComments"],
     "no-var": "warn",
     "semi": ["error", "always"]
-  }
+  }, 
 }
     
