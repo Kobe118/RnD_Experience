@@ -29,3 +29,4 @@ jobs:
   run_deploy:
     needs: cache_checkout
     uses: ./.github/workflows/deploy.yaml
+    secrets: inherit
