@@ -28,7 +28,7 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
   {
   "rules": {
     "semi": "off",
