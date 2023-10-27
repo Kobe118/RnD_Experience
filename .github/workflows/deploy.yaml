@@ -9,6 +9,7 @@ on: workflow_call
 
 jobs:
   Deploy-Production:
+    environment:  PRODUCTION_ENV
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
