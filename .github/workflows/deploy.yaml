@@ -1,7 +1,4 @@
 name: Deployment
-# VERCEL_TOKEN : pZrA8A5eNQST8DngQS9fLmkF
-# VERCEL_PROJECT_ID:  prj_5ZYS5q8cijSFO0IjoMNIHJF3NwhN
-# VERCEL_ORG_ID :    team_LzpixKk4Sgqq5nG2or3EzKAC 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID}}
   VERCEL_PROJECT_ID: ${{secrets.VERCEL_PROJECT_ID}}
