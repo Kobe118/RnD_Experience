@@ -35,3 +35,7 @@ jobs:
 
       - name: Test
         run: npm test
+        
+      - uses: actions/upload-artifact@v3
+        with:
+            path: coverage/index.html
