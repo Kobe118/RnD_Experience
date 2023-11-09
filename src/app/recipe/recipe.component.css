@@ -1,0 +1,24 @@
+.horizontal-scroll {
+    display: flex; /* Use flexbox to enable inline display of children */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Ensures elements stay in a single line */
+}
+
+.image-with-border {
+    flex: 0 0 auto; /* Don't grow, don't shrink, and base size on content */
+    border: 2px solid #000000; /* Example border */
+    margin: 10px; /* Space between items */
+    text-align: center; /* To center the text under the image */
+}
+
+.image-with-border img {
+    display: block; /* Remove extra space below the image */
+    margin-bottom: 8px; /* Space between the image and the text */
+    width: 100px; /* Example fixed width, or use percentage */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.image-with-border p {
+    margin: 0;
+    /* Additional styling for the text */
+}
