@@ -8,7 +8,6 @@ import { RecipeComponent } from './recipe/recipe.component'; // Import RecipeCom
   declarations: [
     AppComponent,
     RecipeComponent
-    // ... any other components in your app
   ],
   imports: [
     BrowserModule,
