@@ -1,0 +1,95 @@
+/* Styles for the liked recipes container */
+.liked-recipes {
+  display: flex; /* Lays out the children in a line */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Ensures the divs don't wrap */
+}
+.disliked-recipes {
+  display: flex; /* Lays out the children in a line */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Ensures the divs don't wrap */
+}
+.recipe-small-view p {
+  /* other styles */
+  text-align: center; /* if you want to center the text under the image */
+  margin-top: 0; /* remove any default margin from the paragraph that could push it down */
+}
+/* Styles for the image containers */
+.image-with-border {
+  position: relative; /* Needed for absolute positioning of the heart button */
+  border: 2px solid #ccc; /* Grey border */
+  border-radius: 10px;
+  background-color: #eee; /* Grey background */
+  margin: 10px; /* Spacing around each image container */
+  width: 150px; /* Fixed width */
+  height: 150px; /* Fixed height */
+  text-align: center; /* Center text */
+  display: inline-block; /* Display inline with block features */
+}
+
+/* Styles for the images */
+.image-with-border img {
+  width: 100px; /* Fixed width for the image */
+  height: 100px; /* Fixed height for the image */
+  border-radius: 50%; /* Makes the image circle shaped */
+  margin-top: 25px; /* Centers the image vertically */
+  object-fit: cover; /* Ensures the image covers the area properly */
+  display: inline-block; /* This will allow the image to be centered by text-align */
+}
+.btn-outline-secondary {
+  position: absolute; /* Absolute positioning relative to the parent */
+  top: 1px; /* Align to the top */
+  right: 1px; /* Align to the left */
+  /* additional styles if needed */
+}
+
+/* Styles for the heart button */
+.heart-btn {
+  position: absolute; /* Absolute positioning relative to its parent */
+  top: 5px; /* Position towards the top */
+  right: 5px; /* Position towards the right */
+  width: 15px; /* Smaller fixed width */
+  height: 15px; /* Smaller fixed height */
+  background: none; /* No background */
+  border: black; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  padding: 0; /* No padding to ensure the button is exactly as wide as the heart itself */
+  outline: none; /* Removes the focus outline to keep the design clean */
+}
+
+/* The heart shapes created using the before and after pseudo-elements */
+.heart-btn:before,
+.heart-btn:after {
+  position: absolute;
+  content: "";
+  left: 5px;
+  top: 0;
+  width: 15px; /* Width of the half-heart */
+  height: 24px; /* Height of the half-heart */
+  background: transparent; /* Initial background color */
+  border-radius: 15px 15px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+  color: red;
+}
+
+.heart-btn:after {
+  left: -5px; /* Adjust position to overlap the before pseudo-element */
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+/* When the heart button is active (clicked) */
+.heart-btn.is-active:before,
+.heart-btn.is-active:after {
+  background: red; /* Fill the heart with red color */
+}
+
+
+
+
+/* Styles for paragraphs (dish names) */
+.image-with-border p {
+  margin: 0; /* Removes default margin */
+  padding: 5px; /* Adds some padding inside the container */
+}

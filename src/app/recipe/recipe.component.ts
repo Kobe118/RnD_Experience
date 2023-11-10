@@ -7,5 +7,15 @@ import { Component } from '@angular/core';
     styleUrls: ['./recipe.component.scss']
 })
 export class RecipeComponent {
-    // RecipeComponent specific properties and methods
+    isHeartFilled = false;
+
+    toggleHeart(): void {
+        this.isHeartFilled = !this.isHeartFilled;
+    }
+    isThumbsDown = false; // Property to hold the state of thumbs down
+
+    // Method to toggle thumbs down
+    toggleThumbsDown(): void {
+        this.isThumbsDown = !this.isThumbsDown;
+    }
 }

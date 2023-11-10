@@ -1,54 +1,80 @@
-<div style="width: 100%; height: 100%; position: relative; background: white">
-    <div style="width: 390px; height: 149px; left: 0px; top: 73px; position: absolute; text-align: center; color: black; font-size: 60px; font-family: Inter; font-weight: 700; word-wrap: break-word"> Sign in</div>
-    <div style="width: 320px; height: 45px; padding-left: 16px; padding-right: 16px; padding-top: 14px; padding-bottom: 14px; left: 35px; top: 377px; position: absolute; background: linear-gradient(0deg, white 0%, white 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.08) 100%); border-radius: 200px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
-        <div style="width: 288px; height: 17px; color: rgba(0, 0, 0, 0.56); font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word">Email</div>
+<h1>Your Recipes</h1>
+<h4>lets have a look at your favourites</h4>
+<h3>your likes</h3>
+<div class="liked-recipes">
+    <div class = "recipe-small-view">
+    <div class="image-with-border">
+        <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+        <button class="btn btn-outline-secondary" (click)="toggleHeart()">
+            <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
+        </button>
     </div>
-    <div style="width: 320px; height: 45px; padding-left: 16px; padding-right: 16px; padding-top: 14px; padding-bottom: 14px; left: 35px; top: 462px; position: absolute; background: linear-gradient(0deg, white 0%, white 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.08) 100%); border-radius: 200px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
-        <div style="width: 288px; height: 17px; color: rgba(0, 0, 0, 0.56); font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word">Password</div>
+    <p>Dish Name1</p>
     </div>
-    <div style="width: 320px; height: 67px; left: 35px; top: 270px; position: absolute; text-align: center; color: black; font-size: 22px; font-family: Inter; font-weight: 700; word-wrap: break-word">Please fill in your login credentials</div>
-    <div style="width: 350px; height: 26px; left: 20px; top: 648px; position: absolute">
-        <div style="width: 32px; height: 26px; left: 159px; top: 0px; position: absolute; color: rgba(0, 0, 0, 0.56); font-size: 22px; font-family: Inter; font-weight: 700; word-wrap: break-word">OR</div>
-        <div style="width: 145px; height: 0px; left: 0px; top: 16px; position: absolute; border: 1.50px rgba(0, 0, 0, 0.56) solid"></div>
-        <div style="width: 145px; height: 0px; left: 205px; top: 16px; position: absolute; border: 1.50px rgba(0, 0, 0, 0.56) solid"></div>
-    </div>
-    <div style="padding-left: 26px; padding-right: 26px; padding-top: 14px; padding-bottom: 14px; left: 145px; top: 556px; position: absolute; background: black; border-radius: 200px; overflow: hidden; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-        <div style="color: white; font-size: 14px; font-family: Inter; font-weight: 600; text-transform: uppercase; word-wrap: break-word">Log in</div>
-    </div>
-    <div style="width: 54px; height: 54px; left: 168px; top: 715px; position: absolute; background: black; box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.17); border-radius: 10px; justify-content: center; align-items: center; display: inline-flex">
-        <div style="padding: 15px; background: black; border-radius: 10px; justify-content: flex-start; align-items: flex-start; gap: 15px; display: inline-flex">
-            <div style="width: 24px; height: 24px; position: relative; background: black">
-                <div style="width: 19.37px; height: 23px; left: 2.31px; top: 0.50px; position: absolute; background: white"></div>
-            </div>
+    <div class = "recipe-small-view">
+        <div class="image-with-border">
+            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+            <button class="btn btn-outline-secondary" (click)="toggleHeart()">
+                <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
+            </button>
         </div>
+        <p>Dish Name1</p>
     </div>
-    <div style="width: 54px; height: 54px; left: 51px; top: 715px; position: absolute; background: #1877F2; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 10px; justify-content: center; align-items: center; display: inline-flex">
-        <div style="padding: 15px; background: #1877F2; border-radius: 10px; justify-content: flex-start; align-items: flex-start; gap: 15px; display: inline-flex">
-            <div style="width: 24px; height: 24px; position: relative; background: #1877F2">
-                <div style="width: 23px; height: 22.86px; left: 0.50px; top: 23.43px; position: absolute; background: white"></div>
-            </div>
+    <div class = "recipe-small-view">
+        <div class="image-with-border">
+            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+            <button class="btn btn-outline-secondary" (click)="toggleHeart()">
+                <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
+            </button>
         </div>
+        <p>Dish Name1</p>
     </div>
-    <div style="width: 54px; height: 54px; left: 285px; top: 715px; position: absolute; background: white; box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.17); border-radius: 10px; justify-content: center; align-items: center; display: inline-flex">
-        <div style="padding: 15px; background: white; border-radius: 10px; justify-content: flex-start; align-items: flex-start; gap: 15px; display: inline-flex">
-            <div style="width: 24px; height: 24px; position: relative; background: white">
-                <div style="width: 23px; height: 23px; left: 0.50px; top: 0.50px; position: absolute">
-                    <div style="width: 11.04px; height: 10.80px; left: 11.50px; top: 9.41px; position: absolute; background: #4285F4"></div>
-                    <div style="width: 17.89px; height: 9.31px; left: 1.22px; top: 13.68px; position: absolute; background: #34A853"></div>
-                    <div style="width: 5.07px; height: 10.33px; left: 0px; top: 6.34px; position: absolute; background: #FBBC05"></div>
-                    <div style="width: 17.97px; height: 9.31px; left: 1.22px; top: -0px; position: absolute; background: #EA4335"></div>
-                    <div style="width: 23px; height: 23px; left: 0px; top: 0px; position: absolute"></div>
-                </div>
-            </div>
+    <div class = "recipe-small-view">
+        <div class="image-with-border">
+            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+            <button class="btn btn-outline-secondary" (click)="toggleHeart()">
+                <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
+            </button>
         </div>
+        <p>Dish Name1</p>
     </div>
-    <div style="width: 390px; height: 44px; left: 0px; top: 0px; position: absolute">
-        <div style="width: 18px; height: 13px; left: 314px; top: 17px; position: absolute; background: black"></div>
-        <div style="width: 26.60px; height: 12.50px; left: 337px; top: 17px; position: absolute">
-            <div style="width: 20.19px; height: 8.65px; left: 1.92px; top: 1.92px; position: absolute; background: black"></div>
-            <img style="width: 26.60px; height: 12.50px; left: 0px; top: 0px; position: absolute; opacity: 0.40" src="https://via.placeholder.com/27x12" />
+</div>
+<h3>your nono's</h3>
+<div class="disliked-recipes">
+    <div class = "recipe-small-view">
+        <div class="image-with-border">
+            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
+                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
+            </button>
         </div>
-        <img style="width: 18.15px; height: 11px; left: 290px; top: 18px; position: absolute" src="https://via.placeholder.com/18x11" />
-        <div style="left: 39px; top: 15px; position: absolute; text-align: center; color: black; font-size: 18px; font-family: SF Pro Display; font-weight: 600; line-height: 18px; word-wrap: break-word">19:02</div>
+        <p>Dish Name1</p>
+    </div>
+    <div class = "recipe-small-view">
+        <div class="image-with-border">
+            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
+                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
+            </button>
+        </div>
+        <p>Dish Name2</p>
+    </div>
+    <div class = "recipe-small-view">
+        <div class="image-with-border">
+            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
+                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
+            </button>
+        </div>
+        <p>Dish Name2</p>
+    </div>
+    <div class = "recipe-small-view">
+        <div class="image-with-border">
+            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
+            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
+                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
+            </button>
+        </div>
+        <p>Dish Name2</p>
     </div>
 </div>
