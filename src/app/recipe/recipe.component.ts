@@ -1,21 +1,39 @@
-// recipe.component.ts
-import { Component } from '@angular/core';
+// recipes.component.ts
+import { Component, OnInit } from '@angular/core';
+import { RecipeService } from './recipe.service';
+import { Recipe } from './recipe.model'; // Import the Recipe interface
 
 @Component({
     selector: 'app-recipe',
     templateUrl: './recipe.component.html',
     styleUrls: ['./recipe.component.scss']
 })
-export class RecipeComponent {
-    isHeartFilled = false;
+export class RecipeComponent implements OnInit {
+    recipes: Recipe[] = []; // Declare recipes as an array of Recipe
+    urls:String[] = [];
+    constructor(private recipeService: RecipeService) {}
 
-    toggleHeart(): void {
-        this.isHeartFilled = !this.isHeartFilled;
+    ngOnInit() {
+        this.recipeService.getRecipes().then(recipes => {
+            if (recipes) {
+                this.recipes = recipes;
+                this.loadImageUrls(this.recipes)
+            }
+        }).catch(error => {
+            console.error('Error fetching recipes:', error);
+        });
     }
-    isThumbsDown = false; // Property to hold the state of thumbs down
 
-    // Method to toggle thumbs down
-    toggleThumbsDown(): void {
-        this.isThumbsDown = !this.isThumbsDown;
+    async loadImageUrls(recipes:Recipe[]) {
+        for (const recipe in recipes) {
+            this.urls.push(await this.recipeService.getImageUrl("65829b95-426e-4eb3-8844-f261805dbee3"));
+        }
+    }
+
+
+    toggleHeart(recipe: Recipe) {
+        console.log(this.recipes)
     }
 }
+
+

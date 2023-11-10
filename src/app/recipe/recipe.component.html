@@ -1,80 +1,30 @@
+<!-- recipes.component.html -->
 <h1>Your Recipes</h1>
-<h4>lets have a look at your favourites</h4>
-<h3>your likes</h3>
+<h4>Let's have a look at your favourites</h4>
+<h3>Your likes</h3>
 <div class="liked-recipes">
-    <div class = "recipe-small-view">
-    <div class="image-with-border">
-        <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-        <button class="btn btn-outline-secondary" (click)="toggleHeart()">
-            <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
-        </button>
-    </div>
-    <p>Dish Name1</p>
-    </div>
-    <div class = "recipe-small-view">
+    <!-- recipes.component.html -->
+    <div *ngFor="let recipe of recipes" class="recipe-small-view">
         <div class="image-with-border">
-            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-            <button class="btn btn-outline-secondary" (click)="toggleHeart()">
-                <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
+            <img [src]="urls[0]" alt="Image of {{ recipe.name }}">
+            <button class="btn btn-outline-secondary" (click)="toggleHeart(recipe)">
+                <i [class]="0 ? 'fas fa-heart' : 'far fa-heart'"></i>
             </button>
         </div>
-        <p>Dish Name1</p>
-    </div>
-    <div class = "recipe-small-view">
-        <div class="image-with-border">
-            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-            <button class="btn btn-outline-secondary" (click)="toggleHeart()">
-                <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
-            </button>
-        </div>
-        <p>Dish Name1</p>
-    </div>
-    <div class = "recipe-small-view">
-        <div class="image-with-border">
-            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-            <button class="btn btn-outline-secondary" (click)="toggleHeart()">
-                <i [class]="isHeartFilled ? 'fas fa-heart' : 'far fa-heart'"></i> <!-- Toggle classes based on a property -->
-            </button>
-        </div>
-        <p>Dish Name1</p>
+        <p>{{ recipe.name }}</p>
     </div>
 </div>
-<h3>your nono's</h3>
+<h3>Your nono's</h3>
 <div class="disliked-recipes">
-    <div class = "recipe-small-view">
+    <!-- recipes.component.html -->
+    <div *ngFor="let recipe of recipes" class="recipe-small-view">
         <div class="image-with-border">
-            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
-                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
+            <img [src]="urls[0]" alt="Image of {{ recipe.name }}">
+            <button class="btn btn-outline-secondary" (click)="toggleHeart(recipe)">
+                <i [class]="0 ? 'fas fa-heart' : 'far fa-heart'"></i>
             </button>
         </div>
-        <p>Dish Name1</p>
-    </div>
-    <div class = "recipe-small-view">
-        <div class="image-with-border">
-            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
-                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
-            </button>
-        </div>
-        <p>Dish Name2</p>
-    </div>
-    <div class = "recipe-small-view">
-        <div class="image-with-border">
-            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
-                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
-            </button>
-        </div>
-        <p>Dish Name2</p>
-    </div>
-    <div class = "recipe-small-view">
-        <div class="image-with-border">
-            <img src="https://files.oaiusercontent.com/file-GogqzTm4Whv35yH1uOom4XK8?se=2023-11-09T19%3A50%3A33Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D38310c55-210e-41b1-ad0a-e3c7c1746056.webp&sig=IxmWClypv9cO6elgheoDRk1wmvusMHTksTESsE%2BqnWc%3D" alt="Descriptive Text for Image 1">
-            <button class="btn btn-outline-secondary" (click)="toggleThumbsDown()">
-                <i class="far fa-thumbs-down"></i> <!-- Regular thumbs down icon -->
-            </button>
-        </div>
-        <p>Dish Name2</p>
+        <p>{{ recipe.name }}</p>
     </div>
 </div>
+<!-- Similar setup for disliked recipes -->
