@@ -11,16 +11,15 @@ import { environment} from "./environments/environment/environment";
 
 export interface Profile {
     id?: string
-    username: string
-    website: string
-    avatar_url: string
+    name: string
+    first_name: string
 }
 
 @Injectable({
     providedIn: 'root',
 })
 export class SupabaseService {
-    private supabase: SupabaseClient
+    supabase: SupabaseClient
     _session: AuthSession | null = null
 
     constructor() {
@@ -36,8 +35,8 @@ export class SupabaseService {
 
     profile(user: User) {
         return this.supabase
-            .from('profiles')
-            .select(`username, website, avatar_url`)
+            .from('users')
+            .select(`name, first_name`)
             .eq('id', user.id)
             .single()
     }
@@ -60,14 +59,6 @@ export class SupabaseService {
             updated_at: new Date(),
         }
 
-        return this.supabase.from('profiles').upsert(update)
-    }
-
-    downLoadImage(path: string) {
-        return this.supabase.storage.from('avatars').download(path)
-    }
-
-    uploadAvatar(filePath: string, file: File) {
-        return this.supabase.storage.from('avatars').upload(filePath, file)
+        return this.supabase.from('users').update(profile).eq('id',profile.id)
     }
 }
