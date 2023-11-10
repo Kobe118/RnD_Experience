@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import {DietaryPreferencePageComponent} from "./Register/DietaryPreferencePage/D
 import {AllergiesPageComponent} from "./Register/AllergiesPage/AllergiesPage.component";
 import {SignUpPageComponent} from "./Register/SignUpPage/SignUpPage.component";
 import {CongratsPageComponent} from "./Register/CongratsPage/CongratsPage.component";
+import {AccountComponent} from "./Register/account/account.component";
 
 @NgModule({
   declarations: [
@@ -17,12 +19,16 @@ import {CongratsPageComponent} from "./Register/CongratsPage/CongratsPage.compon
       DietaryPreferencePageComponent,
       AllergiesPageComponent,
       SignUpPageComponent,
-      CongratsPageComponent
+      CongratsPageComponent,
+      AccountComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    ReactiveFormsModule,
+    FormsModule,
+     CommonModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
