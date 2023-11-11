@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <title>Meal Plans Home Page</title>
+</head>
+<body>
+
+<header>
+    <h1>Your Meal-Plans</h1>
+    <p class="flush-text">What will we have today?</p>
+</header>
+
+<div class="profile-circle">
+    <img class="profile-image" src="assets/profile-pic.webp" alt="Profile Image">
+</div>
+<main>
+    <section>
+        <h2>Family 1</h2>
+
+        <div class="container mt-4">
+            <div class="card bg-light">
+                <div class="card-body scrolling-wrapper scrollable-card-container">
+                    <div class="card card-container" *ngFor="let day of days">
+                        <img src="{{day.image}}" class="card-img-top" alt="Image 1" width="250px" height="250px">
+                        <div class="card-header">{{day.weekday}}</div>
+                        <div class="card-body">
+                            <p class="card-title">Attendees</p>
+                            <p class="card-text">{{ day.attendees.join(', ') || 'No attendees' }}</p>
+                        </div>
+                    </div>
+
+                    <div class="card card-container">
+                        <img src="assets/Tikka-Masala.jpg" class="card-img-top" alt="Image 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Card 2</h5>
+                            <p class="card-text">Some text for card 2.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

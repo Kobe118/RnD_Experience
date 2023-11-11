@@ -1,0 +1,89 @@
+$black: #041903;
+$white: #FDFFFC;
+$light-green: #EEF2ED;
+$medium-green: #406E3D;
+$dark-green: #204C1D;
+$dark-gray: #707070;
+$light-gray: #EBEBEB;
+
+* {
+  font-family: Inter, sans-serif;
+  max-width: 100%;
+}
+h1 {
+  font-size: 28px; //convert to em, pixels/16=em
+}
+h2 {
+  font-size: 22px;
+}
+h3 {
+  font-size: 18px;
+}
+p {
+
+}
+.text-large {
+  font-size: 18px;
+}
+.text-small {
+  font-size: 14px;
+}
+
+.scrollable-hor {
+  max-width: 100%;
+  overflow-x: scroll;
+
+}
+.flush-text {
+  margin-top: -3%;
+}
+.button {
+  background-color: $black;
+  border: none;
+  color: $white;
+  min-width: 10%;
+  padding: 10px 20px 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 200px;
+}
+
+.dark-green {
+  background-color: $dark-green;
+}
+.medium-green {
+  background-color: $medium-green;
+}
+
+.image-cropper {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.profile-pic {
+  display: inline;
+  margin: 0 auto;
+  margin-left: -25%; //centers the image
+  height: 100%;
+  width: auto;
+}
+
+html, body {
+  max-width: 100%;
+  background-color: $white;
+}
+
+header {
+  margin: 10% 2.5% 6% 2.5%;
+}
+
+main {
+  margin: 5% 2.5% 0 2.5%;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

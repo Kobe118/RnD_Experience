@@ -1,0 +1,31 @@
+{
+  "days": [
+    {
+      "image": "assets/Tikka-Masala",
+      "weekday": "Monday",
+      "willAttend": true,
+      "attendees": ["Person1", "Person2", "Person3"]
+    },
+    {
+      "image": "assets/Tikka-Masala",
+      "weekday": "Tuesday",
+      "willAttend": false,
+      "attendees": []
+    },
+    {
+      "image": "assets/Tikka-Masala",
+      "weekday": "Wednesday",
+      "willAttend": true,
+      "attendees": ["Person4", "Person5"]
+    },
+    {
+      "image": "assets/Tikka-Masala",
+      "weekday": "Monday",
+      "willAttend": true,
+      "attendees": ["Rik", "your Mom", "Elle Va"
+      ]
+    }
+  ]
+
+
+}
