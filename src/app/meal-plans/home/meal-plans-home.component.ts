@@ -13,12 +13,13 @@ interface Day {
   styleUrls: ['./meal-plans-home.component.scss']
 })
 export class MealPlansHomeComponent implements OnInit{
-  public days: Day[] = [];
+  days: any[] = [];
+
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
     const url: string = "assets/data.json";
-    this.http.get<Day[]>(url).subscribe((response) => {
-      this.days = response;
+    this.http.get<{ days: Day[] }>(url).subscribe((response: any) => {
+      this.days = response.days;
     });
     console.log(this.days)
   }

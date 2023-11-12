@@ -14,8 +14,12 @@
 </div>
 <main>
     <section>
-        <h2>Family 1</h2>
-
+        <div class="family-container">
+            <h2>Family 1</h2>
+            <button class="circular-button add">
+                <!-- Button content or functionality goes here -->
+            </button>
+        </div>
         <div class="container mt-4">
             <div class="card bg-light">
                 <div class="card-body scrolling-wrapper scrollable-card-container">
@@ -26,13 +30,12 @@
                             <p class="card-title">Attendees</p>
                             <p class="card-text">{{ day.attendees.join(', ') || 'No attendees' }}</p>
                         </div>
-                    </div>
 
-                    <div class="card card-container">
-                        <img src="assets/Tikka-Masala.jpg" class="card-img-top" alt="Image 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Card 2</h5>
-                            <p class="card-text">Some text for card 2.</p>
+                        <div class="card-footer">
+                            <span [ngClass]="{'attend': day.willAttend, 'not-attend': !day.willAttend}">
+                                {{ day.willAttend ? '✔ Attending' : '✘ Not Attending' }}
+                            </span>
+                            <button class="circular-button refresh"></button>
                         </div>
                     </div>
                 </div>
