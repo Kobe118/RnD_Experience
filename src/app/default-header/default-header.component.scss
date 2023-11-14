@@ -1,0 +1,24 @@
+
+.text {
+  width: 75%;
+  float: left;
+}
+
+.image {
+  width: 25%;
+  float: right;
+
+}
+
+.profile-picture {
+  display: inline-block;
+  position: relative;
+  width: 4em;
+  height: 4em;
+  overflow: hidden;
+  border-radius: 50%; }
+
+.profile-picture img {
+  width: auto;
+  height: 100%;
+  }
