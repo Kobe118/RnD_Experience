@@ -1,8 +1,9 @@
-<div class="container" style="padding: 50px 0 100px 0">
-    <app-account *ngIf="session; else auth" [session]="session"></app-account>
-    <ng-template #auth>
-        <SignUpPage></SignUpPage>
-    </ng-template>
-</div>
-<router-outlet></router-outlet>
+<!-- <div class="container" style="padding: 50px 0 100px 0">
+    <app-account  [session]="session"></app-account>
+
+</div>-->
+<router-outlet *ngIf="session; else auth"></router-outlet>
+<ng-template #auth>
+    <SignUpPage></SignUpPage>
+</ng-template>
 

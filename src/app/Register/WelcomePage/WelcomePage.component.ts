@@ -10,6 +10,6 @@ export class WelcomePageComponent {
     constructor(private navigationService: NavigationService) {} // Inject the service
 
     redirectToNewPage() {
-        this.navigationService.redirectToPage(this.navigationService.DietaryPreferencePage); // Use the service to navigate
+        this.navigationService.redirectToPage(this.navigationService.SignUpPage); // Use the service to navigate
     }
 }

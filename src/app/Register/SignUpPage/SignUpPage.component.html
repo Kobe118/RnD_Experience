@@ -24,6 +24,26 @@
                 />
             </div>
             <div>
+                <label for="firstname">Firstname</label>
+                <input
+                        id="firstname"
+                        formControlName="firstname"
+                        class="inputField"
+                        type="firstname"
+                        placeholder="Your First Name"
+                />
+            </div>
+            <div>
+                <label for="lastname">Lastname</label>
+                <input
+                        id="lastname"
+                        formControlName="lastname"
+                        class="inputField"
+                        type="lastname"
+                        placeholder="Your Last Name"
+                />
+            </div>
+            <div>
                 <button type="submit" class="button block" [disabled]="loading">
                     {{ loading ? 'Loading' : 'Send magic link' }}
                 </button>
