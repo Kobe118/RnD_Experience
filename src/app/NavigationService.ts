@@ -15,6 +15,8 @@ export class NavigationService {
     readonly AllergiesPage = '/AllergiesPage';
     readonly SignUpPage = '/SignUpPage';
 
+    readonly ProfilePage = '/profile';
+
     redirectToPage(route: string) {
         this.router.navigate([route]);
     }
@@ -36,6 +38,10 @@ export class NavigationService {
 
     redirectToCongratsPage() {
         this.router.navigate([this.CongratsPage]);
+    }
+
+    redirectToProfilePage() {
+        this.router.navigate([this.ProfilePage]);
     }
 
 }

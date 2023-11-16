@@ -11,6 +11,9 @@ import {AllergiesPageComponent} from "./Register/AllergiesPage/AllergiesPage.com
 import {SignUpPageComponent} from "./Register/SignUpPage/SignUpPage.component";
 import {CongratsPageComponent} from "./Register/CongratsPage/CongratsPage.component";
 import {AccountComponent} from "./Register/account/account.component";
+import {DefaultHeaderComponent} from "./default-header/default-header.component";
+import {FamiliesPageComponent} from "./families-page/families-page.component";
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import {AccountComponent} from "./Register/account/account.component";
       AllergiesPageComponent,
       SignUpPageComponent,
       CongratsPageComponent,
-      AccountComponent
+      AccountComponent,
+      DefaultHeaderComponent,
+      FamiliesPageComponent,
+      ProfilePageComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,8 @@ import {DietaryPreferencePageComponent} from "./Register/DietaryPreferencePage/D
 import {SignUpPageComponent} from "./Register/SignUpPage/SignUpPage.component";
 import {CongratsPageComponent} from "./Register/CongratsPage/CongratsPage.component";
 import {AllergiesPageComponent} from "./Register/AllergiesPage/AllergiesPage.component";
+import {FamiliesPageComponent} from "./families-page/families-page.component";
+import {ProfilePageComponent} from "./profile-page/profile-page.component";
 
 const routes: Routes = [
   { path: '', component: WelcomePageComponent }, //lookup guards
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'AllergiesPage', component: AllergiesPageComponent },
   { path: 'SignUpPage', component: SignUpPageComponent },
   { path: 'CongratsPage', component: CongratsPageComponent },
+  { path: 'families', component: FamiliesPageComponent },
+  { path: 'profile', component: ProfilePageComponent}
 
 ];
 
