@@ -68,7 +68,6 @@ export class SupabaseService {
             .from('profile_pictures')
             .getPublicUrl(filename);
 
-        console.log(data.publicUrl);
         return data.publicUrl;
     }
 }
