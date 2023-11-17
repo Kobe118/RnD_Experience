@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bottom-navigation',
@@ -11,32 +10,27 @@ export class BottomNavigationComponent {
     { 
       path: '/Home', 
       label: 'Home', 
-      iconInactive: '../../assets/icons/home_black_24dp.svg',
-      iconActive: '../../assets/icons/home_white_24dp.svg' 
+      icon: 'home',
     },
     { 
       path: '/mealplanshome', 
       label: 'MealPlan', 
-      iconInactive: '../../assets/icons/calendar_today_black_24dp.svg',
-      iconActive: '../../assets/icons/calendar_today_white_24dp.svg'
+      icon: 'calendar_today',
     },
     { 
       path: '/recipe', 
       label: 'Recipes', 
-      iconInactive: '../../assets/icons/restaurant_menu_black_24dp.svg',
-      iconActive: '../../assets/icons/restaurant_menu_white_24dp.svg' 
+      icon: 'restaurant_menu',
     },
     { 
       path: '/families', 
       label: 'Families', 
-      iconInactive: '../../assets/icons/group_black_24dp.svg',
-      iconActive: '../../assets/icons/group_white_24dp.svg' 
+      icon: 'group'
     },
   ];
 
-  constructor(private router: Router) {}
-
-  isActiveLink(link: any): boolean {
-    return this.router.isActive(link.path, true);
+  getIcon(link: any): string {
+    return link.icon;
   }
+  
 }

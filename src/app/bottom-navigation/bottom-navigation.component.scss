@@ -21,11 +21,10 @@
     margin-bottom: 4px; /* Adjust the spacing as needed */
   }
 
-  .material-icons.color_green { color: #00FF00; }
-  .material-icons.color_white { color: #FFFFFF; }
   
   .active-link {
-    background-color: #2196f3; /* Adjust the background color for the active tab */
     color: #ffffff; /* Adjust the text color for the active tab */
-    
+    mat-icon {
+        color: #ffffff; /* Adjust the color for the active icon */
+      }
   }
