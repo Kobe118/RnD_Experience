@@ -15,7 +15,6 @@ import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
-  { path: '', component: WelcomePageComponent }, //lookup guards
   { path: 'LogIn', component: LogInComponent },
   { path: 'WelcomePage', component: WelcomePageComponent },
   { path: 'DietaryPreferencePage', component: DietaryPreferencePageComponent },
@@ -28,6 +27,8 @@ const routes: Routes = [
   { path: 'MealPlansCalendar', component: MealPlansCalendarComponent },
   { path: 'Recipe', component: RecipeComponent },
   { path: 'Home', component: HomeComponent },
+  {path: '', redirectTo: '/Home', pathMatch: 'full'},
+  {path: '**', redirectTo: 'LogIn' ,pathMatch: 'full'}
 ];
 
 @NgModule({
