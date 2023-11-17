@@ -1,1 +1,30 @@
-<p>recipe works!</p>
+<!DOCTYPE html>
+<h1>Your Recipes</h1>
+<h4>Let's have a look at your favourites</h4>
+<h3>Your likes</h3>
+<div class="liked-recipes">
+    <!-- recipes.component.html -->
+    <div *ngFor="let recipe of recipes" class="recipe-small-view">
+        <div class="image-with-border">
+            <img [src]="urls[0]" alt="Image of {{ recipe.name }}">
+            <button class="btn btn-outline-secondary" (click)="toggleHeart(recipe)">
+                <i [class]="0 ? 'fas fa-heart' : 'far fa-heart'"></i>
+            </button>
+        </div>
+        <p>{{ recipe.name }}</p>
+    </div>
+</div>
+<h3>Your nono's</h3>
+<div class="disliked-recipes">
+    <!-- recipes.component.html -->
+    <div *ngFor="let recipe of recipes" class="recipe-small-view">
+        <div class="image-with-border">
+            <img [src]="urls[0]" alt="Image of {{ recipe.name }}">
+            <button class="btn btn-outline-secondary" (click)="toggleHeart(recipe)">
+                <i [class]="0 ? 'fas fa-heart' : 'far fa-heart'"></i>
+            </button>
+        </div>
+        <p>{{ recipe.name }}</p>
+    </div>
+</div>
+<!-- Similar setup for disliked recipes -->

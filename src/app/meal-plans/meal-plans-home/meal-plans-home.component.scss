@@ -1,0 +1,96 @@
+.profile-circle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #3498db;
+    border-radius: 50%;
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+  }
+  
+  .scrollable-card-container {
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+  
+  .card-container {
+    display: inline-block;
+    width: 18rem;
+    margin-right: 20px;
+  }
+  
+  .attend {
+    color: green; // Change color for attending
+  }
+  
+  .not-attend {
+    color: red; // Change color for not attending
+  }
+  
+  .family-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .family-container h2 {
+    margin-right: 10px;
+    align-self: center;
+    line-height: 30px;
+    margin-top: 10px;
+  }
+  
+  
+  .circular-button {
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #000000;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+  
+  }
+  
+  .add {
+    margin-left: auto;
+    margin-right: 20px;
+    align-self: center;
+    background-image: url('/assets/calenderAdd.png');
+    background-size: 65% 65%;
+  }
+  
+  .plus {
+    margin-left: -10px;
+    margin-right: 20px;
+    align-self: center;
+    background-image: url('/assets/plus.png');
+    background-size: 50% 50%;
+  }
+  
+  .refresh {
+    margin-right: 20px;
+    align-self: center;
+    background-image: url('/assets/refresh.png');
+    background-size: 60% 60%;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .circular-button:hover {
+    background-color: #00ffff;
+  }
+  

@@ -1,1 +1,14 @@
-<p>default-header works!</p>
+<!DOCTYPE html>
+<header>
+    <div class="text">
+        <h1> {{title}}</h1>
+        <p class="flush-text">{{subtitle}}</p>
+    </div>
+    <div class="image">
+        <div class="profile-picture">
+            <img (click)="redirectToProfilePage()" [src]="imageurl" alt="profile picture">
+        </div>
+
+    </div>
+
+</header>

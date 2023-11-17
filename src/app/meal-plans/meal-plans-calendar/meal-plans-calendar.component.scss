@@ -1,0 +1,51 @@
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for days of the week */
+    gap: 2px; /* Adjust the gap between date circles */
+  }
+  
+  .calendar-date {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin: 6px 4px;
+  }
+  
+  .clicked {
+    background-color: green;
+    color: white;
+  }
+  
+  .calendar-date:nth-child(7n + 1) {
+    margin-left: 5px; /* Set margin-left to 0 for the first circle in each row */
+  }
+  
+  .calendar-date:nth-child(7n) {
+    margin-right: 5px; /* Set margin-right to 0 for the last circle in each row */
+  }
+  
+  .back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .back-button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
