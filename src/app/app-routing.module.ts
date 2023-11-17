@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RecipeComponent } from './recipe/recipe.component';
-
 import { LogInComponent } from "./log-in/log-in.component";
 import { WelcomeComponent } from "./register/welcome/welcome.component";
 import { DietaryPreferenceComponent}  from "./register/dietary-preference/dietary-preference.component";

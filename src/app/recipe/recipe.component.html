@@ -32,8 +32,8 @@
  <button class="recipe-generation" (click)="sendRecipeRequest()">
      generate
  </button>
-<div *ngIf="generatedrecipe; else noRecipe">
-    <p>{{ generatedrecipe }}</p>
+<div *ngIf="showedrecipe; else noRecipe">
+    <p>{{ showedrecipe }}</p>
 </div>
 <ng-template #noRecipe>
     <p>No recipe generated yet.</p>

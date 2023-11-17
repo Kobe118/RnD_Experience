@@ -15,6 +15,7 @@ export class RecipeComponent implements OnInit {
     postId?: number; // Use '?' for optional property
     errorMessage?: string;
     generatedrecipe: string = "";  // Initialize as empty string
+    showedrecipe:string = ""
     constructor(private recipeService: RecipeService) {}
 
     ngOnInit() {
@@ -34,20 +35,10 @@ export class RecipeComponent implements OnInit {
         }
     }
     // Inside your RecipeComponent class
-    sendRecipeRequest() {
-        this.recipeService.postRecipeData("", "").subscribe({
-            next: (data) => {
-                this.generatedrecipe = data;
-            },
-            error: (error) => {
-                console.error('Error generating recipe:', error);
-                this.generatedrecipe = "Error generating recipe.";
-            }
-        });
+    async sendRecipeRequest() {
+        this.generatedrecipe = await this.recipeService.postRecipeData( "");
+        this.showedrecipe = this.generatedrecipe
     }
-
-
-
 
     toggleHeart(recipe: Recipe) {
         console.log(this.recipes)

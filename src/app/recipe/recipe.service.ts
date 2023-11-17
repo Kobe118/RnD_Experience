@@ -35,20 +35,10 @@ export class RecipeService {
         return recipe;
     }
 
-    postRecipeData(url: string, input: any): Observable<any> {
-        return new Observable(observer => {
-            this.supabase.functions.invoke('openai', { body: input })
-                .then(response => {
-                    if (response.error) {
-                        observer.error(response.error);
-                    } else {
-                        observer.next(response.data);
-                    }
-                    observer.complete();
-                })
-                .catch(error => observer.error(error));
-        }).pipe(
-            catchError(error => throwError(() => new Error(error.message)))
-        );
+    async postRecipeData(input: any) {
+        let {data:data,error} = await this.supabase.functions.invoke('openai',{body:input})
+        if (error) throw error;
+        console.log(data)
+        return data.choices[0].message.content;
     }
 }
