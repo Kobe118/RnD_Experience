@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {NavigationService} from "../NavigationService";
-import { SupabaseService} from "../supabase.service";
+import {NavigationService} from "../services/navigation.service";
+import { SupabaseService} from "../services/supabase.service";
 
 
 @Component({
@@ -28,7 +28,7 @@ export class DefaultHeaderComponent {
     }
 
     redirectToProfilePage() {
-        this.navigationService.redirectToPage(this.navigationService.ProfilePage); // Use the service to navigate
+        this.navigationService.redirectToPage(this.navigationService.Profile); // Use the service to navigate
     }
     
 }
