@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { LogInComponent } from "./log-in/log-in.component";
 import { WelcomePageComponent } from "./register/welcome-page/welcome-page.component";
 import { DietaryPreferencePageComponent}  from "./register/dietary-preference-page/dietary-preference-page.component";
@@ -15,20 +16,20 @@ import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
-  { path: 'LogIn', component: LogInComponent },
-  { path: 'WelcomePage', component: WelcomePageComponent },
-  { path: 'DietaryPreferencePage', component: DietaryPreferencePageComponent },
-  { path: 'AllergiesPage', component: AllergiesPageComponent },
-  { path: 'SignUpPage', component: SignUpPageComponent },
-  { path: 'CongratsPage', component: CongratsPageComponent },
-  { path: 'Families', component: FamiliesPageComponent },
-  { path: 'Profile', component: ProfilePageComponent},
-  { path: 'MealPlansHome', component: MealPlansHomeComponent },
-  { path: 'MealPlansCalendar', component: MealPlansCalendarComponent },
-  { path: 'Recipe', component: RecipeComponent },
+  { path: 'login', component: LogInComponent },
+  { path: 'welcome', component: WelcomePageComponent },
+  { path: 'dietarypreference', component: DietaryPreferencePageComponent },
+  { path: 'allergies', component: AllergiesPageComponent },
+  { path: 'signup', component: SignUpPageComponent },
+  { path: 'congrats', component: CongratsPageComponent },
+  { path: 'families', component: FamiliesPageComponent },
+  { path: 'profile', component: ProfilePageComponent},
+  { path: 'mealplanshome', component: MealPlansHomeComponent },
+  { path: 'mealplanscalendar', component: MealPlansCalendarComponent },
+  { path: 'recipe', component: RecipeComponent },
   { path: 'Home', component: HomeComponent },
-  {path: '', redirectTo: '/Home', pathMatch: 'full'},
-  {path: '**', redirectTo: 'LogIn' ,pathMatch: 'full'}
+  { path: '', redirectTo: '/Home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' ,pathMatch: 'full' }
 ];
 
 @NgModule({

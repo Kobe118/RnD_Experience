@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +19,8 @@ import { MealPlansHomeComponent } from './meal-plans/meal-plans-home/meal-plans-
 import { MealPlansCalendarComponent } from './meal-plans/meal-plans-calendar/meal-plans-calendar.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
+import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,13 +37,17 @@ import { HomeComponent } from './home/home.component';
     MealPlansHomeComponent,
     MealPlansCalendarComponent,
     RecipeComponent,
-    HomeComponent
+    HomeComponent,
+    BottomNavigationComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatTabsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
