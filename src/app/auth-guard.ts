@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SupabaseService } from './supabase.service';
+import { SupabaseService } from './services/supabase.service';
 import { Router } from '@angular/router';
 
 @Injectable({

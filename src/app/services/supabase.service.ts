@@ -7,7 +7,7 @@ import {
     SupabaseClient,
     User,
 } from '@supabase/supabase-js'
-import { environment} from "./environments/environment/environment";
+import { environment} from "../environments/environment/environment";
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
