@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {NavigationService} from "../navigation-service";
-import { SupabaseService} from "../supabase.service";
+import {NavigationService} from "../services/navigation.service";
+import { SupabaseService} from "../services/supabase.service";
 
 
 @Component({
