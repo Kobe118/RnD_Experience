@@ -10,10 +10,10 @@ interface Day {
   selector: 'app-meal-plan-calender',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './meal-plan-calender.component.html',
-  styleUrl: './meal-plan-calender.component.scss'
+  templateUrl: './meal-plans-calender.component.html',
+  styleUrl: './meal-plans-calender.component.scss'
 })
-export class MealPlanCalenderComponent {
+export class MealPlansCalenderComponent {
   dates: Day[] = [
     { date: new Date(2023, 0, 1), clicked: false },
     { date: new Date(2023, 0, 2), clicked: true },

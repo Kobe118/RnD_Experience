@@ -6,6 +6,6 @@ export interface Day {
     willAttend: boolean;
     attendees: string[];
 }
-export interface MealPlan {
+export interface MealPlan   {
     days: Day[];
 }

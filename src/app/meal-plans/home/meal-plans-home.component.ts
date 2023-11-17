@@ -1,5 +1,6 @@
 import {Component, OnInit, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { Router } from '@angular/router';
 
 interface Day {
   image: string;
@@ -15,7 +16,7 @@ interface Day {
 export class MealPlansHomeComponent implements OnInit{
   days: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
   ngOnInit(): void {
     const url: string = "assets/data.json";
     this.http.get<{ days: Day[] }>(url).subscribe((response: any) => {
@@ -24,4 +25,12 @@ export class MealPlansHomeComponent implements OnInit{
     console.log(this.days)
   }
 
+  navigateToCalender() {
+    this.router.navigate(['MealPlansCalender']);
+  }
+
+  navigateToAddMealPlan() {
+    this.router.navigate(['MealPlansGenerate']);
+
+  }
 }
