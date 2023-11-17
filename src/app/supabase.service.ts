@@ -61,4 +61,14 @@ export class SupabaseService {
 
         return this.supabase.from('users').update(profile).eq('id',profile.id)
     }
+
+    async getUserPictureUrl(filename: string) {
+        const { data } = this.supabase
+            .storage
+            .from('profile_pictures')
+            .getPublicUrl(filename);
+
+        console.log(data.publicUrl);
+        return data.publicUrl;
+    }
 }
