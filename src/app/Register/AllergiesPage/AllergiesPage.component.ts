@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {NavigationService} from "../../NavigationService";
 
+
 @Component({
     selector: 'AllergiesPage',
     templateUrl: './AllergiesPage.component.html',
