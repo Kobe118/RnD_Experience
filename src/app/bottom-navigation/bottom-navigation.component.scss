@@ -1,0 +1,30 @@
+
+  mat-tab-nav-bar {
+    display: flex;
+    background-color: #2196f3; /* Change the background color as needed */
+    justify-content: space-around; /* Adjust the spacing as needed */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  mat-tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  mat-icon {
+    margin-bottom: 4px; /* Adjust the spacing as needed */
+  }
+
+  
+  .active-link {
+    color: #ffffff; /* Adjust the text color for the active tab */
+    mat-icon {
+        color: #ffffff; /* Adjust the color for the active icon */
+      }
+  }
