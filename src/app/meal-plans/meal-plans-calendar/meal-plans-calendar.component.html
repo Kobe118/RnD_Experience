@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<header>
+    <h1>Your Meal-Plans</h1>
+    <p class="flush-text">What will we have today?</p>
+</header>
+<main>
+    <section>
+        <div class="calendar">
+            <div *ngFor="let date of dates">
+                <div
+                        class="calendar-date"
+                        [ngClass]="{ 'clicked': isDateClicked(date) }"
+                        (click)="onDateClick(date)"
+                >
+                    {{ date.date.getDate() }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="back-button-container">
+        <button class="back-button" (click)="goBack()">Confirm attendances</button>
+    </div></main>

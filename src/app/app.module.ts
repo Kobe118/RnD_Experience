@@ -1,24 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module'; // Import AppRoutingModule
+import { MatTabsModule } from '@angular/material/tabs';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { AppComponent } from './app.component';
-import { RecipeComponent } from './recipe/recipe.component'; // Import RecipeComponent
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
+import {NgOptimizedImage} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
 
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RecipeComponent
+    AppComponent
   ],
   imports: [
-      CommonModule,
-      BrowserModule,
-      HttpClientModule,
-      AppRoutingModule // Include it in the imports array
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
