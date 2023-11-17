@@ -27,4 +27,14 @@
         <p>{{ recipe.name }}</p>
     </div>
 </div>
+
+ <button class="recipe-generation" (click)="sendRecipeRequest()">
+     generate
+ </button>
+<div *ngIf="generatedrecipe; else noRecipe">
+    <p>{{ generatedrecipe }}</p>
+</div>
+<ng-template #noRecipe>
+    <p>No recipe generated yet.</p>
+</ng-template>
 <!-- Similar setup for disliked recipes -->
