@@ -1,6 +1,7 @@
 import {Component, OnInit, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
+import { SupabaseService } from "../../supabase.service";
 
 interface Day {
   image: string;
@@ -16,13 +17,12 @@ interface Day {
 export class MealPlansHomeComponent implements OnInit{
   days: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private supabaseService: SupabaseService) {}
   ngOnInit(): void {
-    const url: string = "assets/data.json";
-    this.http.get<{ days: Day[] }>(url).subscribe((response: any) => {
-      this.days = response.days;
+    this.supabaseService.MealPlansFromFamily('244f4431-3c7b-4e43-9bcd-93d93422e3ef', '2023-11-13').then((data) => {
+      this.days = data;
+      console.log(this.days);
     });
-    console.log(this.days)
   }
 
   navigateToCalender() {
