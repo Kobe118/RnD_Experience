@@ -67,15 +67,8 @@ p {
 html, body {
   max-width: 100%;
   background-color: $white;
+  height: 100%;
+  margin: 5% 1.5% 0 1.5%;
+  font-family: Inter, sans-serif;
 }
 
-header {
-  margin: 3% 2.5% 6% 2.5%;
-}
-
-main {
-  margin: 5% 2.5% 0 2.5%;
-}
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
