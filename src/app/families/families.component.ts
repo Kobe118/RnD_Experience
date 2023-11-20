@@ -7,7 +7,9 @@ import {SupabaseService} from "../services/supabase.service";
   styleUrls: ['./families.component.scss']
 })
 export class FamiliesComponent implements OnInit {
-  currentUser: any;
+  currentUser: any = {};
+  userFamilies: any[] = [];
+  imageurls: any[] = [];
 
   constructor(private readonly supabaseService: SupabaseService) {}
 
@@ -28,16 +30,30 @@ export class FamiliesComponent implements OnInit {
   }
 
   async getFamilies() {
+    await this.getCurrentUser();
+
     let { data, error } = await this.supabaseService.supabase
         .rpc('get_all_users_family_members', {
-          user_uuid:this.currentUser.id
-        })
-    if (error) console.error(error)
-    else console.log(data)
+          user_uuid: this.currentUser.id
+          //user_uuid: "afa97aa6-0c65-4db2-996e-2930ef3b9c1c"
+        });
+
+    if (error) {
+      console.error(error);
+    } else {
+      this.userFamilies = data;
+      console.log(data);
+    }
+  }
+
+  async getImageUrl() {
+    for (let i=1; i<6;i++) {
+      this.imageurls.push(await this.supabaseService.getUserPictureUrl('test_user_' + i + '.jpg'));
+    }
   }
 
   ngOnInit() {
-    this.getCurrentUser();
-    this.getFamilies();
+    this.getFamilies().then(r => {});
+    this.getImageUrl().then(r => {});
   }
 }
