@@ -23,11 +23,11 @@ import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FamiliesComponent } from './families/families.component';
 import { ProfileComponent } from './profile/profile.component';
-import { WelcomeComponent } from './register/welcome/welcome.component';
-import { SignUpComponent } from './register/sign-up/sign-up.component';
-import { DietaryPreferenceComponent } from './register/dietary-preference/dietary-preference.component';
-import { CongratsComponent } from './register/congrats/congrats.component';
-import { AllergiesComponent } from './register/allergies/allergies.component';
+import { WelcomeComponent } from './Register/welcome/welcome.component';
+import { SignUpComponent } from './Register/sign-up/sign-up.component';
+import { DietaryPreferenceComponent } from './Register/dietary-preference/dietary-preference.component';
+import { CongratsComponent } from './Register/congrats/congrats.component';
+import { AllergiesComponent } from './Register/allergies/allergies.component';
 
 @NgModule({
   declarations: [

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from "./log-in/log-in.component";
-import { WelcomeComponent } from "./register/welcome/welcome.component";
-import { DietaryPreferenceComponent}  from "./register/dietary-preference/dietary-preference.component";
-import { SignUpComponent } from "./register/sign-up/sign-up.component";
-import { CongratsComponent } from "./register/congrats/congrats.component";
-import { AllergiesComponent } from "./register/allergies/allergies.component";
+import { WelcomeComponent } from "./Register/welcome/welcome.component";
+import { DietaryPreferenceComponent}  from "./Register/dietary-preference/dietary-preference.component";
+import { SignUpComponent } from "./Register/sign-up/sign-up.component";
+import { CongratsComponent } from "./Register/congrats/congrats.component";
+import { AllergiesComponent } from "./Register/allergies/allergies.component";
 import { FamiliesComponent } from "./families/families.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { MealPlansHomeComponent } from "./meal-plans/meal-plans-home/meal-plans-home.component";
