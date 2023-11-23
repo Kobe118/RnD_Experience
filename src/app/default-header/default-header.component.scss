@@ -1,0 +1,25 @@
+
+.text {
+    width: 83%;
+    float: left;
+  }
+  
+  .image {
+    width: 17%;
+    float: left;
+    padding-top: 5%;
+    padding-right: -3%;
+  }
+  
+  .profile-picture {
+    display: inline-block;
+    position: relative;
+    width:  3.333em;
+    height: 3.333em;
+    overflow: hidden;
+    border-radius: 50%; }
+  
+  .profile-picture img {
+    width: auto;
+    height: 100%;
+    }
