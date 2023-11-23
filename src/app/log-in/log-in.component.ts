@@ -38,4 +38,9 @@ export class LogInComponent implements OnInit {
     // Implement your error display logic here
     console.error(title, msg);
   }
+
+  // Method to navigate to the sign-up page
+  redirectToSignUpPage() {
+    this.router.navigateByUrl('/signup', {replaceUrl: true});
+  }
 }

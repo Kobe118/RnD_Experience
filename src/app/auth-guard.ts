@@ -18,11 +18,19 @@ export class AuthGuard {
     | boolean
     | UrlTree {
     if (this.supabaseService.isLoggedIn()) {
-      // this allows the user to access the page if they are logged in
+      // User is logged in, allow access
       return true;
     } else {
-      this.router.navigateByUrl('/tabs/list-login'); // this redirects the user to the login page if they are not logged in
-      return false;
+      // User is not logged in, check if trying to access login or sign-up page
+      const currentUrl = this.router.url;
+      if (currentUrl === '/tabs/list-login' || currentUrl === '/tabs/list-signup') {
+        // Allow access to login or sign-up page if the user is not logged in
+        return true;
+      } else {
+        // Redirect to the login page for other routes
+        this.router.navigateByUrl('/tabs/list-login');
+        return false;
+      }
     }
   }
 }
