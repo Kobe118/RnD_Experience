@@ -1,2 +1,14 @@
 <!DOCTYPE html>
 <app-default-header [title]= "'Home'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
+<h1>Upcoming Meals</h1>
+<h4>Let's have a look at your favourites</h4>
+<h3>Your likes</h3>
+<div class="upcoming-recipes">
+    <!-- recipes.component.html -->
+    <div *ngFor="let recipe of recipes" class="recipe-small-view">
+        <div class="image-with-border">
+            <img [src]="urls[0]" alt="Image of {{ recipe.recipe_name }}">
+        </div>
+        <p>{{ recipe.recipe_name }}</p>
+    </div>
+</div>
