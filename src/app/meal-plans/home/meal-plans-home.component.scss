@@ -16,14 +16,14 @@
 }
 
 .scrollable-card-container {
-  white-space: nowrap;
-  overflow-x: auto;
+  white-space: nowrap !important;
+  overflow-x: auto !important;
 }
 
 .card-container {
-  display: inline-block;
-  width: 18rem;
-  margin-right: 20px;
+  display: inline-block !important;
+  width: 18rem !important;
+  margin-right: 20px !important;
 }
 
 .attend {
@@ -92,5 +92,10 @@
 
 .circular-button:hover {
   background-color: #00ffff;
+}
+
+.card {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

@@ -63,18 +63,46 @@ export class SupabaseService {
         return this.supabase.from('users').update(profile).eq('id',profile.id)
     }
 
-    async MealPlansFromFamily( family_uuid:String,  day:String ) {
+    async getImage(id: string) {
+        const {data} = this.supabase
+            .storage
+            .from('recipes_thumbnail_and_picture')
+            .getPublicUrl(id + '.png')
+
+        return data.publicUrl;
+    }
+
+    async MealPlansFromFamily( family_uuid:String, user_uuid:String,  week:String ) {
+        console.log({
+            family_uuid,
+            user_uuid,
+            week
+        })
         let { data, error } = await this.supabase
             .rpc('get_present_users_week', {
                 family_uuid,
-                day
+                user_uuid,
+                week
             })
         if (error) {
             console.error(error);
             return [];
         } else {
             console.log(data);
-            return data as any[];
+            return Object.values(data);
+        }
+    }
+    async GetUsersFamilies(user_uuid:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_all_users_family', {
+                user_uuid
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
         }
     }
 }

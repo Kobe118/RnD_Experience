@@ -11,7 +11,7 @@ interface Day {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './meal-plans-calender.component.html',
-  styleUrl: './meal-plans-calender.component.scss'
+  styleUrls: ['./meal-plans-calender.component.scss']
 })
 export class MealPlansCalenderComponent {
   dates: Day[] = [
