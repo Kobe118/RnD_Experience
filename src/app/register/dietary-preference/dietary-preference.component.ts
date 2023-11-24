@@ -13,9 +13,19 @@ export class DietaryPreferenceComponent implements OnInit {
 
     constructor(private supabaseService: SupabaseService, private navigationService: NavigationService) {}
 
-    ngOnInit(): void {
-        this.loadDietaryPreferences();
-        this.userId = this.supabaseService.getUserId();
+    async ngOnInit(): Promise<void> {
+        try {
+            this.userId = await this.supabaseService.getUserId();
+            if (!this.userId) {
+                // Redirect to login or authentication page
+                this.navigationService.redirectToPage(this.navigationService.Login);
+            } else {
+                this.loadDietaryPreferences();
+            }
+        } catch (error) {
+            console.error('Error fetching user ID:', error);
+            // Handle the error accordingly, perhaps by redirecting to an error page or displaying a message
+        }
     }
 
     loadDietaryPreferences(): void {

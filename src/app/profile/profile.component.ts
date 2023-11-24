@@ -59,6 +59,10 @@ export class ProfileComponent implements OnInit {
             const lastname = this.updateProfileForm.value.lastname as string;
             const firstname = this.updateProfileForm.value.firstname as string;
 
+            if (!this.userId) {
+                throw new Error('User ID not available');
+            }
+
             const updatedProfile: Profile = {
                 id: this.userId,
                 name: lastname,
