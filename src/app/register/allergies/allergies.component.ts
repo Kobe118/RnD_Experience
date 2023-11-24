@@ -8,14 +8,26 @@ import {SupabaseService} from "../../supabase.service";
     styleUrls: ['./allergies.component.scss']
 })
 export class AllergiesComponent {
-    preferences: any[] = [];
+    allergies: any[] = [];
     userId: string | undefined;
     constructor(private navigationService: NavigationService, private supabaseService: SupabaseService) {} // Inject the service
 
-    ngOnInit(): void {
-        this.loadAllergies();
-        this.userId = this.supabaseService.getUserId();
+    async ngOnInit(): Promise<void> {
+        try {
+            this.userId = await this.supabaseService.getUserId();
+            if (!this.userId) {
+                // Redirect to login or authentication page
+                this.navigationService.redirectToPage(this.navigationService.Login);
+            } else {
+                this.loadAllergies();
+            }
+        } catch (error) {
+            console.error('Error fetching user ID:', error);
+            // Handle the error accordingly, perhaps by redirecting to an error page or displaying a message
+        }
     }
+
+
 
     loadAllergies(): void {
         this.supabaseService.getAllergies().then(({ data, error }) => {
@@ -23,31 +35,19 @@ export class AllergiesComponent {
                 console.error('Error fetching preferences:', error);
                 // Handle error scenarios
             } else {
-                this.preferences = data || [];
+                this.allergies = data || [];
             }
         });
     }
 
-    selectAllergies(preference: any) {
-        // Assuming 'id' is the property in the preference object representing the ingredient ID
-        const allergieId = preference.id;
+    selectAllergies(allergies: any) {
+        const allergieId = allergies.id;
 
         if (this.userId !== undefined) {
-            // Call the function that expects a string argument
             this.supabaseService.linkAllergieToUserAllergies(this.userId, allergieId);
         } else {
-            // Handle the case where userId is undefined (if applicable)
             console.error('User ID is undefined');
         }
-    }
-
-    // Method to link the ingredient to the user's allergies using SupabaseService
-    linkIngredientToUserAllergies(userId: string, allergieId: string) {
-        this.supabaseService.linkAllergieToUserAllergies(userId, allergieId)
-            .then(response => {
-                console.log('Allergies linked to user dislikes:', response);
-                // Handle success (if needed)
-            })
     }
 
     redirectToSignUpPage() {

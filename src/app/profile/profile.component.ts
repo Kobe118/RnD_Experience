@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         try {
             this.loading = true;
-            this.userId = this.supabaseService.getUserId();
+            this.userId = await this.supabaseService.getUserId();
 
             if (!this.userId) {
                 throw new Error('User ID not available');

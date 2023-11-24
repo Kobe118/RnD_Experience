@@ -10,8 +10,8 @@
 
 <div>
     <!-- Display fetched preferences as buttons/options -->
-    <button *ngFor="let preference of preferences" (click)="selectAllergies(preference)">
-        {{ preference.allergie }} <!-- Assuming 'name' is the property in the preference object -->
+    <button *ngFor="let allergy of allergies" (click)="selectAllergies(allergy)">
+        {{ allergy.text }}
     </button>
 </div>
 

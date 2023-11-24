@@ -32,12 +32,16 @@ export class SupabaseService {
         return this._session
     }
 
-    getUserId(): string | undefined {
+    async getUserId(): Promise<string | undefined> {
+        const { data } = await this.supabase.auth.getSession();
+        this._session = data?.session;
+
         if (this._session?.user?.id) {
             return this._session.user.id;
         }
         return undefined;
     }
+
 
     profile(userId: string) {
         return this.supabase
