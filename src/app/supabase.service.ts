@@ -83,7 +83,7 @@ export class SupabaseService {
     }
 
     getAllergies() {
-        return this.supabase.from('allergie').select('*');
+        return this.supabase.from('allergie').select('*').order('allergie');
     }
 
     linkIngredientToUserDislikes(userId: string, ingredientId: string){
@@ -92,9 +92,9 @@ export class SupabaseService {
             .insert({ user_id: userId, ingredient_id: ingredientId });
     }
 
-    linkIngredientToUserAllergies(userId: string, ingredientId: string){
+    linkAllergieToUserAllergies(userId: string, allergieId: string){
         return this.supabase
             .from('user_has_allergies')
-            .insert({ user_id: userId, ingredient_id: ingredientId });
+            .insert({ user_id: userId, ingredient_id: allergieId });
     }
 }

@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LogInComponent, },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'dietarypreference', component: DietaryPreferenceComponent },
-  { path: 'allergies', component: AllergiesComponent, canActivate: [ AuthGuard] },
+  { path: 'allergies', component: AllergiesComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'congrats', component: CongratsComponent, canActivate: [ AuthGuard] },
   { path: 'families', component: FamiliesComponent, canActivate: [ AuthGuard] },

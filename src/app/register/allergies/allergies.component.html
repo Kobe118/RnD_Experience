@@ -9,6 +9,13 @@
 </div>
 
 <div>
+    <!-- Display fetched preferences as buttons/options -->
+    <button *ngFor="let preference of preferences" (click)="selectAllergies(preference)">
+        {{ preference.allergie }} <!-- Assuming 'name' is the property in the preference object -->
+    </button>
+</div>
+
+<div>
     <button (click)="redirectToSignUpPage()">Continue</button>
 </div>
 <div>
