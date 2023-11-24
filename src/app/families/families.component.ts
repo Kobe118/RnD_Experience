@@ -1,17 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import {SupabaseService} from "../services/supabase.service";
+import { FamilyModalComponent } from "../family-modal/family-modal.component";
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+
+interface User {
+  user_id: string;
+  last_name: string;
+  first_name: string;
+  picture_url: string;
+}
+interface Family  {
+  family_id: string;
+  family_name: string;
+  is_admin: boolean;
+  users: User[];
+}
 
 @Component({
   selector: 'app-families',
   templateUrl: './families.component.html',
   styleUrls: ['./families.component.scss']
 })
+
 export class FamiliesComponent implements OnInit {
   currentUser: any = {};
-  userFamilies: any[] = [];
+  userFamilies: Family[] = [];
   imageurls: any[] = [];
+  modalRef: MdbModalRef<FamilyModalComponent> | null = null;
 
-  constructor(private readonly supabaseService: SupabaseService) {}
+  constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService) {}
 
   async getCurrentUser() {
     try {
@@ -34,26 +51,33 @@ export class FamiliesComponent implements OnInit {
 
     let { data, error } = await this.supabaseService.supabase
         .rpc('get_all_users_family_members', {
-          user_uuid: this.currentUser.id
-          //user_uuid: "afa97aa6-0c65-4db2-996e-2930ef3b9c1c"
+          //user_uuid: this.currentUser.id
+          user_uuid: "afa97aa6-0c65-4db2-996e-2930ef3b9c1c"
         });
 
     if (error) {
       console.error(error);
     } else {
-      this.userFamilies = data;
+      this.userFamilies = data.families as Family[];
       console.log(data);
+      console.log(this.userFamilies)
     }
   }
 
   async getImageUrl() {
-    for (let i=1; i<6;i++) {
-      this.imageurls.push(await this.supabaseService.getUserPictureUrl('test_user_' + i + '.jpg'));
+    for (const family of this.userFamilies) {
+      for (const user of family.users) {
+        user.picture_url = await this.supabaseService.getUserPictureUrl(`${user.user_id}.jpg`);
+      }
     }
   }
 
   ngOnInit() {
     this.getFamilies().then(r => {});
     this.getImageUrl().then(r => {});
+  }
+
+  openModal() {
+    this.modalRef = this.modalService.open(FamilyModalComponent)
   }
 }

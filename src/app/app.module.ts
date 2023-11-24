@@ -14,7 +14,6 @@ import {HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
-
 import { DefaultHeaderComponent } from './default-header/default-header.component';
 import { MealPlansHomeComponent } from './meal-plans/meal-plans-home/meal-plans-home.component';
 import { RecipeComponent } from './recipe/recipe.component';
@@ -28,6 +27,22 @@ import { SignUpComponent } from './register/sign-up/sign-up.component';
 import { DietaryPreferenceComponent } from './register/dietary-preference/dietary-preference.component';
 import { CongratsComponent } from './register/congrats/congrats.component';
 import { AllergiesComponent } from './register/allergies/allergies.component';
+import { FamilyModalComponent } from './family-modal/family-modal.component';
+import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
+import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { MdbPopoverModule } from 'mdb-angular-ui-kit/popover';
+import { MdbRadioModule } from 'mdb-angular-ui-kit/radio';
+import { MdbRangeModule } from 'mdb-angular-ui-kit/range';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
+import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
+import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
+import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
+import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 
 @NgModule({
   declarations: [
@@ -45,6 +60,7 @@ import { AllergiesComponent } from './register/allergies/allergies.component';
     DietaryPreferenceComponent,
     CongratsComponent,
     AllergiesComponent,
+    FamilyModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +75,21 @@ import { AllergiesComponent } from './register/allergies/allergies.component';
     MatButtonModule,
     NgOptimizedImage,
     HttpClientModule,
+    MdbAccordionModule,
+    MdbCarouselModule,
+    MdbCheckboxModule,
+    MdbCollapseModule,
+    MdbDropdownModule,
+    MdbFormsModule,
+    MdbModalModule,
+    MdbPopoverModule,
+    MdbRadioModule,
+    MdbRangeModule,
+    MdbRippleModule,
+    MdbScrollspyModule,
+    MdbTabsModule,
+    MdbTooltipModule,
+    MdbValidationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
