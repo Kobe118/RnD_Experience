@@ -1,0 +1,23 @@
+/* Styles for the liked recipes container */
+.upcoming-recipes {
+    display: flex; /* Lays out the children in a line */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    white-space: nowrap; /* Ensures the divs don't wrap */
+  }
+  .recipe-small-view p {
+    /* other styles */
+    text-align: center; /* if you want to center the text under the image */
+    margin-top: 0; /* remove any default margin from the paragraph that could push it down */
+  }
+  /* Styles for the image containers */
+  .image-with-border {
+    position: relative; /* Needed for absolute positioning of the heart button */
+    border: 2px solid #ccc; /* Grey border */
+    border-radius: 10px;
+    background-color: #eee; /* Grey background */
+    margin: 10px; /* Spacing around each image container */
+    width: 120px; /* Fixed width */
+    height: 150px; /* Fixed height */
+    text-align: center; /* Center text */
+    display: inline-block; /* Display inline with block features */
+  }
