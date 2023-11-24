@@ -29,133 +29,234 @@ function formatRecipe(recipe: Recipe): string {
 }
 
 
+
+function extractAndParseJSON(responseString) {
+  // Find the start and end index of the JSON content
+  const startIndex = responseString.indexOf('{');
+  const endIndex = responseString.lastIndexOf('}') + 1;
+
+  if (startIndex === -1 || endIndex === -1) {
+    console.error("JSON content not found in the response.");
+    return;
+  }
+
+  // Extract the JSON string
+  const jsonString = responseString.substring(startIndex, endIndex);
+
+  // Parse the JSON string
+  try {
+    const jsonData = JSON.parse(jsonString);
+    console.log("Extracted JSON Data:", jsonData);
+    return jsonData;
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+  }
+}
+
+
 Deno.serve(async (req) => {
   // if (req.method === 'OPTIONS') {
   //   return new Response('ok', { headers: corsHeaders })
   // }
 
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0Y3Fj' +
-      'cHR6dWF6a3F0bWNwc3h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTU5OTk3NjMsImV4cCI6MjAxMTU3NTc2M30.5cif3sm' +
-      'YXD88DMcwjimkQ0LDlmDGmKa6-A7smgjdPP4';
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+      "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0Y3FjcHR6dWF6a3F0bW" +
+      "Nwc3h3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NTk5O" +
+      "Tc2MywiZXhwIjoyMDExNTc1NzYzfQ.IOXs53-E-fFBoog9F5IDyzy2f" +
+      "2xYpyAu_3SBY8gRDew";
   const supabase = createClient(
       Deno.env.get('URL') ?? '',
-      Deno.env.get('ANON_KEY') ?? '',
+      Deno.env.get('SERVICE_ROLE_KEY') ?? '',
       { global: { headers: { Authorization: supabaseKey } } }
   )
   try {
-  //   const { data:recipes, error } = await supabase.from('recipe').select('name')
-  //
-  //   // Parse the JSON body of the request
-  //   const requestBody = await req.json();
-  //   // // Extract allergies, preferences, and message from the request body
-  //   const allergies = requestBody.allergies;
-  //   const preferences = requestBody.preferences;
-  //   const message = requestBody.message;
-  //   var content = "please respond to me in the format i gave you later, dont add anything extra\n"
-  //   content+= "I am trying to generate recipes with you and insert your data directly into database,please all recipe name and ingredient name and unit in camelCase"
-  //   content += "required format(just a example):\n"
-  //   content += "recipe:recipeName\n Ingredients: roastedPeanuts,1/2,cup,riceVinegar,1,tablespoon..........\n"
-  //   content+= "Steps:\n1. Cut the chicken into bite-sized pieces.\n2. In a bowl, mix soy sauce, rice vinegar, and cornstarch to create a marinade.\n3. Marinate the chicken in the mixture for 30 minutes.\n4........."
-  //   content+= "remember that user have allergies of:"
-  //   for (const allergy in allergies) {
-  //     content+= " "
-  //     content+= allergy
-  //   }
-  //   content+= ".\n remember that user have preferences of:"
-  //   for (const preference in preferences) {
-  //     content+= " "
-  //     content+=preference
-  //   }
-  //   content+= ".\n remember that user want to leave you a message:"
-  //   content+= message
-  //   content+=".\n remember you need to avoid these recipes that is already in my database"
-  //   for (const recipe in recipes) {
-  //     content+=recipe
-  //   }
-  //
-  //   const sent_message = {
-  //     messages: [{"role": "system", "content": "You are a helpful assistant."},
-  //       {"role": "user",
-  //         "content": content}],
-  //     model: "gpt-4",
-  //   };
-  //
-  //   const response = await fetch('https://api.openai.com/v1/chat/completions', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(sent_message),
-  //   });
-  //
-  //   if (!response.ok) {
-  //     const errorBody = await response.text(); // Get the response body as text
-  //     throw new Error(`Failed to fetch from OpenAI: ${response.status} - ${errorBody}`);
-  //   }
+    //****************************data preperation**********************************
+    const requestBody = await req.json();
+    // // Extract allergies, preferences, and message from the request body
+    const userAllergies = requestBody.allergies;
+    const preferences = requestBody.preferences;
+    const message = requestBody.message;
+    const { data:recipes, error:recipeError } = await supabase.from('recipe').select('name')
+    let exist_recipes = [];
+    for (let i = 0; i < recipes.length; i++) {
+        exist_recipes.push(recipes[i].name);
+      }
+    const {data:allergieSources, error:allergieError} = await supabase.from('allergie').select('allergie')
+    let allergie_sources = [];
+    for (let i = 0; i < allergieSources.length; i++) {
+      allergie_sources.push(allergieSources[i].allergie);
+    }
+    //**************content********************
+    var content = "Please add all the possible allergy sources in the allgergySources part" +
+        "Given the possible allergy sources from our database be aware that you dont have to a" +
+        "void them but respond to me if the allergy sources exist in the recipe["+ allergie_sources.join(", ") +"] " +
+        "the allergies from the user that you should avoid[" + userAllergies.join(", ") + "], " +
+        "preferences from the user [" + preferences.join(", ") +
+        "], and the message from the user '" + message +
+        "', please generate a recipe avoiding [" + exist_recipes.join(", ") +
+        "]. Format the response in JSON with the following structure: recipe name,allergySources, ingredients (amount, unit, name), and steps. " +
+        "Ingredients should be basic (e.g., 'beans' instead of 'frozenBeans') and in camelCase, " +
+        "the allergySources is the allergySources in the recipe you generated. please keep the content in pure json format so that i can directly json.parse your reply";
+
+      content += " Example format: \n";
+      content += `{
+    "recipeName": "exampleRecipe",
+    "allergySources": ["Milk","Tree Nuts"],
+    "ingredients": [
+      {"amount": "1/2", "unit": "cup", "name": "roastedPeanuts"},
+      {"amount": "1", "unit": "tablespoon", "name": "riceVinegar"},
+      ...
+    ],
+    "steps": [
+      "Cut the chicken into bite-sized pieces.",
+      "In a bowl, mix soy sauce, rice vinegar, and cornstarch to create a marinade.",
+      ...
+    ]
+  }`;
+      console.log(content)
+
+    const sent_message = {
+      messages: [{"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user",
+          "content": content}],
+      model: "gpt-4-1106-preview",
+    };
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(sent_message),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text(); // Get the response body as text
+      throw new Error(`Failed to fetch from OpenAI: ${response.status} - ${errorBody}`);
+    }
   //******************response analysis************
-  //   const data = await response.json();
-  //   const choices = data.choices
-  //   const contentGpt = choices[0].message.content; // Your GPT-4 response
-  //   const sections = contentGpt.split('\n');
-  //   const recipeName = sections[0].split(':')[1];
-  //
-  //   const rawIngredients = sections[1].split(':')[1].split(',');
-  //   const ingredients: Ingredient[] = [];
-  //
-  //   for (let i = 0; i < rawIngredients.length; i += 3) {
-  //     ingredients.push({
-  //       name: rawIngredients[i],
-  //       quantity: parseFloat(rawIngredients[i + 1]),
-  //       unit: rawIngredients[i + 2]
-  //     });
-  //   }
-  //
-  //   const steps = sections.slice(2).join('\n');
-  //
-  //   const r: Recipe = {
-  //     name: recipeName,
-  //     ingredients,
-  //     steps
-  //   };
-  //
-  //   const formattedRecipe = formatRecipe(r);
-  //   console.log(formattedRecipe);
+    const data = await response.json();
+    console.log(data)
+    const choices = data.choices
+    const contentGpt = extractAndParseJSON(choices[0].message.content); // GPT-4 response
+    console.log(contentGpt)
+
+    // Validate the response format
+    if (!contentGpt.recipeName || !Array.isArray(contentGpt.ingredients) || !Array.isArray(contentGpt.steps) || !Array.isArray(contentGpt.allergySources)) {
+      console.error("Response does not meet the required format");
+      return;
+    }
+    console.log("content correct")
+
+    // Extract data
+    const recipeName = contentGpt.recipeName;
+    const ingredients = contentGpt.ingredients.map(ingredient => ({
+      amount: ingredient.amount,
+      unit: ingredient.unit || '',  // Default to empty string if unit is not provided
+      name: ingredient.name
+    }));
+    const steps = contentGpt.steps;
+    const allergies = contentGpt.allergySources;
+
+    // Further processing can be done here, like storing the data into variables or database
+    console.log("Recipe Name:", recipeName);
+    console.log("Ingredients:", ingredients);
+    console.log("Steps:", steps);
+    console.log("Allergies",allergies);
 
 //**********inserting into database*******************
-
-    // const { data:d1, error:e1 } = await supabase
-    //     .from('recipe')
-    //     .insert([
-    //       { 'name': r.name, 'manual': r.steps },
-    //     ])
-    //     .select()
-    //
-    // for (const ingredient of r.ingredients) {
-    //   let { data: inow, error: e2 } = await supabase
-    //       .from('ingredient')
-    //       .select("*")
-    //       .ilike('name', ingredient.name);
-    //
-    //   if (inow && inow.length === 0) {
-    //     const { data, error: e3 } = await supabase
-    //         .from('ingredient')
-    //         .insert([{ 'name': ingredient.name }])
-    //         .select();
-    //     console.log("New data inserted", data, ingredient.name);
-    //   } else if (inow) {
-    //     console.log('Data found:', inow);
-    //   } else if (e2) {
-    //     console.error('Error:', e2);
-    //   }
-    // }
-
-    const { data, error:e1 } = await supabase
-        .from('users')
+//     **********insert recipe*****************
+    const { data:recipe_insert_result, error:e1 } = await supabase
+        .from('recipe')
         .insert([
-          { 'name': "a", 'first_name': "b" },
+          { 'name': recipeName, 'manual': steps.join("\n").toString() },
         ])
         .select()
+    console.log("recipe inserted", recipe_insert_result)
+    //***************insert ingredients and relations*************
+    for (let i = 0; i < ingredients.length; i++) {
+      const {data:sameIngredient, error:e2} = await supabase
+          .from('ingredient')
+          .select("*")
+          .ilike('name',ingredients[i].name)
+      if(sameIngredient && sameIngredient.length == 0){
+        const { data:ingredient_insert_result, error: e3 } = await supabase
+            .from('ingredient')
+            .insert([{ 'name': ingredients[i].name }])
+            .select();
+
+        const { data:ingredient_recipe_insert_result, error: e4 } = await supabase
+            .from('ingredient_in_recipe')
+            .insert([{ 'recipe': recipe_insert_result[0].id,'ingredient':ingredient_insert_result[0].id,'quantity':ingredients[i].amount,'unit':ingredients[i].unit }])
+            .select();
+      }
+      else if (sameIngredient) {
+        const { data:ingredient_recipe_insert_result, error: e5 } = await supabase
+            .from('ingredient_in_recipe')
+            .insert([{ 'recipe': recipe_insert_result[0].id,'ingredient':sameIngredient[0].id,'quantity':ingredients[i].amount,'unit':ingredients[i].unit }])
+            .select();
+      }
+      else if (e2) {
+        console.error('Error:', e2);
+      }
+    }
+    //****************insert allergies relations**********************
+    for (let i = 0; i < allergies.length; i++){
+      const {data:sameAllergy,error:e6} = await supabase
+          .from('allergie')
+          .select("*")
+          .ilike('allergie',allergies[i]);
+      if (sameAllergy&&sameAllergy.length == 1){
+        const { data:allergy_recipe_insert_result,error:e7} = await supabase
+            .from('allergie_in_recipe')
+            .insert([{'allergie':sameAllergy[0].id,'recipe':recipe_insert_result[0].id}])
+            .select();
+      }
+    }
+
+    //********************generate images*****************
+    const prompt = "I want you to generate a recipe image for a recipe generation application, the image should be as realistic as possible"+
+        "recipe name:"+recipeName+
+        "Steps: "+ steps.join("\n").toString();
+    const image_generation_message = {
+      model:"dall-e-3",
+      prompt:prompt,
+      size:"1024x1024",
+      quality:"standard",
+      n:1
+    };
+    console.log("sent message:"+image_generation_message)
+    const imageResponse = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(image_generation_message),
+    });
+
+    console.log("receive message:"+Object.values(imageResponse))
+    url = imageResponse.data[0].url
+    const bucketName = 'recipes_thumbnail_and_picture';
+    const fileName = 'your_image_name.jpg'; // or .png, etc.
+
+    try {
+      // Fetch the image from the URL
+      const imageRes = await fetch(url);
+      const imageBlob = await imageRes.blob();
+
+      // Upload the image to Supabase Storage
+      const { data, error } = await supabase.storage
+          .from(bucketName)
+          .upload(fileName, imageBlob, {
+            cacheControl: '3600',
+            upsert: false
+          });
+      console.log('Upload successful:', data);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
 
 
 
