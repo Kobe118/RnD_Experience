@@ -19,7 +19,7 @@ import { AuthGuard } from './auth-guard';
 const routes: Routes = [
   { path: 'login', component: LogInComponent, },
   { path: 'welcome', component: WelcomeComponent },
-  { path: 'dietarypreference', component: DietaryPreferenceComponent },
+  { path: 'dietarypreference', component: DietaryPreferenceComponent, canActivate: [ AuthGuard] },
   { path: 'allergies', component: AllergiesComponent, canActivate: [ AuthGuard] },
   { path: 'signup', component: SignUpComponent },
   { path: 'congrats', component: CongratsComponent, canActivate: [ AuthGuard] },
