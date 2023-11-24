@@ -79,8 +79,11 @@ export class SupabaseService {
 
 
     getIngredients() {
-        // Replace 'ingredients' with the correct table name in your Supabase database
         return this.supabase.from('ingredient').select('*').order('name');
+    }
+
+    getAllergies() {
+        return this.supabase.from('allergie').select('*');
     }
 
     linkIngredientToUserDislikes(userId: string, ingredientId: string){
