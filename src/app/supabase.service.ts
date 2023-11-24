@@ -101,4 +101,13 @@ export class SupabaseService {
             .from('user_has_allergies')
             .insert({ user_id: userId, ingredient_id: allergieId });
     }
+
+    async getUserPictureUrl(filename: string) {
+        const { data } = this.supabase
+            .storage
+            .from('profile_pictures')
+            .getPublicUrl(filename);
+
+        return data.publicUrl;
+    }
 }
