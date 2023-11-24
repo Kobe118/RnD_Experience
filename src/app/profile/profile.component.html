@@ -1,0 +1,24 @@
+<form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="text" placeholder="Enter email" disabled />
+    </div>
+    <div>
+        <label for="lastname">Last Name</label>
+        <input formControlName="lastname" id="lastname" type="text" placeholder="Enter last name" />
+    </div>
+    <div>
+        <label for="firstname">First Name</label>
+        <input formControlName="firstname" id="firstname" type="text" placeholder="Enter first name" />
+    </div>
+
+    <div>
+        <button type="submit" class="button primary block" [disabled]="loading">
+            {{ loading ? 'Loading ...' : 'Update' }}
+        </button>
+    </div>
+
+    <div>
+        <button class="button block" (click)="signOut()">Sign Out</button>
+    </div>
+</form>
