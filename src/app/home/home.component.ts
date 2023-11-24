@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../services/supabase.service';
-import { Recipe, PreferredRecipes } from './home.model';
+import { Recipe, PreferredRecipe, Family } from './home.model';
 
 
 @Component({
@@ -10,7 +10,8 @@ import { Recipe, PreferredRecipes } from './home.model';
 })
 export class HomeComponent implements OnInit {
   recipes: Recipe[] = [];
-  preferredRecipes: PreferredRecipes[] = [];
+  preferredRecipes: PreferredRecipe[] = [];
+  families: Family[] = [];
   urls: string[] = [];
   errorMessage?: string;
 
@@ -20,11 +21,19 @@ export class HomeComponent implements OnInit {
     try {
       const recipes = await this.supabaseService.getUpcomingRecipes();
       if (recipes) {
-        this.recipes = recipes;
+        this.recipes = recipes[0] as Recipe[];
+        console.log('upcoming: ', this.recipes);
         this.loadImageUrls(this.recipes);
       }
       const preferredRecipes = await this.supabaseService.getPreferredRecipes();
-      if(preferredRecipes as unknown as PreferredRecipes){}
+      if(preferredRecipes){
+        this.preferredRecipes = preferredRecipes[0] as PreferredRecipe[];
+        this.loadImageUrls(this.recipes);
+      }
+      const families = await this.supabaseService.getFamilies();
+      if(preferredRecipes){
+        this.families = families[0] as Family[];
+      }
     } catch (error) {
       console.error('Error fetching recipes:', error);
       this.errorMessage = 'Error fetching recipes';
@@ -32,8 +41,8 @@ export class HomeComponent implements OnInit {
   }
 
   async loadImageUrls(recipes:Recipe[]) {
-    for (const recipe in recipes) {
-        this.urls.push(await this.supabaseService.getImageUrl("65829b95-426e-4eb3-8844-f261805dbee3"));
+    for (const x in recipes) {
+        this.urls.push(await this.supabaseService.getImageUrl(recipes[x].recipe));
     }
-}
+  }
 }

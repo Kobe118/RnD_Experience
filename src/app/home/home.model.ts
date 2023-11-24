@@ -6,9 +6,16 @@ export interface Recipe {
     recipe_name: string;
 }
 
-export interface PreferredRecipes {
+export interface PreferredRecipe {
     name: string;
     recipe: string;
     made_by: string;
 }
+
+export interface Family {
+    is_admin: boolean;
+    family_id: string;
+    family_name: string;
+}
+
 

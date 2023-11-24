@@ -9,9 +9,8 @@ import {
 } from '@supabase/supabase-js'
 import { environment} from "../environments/environment/environment";
 import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Recipe } from '../home/home.model';
+
 
 export interface Profile {
     id?: string
@@ -123,20 +122,18 @@ export class SupabaseService {
         return !!user; // if user is not null or undefined, return true else return false
       }
 
-      async getUpcomingRecipes(): Promise<Recipe[]> {
+      async getUpcomingRecipes(){
         try {
           console.log('userID: ', this._currentUser.getValue().id);
           const { data, error } = await this.supabase
             .rpc('get_upcoming_recipes', {
               user_uuid: this._currentUser.getValue().id
             });
-      
           if (error) {
             console.error(error);
             throw error;
-          } else {
-            console.log('data: ',data);      
-            return data as Recipe[]; // Assuming data is an array of Recipe objects
+          } else {     
+            return Object.values(data); // Assuming data is an array of Recipe objects
           }
         } catch (error) {
           console.error('Error fetching recipes:', error);
@@ -144,17 +141,42 @@ export class SupabaseService {
         }
       }
 
-      async getPreferredRecipes(){
-          console.log('Preferred userID: ', this._currentUser.getValue().id);
-          let { data, error } = await this.supabase
-            .rpc('get_preferred_recipes', {
-              user_uuid: this._currentUser.getValue().idd
-            })
-          console.log('Preferred data: ', data);
-          if (error) console.error(error)
-          else console.log(data)
+    async getPreferredRecipes(){
+      try {
+        console.log('Preferred userID: ', this._currentUser.getValue().id);
+        const { data, error } = await this.supabase
+          .rpc('get_preferred_recipes', {
+            user_uuid: this._currentUser.getValue().id
+          });
+          if (error) {
+            console.error(error);
+            throw error;
+          } else {     
+            return Object.values(data); // Assuming data is an array of Recipe objects
+          }
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+        throw error;
       }
-      
+    }
+
+    async getFamilies(){
+      try {
+        const { data, error } = await this.supabase
+          .rpc('get_all_users_family', {
+            user_uuid: this._currentUser.getValue().id
+          });
+          if (error) {
+            console.error(error);
+            throw error;
+          } else {     
+            return Object.values(data); // Assuming data is an array of Recipe objects
+          }
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+        throw error;
+      }
+    }
 
     async getImageUrl(id: string) {
       const { data } = this.supabase
