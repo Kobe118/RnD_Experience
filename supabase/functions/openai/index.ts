@@ -1,6 +1,8 @@
 import { serve } from 'https://deno.land/std/http/server.ts';
 import { corsHeaders } from '../../shared/cors.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+import { resize } from "https://deno.land/x/deno_image/mod.ts";
+
 
 interface Ingredient {
   name: string;
@@ -70,6 +72,7 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: supabaseKey } } }
   )
   try {
+    console.log(Deno.env.get('SERVICE_ROLE_KEY'))
     //****************************data preperation**********************************
     const requestBody = await req.json();
     // // Extract allergies, preferences, and message from the request body
@@ -215,10 +218,11 @@ Deno.serve(async (req) => {
       }
     }
 
-    //********************generate images*****************
+    // ********************generate images*****************
     const prompt = "I want you to generate a recipe image for a recipe generation application, the image should be as realistic as possible"+
-        "recipe name:"+recipeName+
-        "Steps: "+ steps.join("\n").toString();
+        "recipe name:"+recipeName
+        // "Steps: "+ steps.join("\n").toString()
+        // +"keep the image size smaller than 500kb";
     const image_generation_message = {
       model:"dall-e-3",
       prompt:prompt,
@@ -226,7 +230,6 @@ Deno.serve(async (req) => {
       quality:"standard",
       n:1
     };
-    console.log("sent message:"+image_generation_message)
     const imageResponse = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: {
@@ -235,28 +238,41 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify(image_generation_message),
     });
-
-    console.log("receive message:"+Object.values(imageResponse))
-    url = imageResponse.data[0].url
+    const jsonResponse = await imageResponse.json();
+    console.log(jsonResponse);
+    const url = jsonResponse.data[0].url
+    console.log(url)
     const bucketName = 'recipes_thumbnail_and_picture';
-    const fileName = 'your_image_name.jpg'; // or .png, etc.
-
+    const fileName = recipe_insert_result[0].id+'.jpg'; // or .png, etc.
+    const supabase2 = createClient(
+        Deno.env.get('URL') ?? '',
+        Deno.env.get('SERVICE_ROLE_KEY') ?? ''
+    )
     try {
       // Fetch the image from the URL
       const imageRes = await fetch(url);
-      const imageBlob = await imageRes.blob();
+      const arrayBuffer = await imageRes.arrayBuffer();
+      const imgUint8Array = new Uint8Array(arrayBuffer);
+
+      const resizedImage = await resize(imgUint8Array, { width: 512, height: 512 });
+
+      const imageBlob = new Blob([resizedImage], { type: 'image/jpeg' });
 
       // Upload the image to Supabase Storage
-      const { data, error } = await supabase.storage
+      const { data, error } = await supabase2.storage
           .from(bucketName)
-          .upload(fileName, imageBlob, {
-            cacheControl: '3600',
-            upsert: false
-          });
+          .upload(fileName, imageBlob);
+
+      if (error) {
+        throw error;
+      }
+
+      // Continue processing with the uploaded data
       console.log('Upload successful:', data);
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('Error during file upload:', error);
     }
+
 
 
 
