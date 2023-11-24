@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
         this.loadImageUrls(this.recipes);
       }
       const preferredRecipes = await this.supabaseService.getPreferredRecipes();
+      if(preferredRecipes as unknown as PreferredRecipes){}
     } catch (error) {
       console.error('Error fetching recipes:', error);
       this.errorMessage = 'Error fetching recipes';
