@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SupabaseService} from "../services/supabase.service";
 import { FamilyModalComponent } from "../family-modal/family-modal.component";
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import {Observable, of} from "rxjs";
-import {catchError, map} from "rxjs/operators";
+
 
 interface User {
   user_id: string;
@@ -84,7 +83,6 @@ export class FamiliesComponent implements OnInit {
   ngOnInit() {
     this.getFamilies().then(() => {
       this.getImageUrl().then(() => {
-        // Images are now loaded, and you can use them in the template
       });
     });
   }
@@ -94,6 +92,6 @@ export class FamiliesComponent implements OnInit {
   }
 
   handleImageError(user: User) {
-    user.picture_url = "\\assets\\default-user.jpg"; // replace with the path to your fallback image
+    user.picture_url = "\\assets\\default-user.jpg";
   }
 }

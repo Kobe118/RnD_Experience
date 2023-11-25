@@ -18,17 +18,17 @@
             <div *ngIf="family.is_admin ; else elseBlock">
                 <ul class="nav nav-pills card-header-pills">
                     <li class="nav-item">
-                        <a class="button" href="#">Add</a>
+                        <button type="button" class="button" href="#">Add</button>
                     </li>
                     <li class="nav-item">
-                        <a class="button medium-green" (click)="openModal()" href="#">Edit</a>
+                        <button type="button" class="button medium-green" (click)="openModal()" href="#">Edit</button>
                     </li>
                 </ul>
             </div>
             <ng-template #elseBlock>
                 <ul class="nav nav-pills card-header-pills">
                     <li class="nav-item">
-                        <a class="button" href="#">Leave</a>
+                        <button type="button" class="button" href="#">Leave</button>
                     </li>
                 </ul>
             </ng-template>
