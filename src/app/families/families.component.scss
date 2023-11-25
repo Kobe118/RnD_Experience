@@ -7,7 +7,6 @@
 .user-container {
   display: flex;
   align-items: center;
-  margin-bottom: 3px;
 }
 
 .user-container-text {
@@ -16,10 +15,11 @@
 
 .profile-picture {
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   margin-right: 10px;
 }
+
 
 #family-id {
   font-size: 0.6em;

@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {SupabaseService} from "../services/supabase.service";
 import { FamilyModalComponent } from "../family-modal/family-modal.component";
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import {Observable, of} from "rxjs";
+import {catchError, map} from "rxjs/operators";
 
 interface User {
   user_id: string;
   last_name: string;
   first_name: string;
-  picture_url: string;
+  picture_url: string | null;
 }
 interface Family  {
   family_id: string;
@@ -62,22 +64,36 @@ export class FamiliesComponent implements OnInit {
       console.log(data);
       console.log(this.userFamilies)
     }
+
+    await this.getImageUrl();
   }
 
   async getImageUrl() {
     for (const family of this.userFamilies) {
       for (const user of family.users) {
-        user.picture_url = await this.supabaseService.getUserPictureUrl(`${user.user_id}.jpg`);
+        try {
+          const imageUrl = await this.supabaseService.getUserPictureUrl(`${user.user_id}.jpg`);
+          user.picture_url = imageUrl;
+        } catch (error) {
+          user.picture_url = null;
+        }
       }
     }
   }
 
   ngOnInit() {
-    this.getFamilies().then(r => {});
-    this.getImageUrl().then(r => {});
+    this.getFamilies().then(() => {
+      this.getImageUrl().then(() => {
+        // Images are now loaded, and you can use them in the template
+      });
+    });
   }
 
   openModal() {
     this.modalRef = this.modalService.open(FamilyModalComponent)
+  }
+
+  handleImageError(user: User) {
+    user.picture_url = "\\assets\\default-user.jpg"; // replace with the path to your fallback image
   }
 }

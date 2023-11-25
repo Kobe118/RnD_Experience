@@ -6,12 +6,13 @@
         <div class="card-body">
             <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
             <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>
-            <div *ngFor="let member of family.users">
+            <div *ngFor="let user of family.users">
                 <div class="user-container">
-                    <!--<img [src]="url" alt="Profile Picture" class="profile-picture">-->
-                    <p class="user-container-text">{{ member.first_name }} {{ member.last_name }}</p>
+                    <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture">
+                    <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
                 </div>
             </div>
+
         </div>
         <div class="card-header">
             <div *ngIf="family.is_admin ; else elseBlock">
