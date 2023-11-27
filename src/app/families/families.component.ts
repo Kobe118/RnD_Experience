@@ -2,20 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {SupabaseService} from "../services/supabase.service";
 import { FamilyModalComponent } from "../family-modal/family-modal.component";
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import {User} from "./user.model";
+import {Family} from "./Family.model";
 
 
-interface User {
-  user_id: string;
-  last_name: string;
-  first_name: string;
-  picture_url: string | null;
-}
-interface Family  {
-  family_id: string;
-  family_name: string;
-  is_admin: boolean;
-  users: User[];
-}
+
+
 
 @Component({
   selector: 'app-families',
@@ -24,9 +16,13 @@ interface Family  {
 })
 
 export class FamiliesComponent implements OnInit {
-  currentUser: any = {};
+  currentUser: User = {
+    user_id: "",
+    last_name: "",
+    first_name: "",
+    picture_url: ""
+  };
   userFamilies: Family[] = [];
-  imageurls: any[] = [];
   modalRef: MdbModalRef<FamilyModalComponent> | null = null;
 
   constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService) {}
@@ -35,10 +31,13 @@ export class FamiliesComponent implements OnInit {
     try {
       const { data } = await this.supabaseService.supabase.auth.getUser();
 
-      if (data) {
-        this.currentUser = data.user;
-        console.log('User ID:', this.currentUser.id);
-        console.log('User Email:', this.currentUser.email);
+      if (data.user) {
+        this.currentUser = {
+          user_id: data.user.id,
+          last_name: "",
+          first_name:  "",
+          picture_url: "" // You can set a default picture URL here if needed
+        };
       } else {
         console.log('No authenticated user');
       }
@@ -49,11 +48,12 @@ export class FamiliesComponent implements OnInit {
 
   async getFamilies() {
     await this.getCurrentUser();
+    console.log(this.currentUser.user_id);
 
     let { data, error } = await this.supabaseService.supabase
         .rpc('get_all_users_family_members', {
-          //user_uuid: this.currentUser.id
-          user_uuid: "afa97aa6-0c65-4db2-996e-2930ef3b9c1c"
+          user_uuid: this.currentUser.user_id
+          //user_uuid: "9e2a348d-14d1-4bbd-b8c5-83e3b74f474e"
         });
 
     if (error) {
@@ -87,8 +87,10 @@ export class FamiliesComponent implements OnInit {
     });
   }
 
-  openModal() {
-    this.modalRef = this.modalService.open(FamilyModalComponent)
+  openModal(family: Family) {
+    this.modalRef = this.modalService.open(FamilyModalComponent, {
+      data: { currentUser: this.currentUser, family: family },
+    });
   }
 
   handleImageError(user: User) {
