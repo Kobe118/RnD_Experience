@@ -44,6 +44,7 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.component';
+import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-leave.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.com
     AllergiesComponent,
     FamilyModalComponent,
     FamilyModalAddComponent,
+    FamilyModalLeaveComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,14 +20,14 @@
                         <button type="button" class="button" href="#" (click)="openModalAdd(family)">Add</button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="button medium-green" (click)="openModal(family)" href="#">Edit</button>
+                        <button type="button" class="button medium-green" (click)="openModal(family)" href="#">Delete</button>
                     </li>
                 </ul>
             </div>
             <ng-template #elseBlock>
                 <ul class="nav nav-pills card-header-pills">
                     <li class="nav-item">
-                        <button type="button" class="button" href="#">Leave</button>
+                        <button type="button" class="button" href="#" (click)="openModalLeave(family)">Leave</button>
                     </li>
                 </ul>
             </ng-template>

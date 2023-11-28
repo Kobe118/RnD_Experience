@@ -5,6 +5,7 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import {User} from "./user.model";
 import {Family} from "./Family.model";
 import {FamilyModalAddComponent} from "../family-modal-add/family-modal-add.component";
+import {FamilyModalLeaveComponent} from "../family-modal-leave/family-modal-leave.component";
 
 
 
@@ -26,6 +27,8 @@ export class FamiliesComponent implements OnInit {
   userFamilies: Family[] = [];
   modalRef: MdbModalRef<FamilyModalComponent> | null = null;
   modaladdRef: MdbModalRef<FamilyModalAddComponent> | null = null;
+  modalleaveRef: MdbModalRef<FamilyModalLeaveComponent> | null = null;
+
   constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService) {}
 
   async getCurrentUser() {
@@ -95,6 +98,12 @@ export class FamiliesComponent implements OnInit {
 
   openModalAdd(family: Family) {
     this.modaladdRef = this.modalService.open(FamilyModalAddComponent, {
+      data: { currentUser: this.currentUser, family: family },
+    });
+  }
+
+  openModalLeave(family: Family) {
+    this.modalleaveRef = this.modalService.open(FamilyModalLeaveComponent, {
       data: { currentUser: this.currentUser, family: family },
     });
   }

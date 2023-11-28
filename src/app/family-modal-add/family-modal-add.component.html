@@ -5,10 +5,10 @@
 <div class="modal-body">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
-            <label for="email" class="form-label">User Email</label>
-            <input type="email" class="form-control" id="email" formControlName="email" required>
-            <div *ngIf="userForm.get('email')?.hasError('email') && userForm.get('email')?.touched" class="text-danger">
-                Please enter a valid email address.
+            <label for="userId" class="form-label">User ID</label>
+            <input type="text" class="form-control" id="userId" formControlName="userId" required>
+            <div *ngIf="userForm.get('userId')?.hasError('pattern') && userForm.get('userId')?.touched" class="text-danger">
+                Please enter a valid user ID.
             </div>
         </div>
 

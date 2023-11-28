@@ -20,23 +20,29 @@ export class FamilyModalAddComponent implements OnInit{
   };
   family: Family | null = null;
   userForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-  });
+    userId: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_-]+')]],});
   constructor(private readonly supabaseService: SupabaseService, public modalRef: MdbModalRef<FamilyModalAddComponent>
   , private fb: FormBuilder) {}
   ngOnInit() {
 
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.userForm.valid) {
-      const userEmail = this.userForm.get('email')?.value;
+      const userId = this.userForm.get('userId')?.value;
 
-      if (userEmail) {
-        console.log('User email submitted:', userEmail);
+      if (userId) {
+        console.log('User id submitted:', userId);
+        const { data, error } = await this.supabaseService.supabase
+            .from('user_in_family')
+            .insert([
+              { user: userId, family: this.family?.family_id },
+            ])
+            .select()
       }
 
     }
+    this.modalRef.close();
   }
 }
 
