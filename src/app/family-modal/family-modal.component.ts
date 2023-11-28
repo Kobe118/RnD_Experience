@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SupabaseService} from "../services/supabase.service";
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import {Family} from "../families/Family.model";
 import {User} from "../families/user.model";
@@ -17,7 +18,7 @@ export class FamilyModalComponent implements OnInit{
   };
   family: Family | null = null;
   selectedUserIds: string[] = [];
-  constructor(public modalRef: MdbModalRef<FamilyModalComponent>) {}
+  constructor(private readonly supabaseService: SupabaseService, public modalRef: MdbModalRef<FamilyModalComponent>) {}
   ngOnInit() {
 
   }
@@ -33,6 +34,19 @@ export class FamilyModalComponent implements OnInit{
       this.selectedUserIds.push(userId);
     }
     console.log('Selected user ID:', this.selectedUserIds);
+
+  }
+
+  async deleteUsers() {
+    for (let id of this.selectedUserIds) {
+      const { data, error } = await this.supabaseService.supabase
+          .from('user_in_family')
+          .delete()
+          .eq('user', id)
+          .eq('family', this.family?.family_id);
+    }
+
+    this.selectedUserIds = [];
 
   }
 }

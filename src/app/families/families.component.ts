@@ -4,6 +4,7 @@ import { FamilyModalComponent } from "../family-modal/family-modal.component";
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import {User} from "./user.model";
 import {Family} from "./Family.model";
+import {FamilyModalAddComponent} from "../family-modal-add/family-modal-add.component";
 
 
 
@@ -24,7 +25,7 @@ export class FamiliesComponent implements OnInit {
   };
   userFamilies: Family[] = [];
   modalRef: MdbModalRef<FamilyModalComponent> | null = null;
-
+  modaladdRef: MdbModalRef<FamilyModalAddComponent> | null = null;
   constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService) {}
 
   async getCurrentUser() {
@@ -53,7 +54,6 @@ export class FamiliesComponent implements OnInit {
     let { data, error } = await this.supabaseService.supabase
         .rpc('get_all_users_family_members', {
           user_uuid: this.currentUser.user_id
-          //user_uuid: "9e2a348d-14d1-4bbd-b8c5-83e3b74f474e"
         });
 
     if (error) {
@@ -89,6 +89,12 @@ export class FamiliesComponent implements OnInit {
 
   openModal(family: Family) {
     this.modalRef = this.modalService.open(FamilyModalComponent, {
+      data: { currentUser: this.currentUser, family: family },
+    });
+  }
+
+  openModalAdd(family: Family) {
+    this.modaladdRef = this.modalService.open(FamilyModalAddComponent, {
       data: { currentUser: this.currentUser, family: family },
     });
   }

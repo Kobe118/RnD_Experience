@@ -43,6 +43,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
     CongratsComponent,
     AllergiesComponent,
     FamilyModalComponent,
+    FamilyModalAddComponent,
   ],
   imports: [
     BrowserModule,
