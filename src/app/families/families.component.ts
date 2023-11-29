@@ -98,7 +98,14 @@ export class FamiliesComponent implements OnInit {
 
   openModalAdd(family: Family) {
     this.modaladdRef = this.modalService.open(FamilyModalAddComponent, {
-      data: { currentUser: this.currentUser, family: family },
+      data: { currentUser: this.currentUser, family: family, title: "Add member to " + family.family_name,  searchuser: true},
+    });
+
+  }
+
+  openModalJoin() {
+    this.modaladdRef = this.modalService.open(FamilyModalAddComponent, {
+      data: { currentUser: this.currentUser, family: null, title: "Search a family to join" , searchuser: false},
     });
   }
 

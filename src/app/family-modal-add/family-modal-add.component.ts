@@ -19,15 +19,24 @@ export class FamilyModalAddComponent implements OnInit{
     picture_url: ""
   };
   family: Family | null = null;
+  title: String = "";
+
+  searchuser: boolean = true;
   userForm = this.fb.group({
-    userId: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_-]+')]],});
+    userId: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_-]+')]],
+  });
+
+  familyForm = this.fb.group({
+    familyId: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_-]+')]]
+  });
+
   constructor(private readonly supabaseService: SupabaseService, public modalRef: MdbModalRef<FamilyModalAddComponent>
   , private fb: FormBuilder) {}
   ngOnInit() {
 
   }
 
-  async onSubmit() {
+  async onSubmitUserForm() {
     if (this.userForm.valid) {
       const userId = this.userForm.get('userId')?.value;
 
@@ -43,6 +52,22 @@ export class FamilyModalAddComponent implements OnInit{
 
     }
     this.modalRef.close();
+  }
+
+  async onSubmitFamilyForm() {
+    if(this.familyForm.valid) {
+     const familyId = this.familyForm.get('familyId')?.value;
+
+     if(familyId) {
+       console.log(' id submitted:', familyId);
+       const { data, error } = await this.supabaseService.supabase
+           .from('user_in_family')
+           .insert([
+             { user: this.currentUser.user_id, family: familyId }
+           ])
+           .select()
+     }
+    }
   }
 }
 

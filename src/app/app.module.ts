@@ -65,6 +65,7 @@ import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-lea
     FamilyModalComponent,
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
+
   ],
   imports: [
     BrowserModule,
