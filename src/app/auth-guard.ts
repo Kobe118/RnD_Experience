@@ -21,7 +21,7 @@ export class AuthGuard {
       // this allows the user to access the page if they are logged in
       return true;
     } else {
-      this.router.navigateByUrl('/tabs/list-login'); // this redirects the user to the login page if they are not logged in
+      this.router.navigateByUrl('login'); // this redirects the user to the login page if they are not logged in
       return false;
     }
   }

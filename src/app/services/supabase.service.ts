@@ -9,8 +9,8 @@ import {
 } from '@supabase/supabase-js'
 import { environment} from "../environments/environment/environment";
 import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+
 
 export interface Profile {
     id?: string
@@ -26,28 +26,8 @@ export class SupabaseService {
     _session: AuthSession | null = null
     private _currentUser: BehaviorSubject<any> = new BehaviorSubject<any>(null); // this is a BehaviorSubject from rxjs that is used to store the current user and is initialized with null as the default value
 
-    // Try to recover our user session
-    async ngOnInit() {
-        await this.loadUser();
-    };
-
     constructor() {
-        this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
-            auth: {
-              // auth is an object from @supabase/supabase-js that is used to store the logged-in session
-              autoRefreshToken: true, // autoRefreshToken is a boolean from @supabase/supabase-js that is used to refresh the token for logged-in users
-              persistSession: true, // persistSession is a boolean from @supabase/supabase-js that is used to store the logged-in session
-            },
-          });
-          this.loadUser();
-
-        this.supabase.auth.onAuthStateChange((event, session) => {
-        if (event == 'SIGNED_IN') {
-            this._currentUser.next(session?.user);
-        } else {
-            this._currentUser.next(false);
-        }
-        });
+      this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
     }
 
     get session() {
@@ -55,15 +35,6 @@ export class SupabaseService {
             this._session = data.session
         })
         return this._session
-    }
-
-    async loadUser() {
-        const user = await this.supabase.auth.getUser();
-        if (user) {
-          this._currentUser.next(user);
-        } else {
-          this._currentUser.next(false);
-        }
     }
 
     get currentUser(): Observable<User> {
@@ -119,7 +90,9 @@ export class SupabaseService {
     }
 
     signOut() {
-        return this.supabase.auth.signOut()
+    // Remove the stored session from LocalStorage
+    localStorage.removeItem('supabase.auth.token');
+      return this.supabase.auth.signOut();
     }
 
     updateProfile(profile: Profile) {
@@ -142,9 +115,75 @@ export class SupabaseService {
 
     isLoggedIn() {
         // this function is used to check if the user is logged in which will be used in auth.guard.ts to protect the routes from unauthorized access
-    
+
         const user = this._currentUser.getValue(); // get the current value of the BehaviorSubject
         console.log('user: ', user);
+        
         return !!user; // if user is not null or undefined, return true else return false
       }
+
+      async getUpcomingRecipes(){
+        try {
+          console.log('userID: ', this._currentUser.getValue().id);
+          const { data, error } = await this.supabase
+            .rpc('get_upcoming_recipes', {
+              user_uuid: this._currentUser.getValue().id
+            });
+          if (error) {
+            console.error(error);
+            throw error;
+          } else {     
+            return Object.values(data); // Assuming data is an array of Recipe objects
+          }
+        } catch (error) {
+          console.error('Error fetching recipes:', error);
+          throw error;
+        }
+      }
+
+    async getPreferredRecipes(){
+      try {
+        console.log('Preferred userID: ', this._currentUser.getValue().id);
+        const { data, error } = await this.supabase
+          .rpc('get_preferred_recipes', {
+            user_uuid: this._currentUser.getValue().id
+          });
+          if (error) {
+            console.error(error);
+            throw error;
+          } else {     
+            return Object.values(data); // Assuming data is an array of Recipe objects
+          }
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+        throw error;
+      }
+    }
+
+    async getFamilies(){
+      try {
+        const { data, error } = await this.supabase
+          .rpc('get_all_users_family', {
+            user_uuid: this._currentUser.getValue().id
+          });
+          if (error) {
+            console.error(error);
+            throw error;
+          } else {     
+            return Object.values(data); // Assuming data is an array of Recipe objects
+          }
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+        throw error;
+      }
+    }
+
+    async getImageUrl(id: string) {
+      const { data } = this.supabase
+          .storage
+          .from('recipes_thumbnail_and_picture')
+          .getPublicUrl(id+'.png')
+
+      return data.publicUrl;
+    }
 }
