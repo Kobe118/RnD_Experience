@@ -16,11 +16,15 @@
     "no-var": "warn",
     "semi": ["error", "always"]
   }, 
+
+  "attr-lowercase": "off",
   
   "overrides":[{
       "files": "*.json",
       "parser": "jsonc-eslint-parser",
       "rules": {}
     }]
+
 }
+
     
