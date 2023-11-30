@@ -10,8 +10,9 @@ import {Observable} from "rxjs"; // Import the Recipe interface
     styleUrls: ['./recipe.component.scss']
 })
 export class RecipeComponent implements OnInit {
-    recipes: Recipe[] = []; // Declare recipes as an array of Recipe
-    urls:String[] = [];
+    liked_numbers = 0;
+    liked_recipes: Recipe[] = []; // Declare recipes as an array of Recipe
+    liked_urls:String[] = [];
     postId?: number; // Use '?' for optional property
     errorMessage?: string;
     generatedrecipe: string = "";  // Initialize as empty string
@@ -19,10 +20,10 @@ export class RecipeComponent implements OnInit {
     constructor(private recipeService: RecipeService) {}
 
     ngOnInit() {
-        this.recipeService.getRecipes().then(recipes => {
+        this.recipeService.get_Liked_Recipes().then(recipes => {
             if (recipes) {
-                this.recipes = recipes;
-                this.loadImageUrls(this.recipes)
+                this.liked_recipes = recipes;
+                this.loadImageUrls(this.liked_recipes)
             }
         }).catch(error => {
             console.error('Error fetching recipes:', error);
@@ -30,8 +31,8 @@ export class RecipeComponent implements OnInit {
     }
 
     async loadImageUrls(recipes:Recipe[]) {
-        for (const recipe in recipes) {
-            this.urls.push(await this.recipeService.getImageUrl("65829b95-426e-4eb3-8844-f261805dbee3"));
+        for (let i = 0; i < recipes.length; i++) {
+            this.liked_urls.push(await this.recipeService.getImageUrl(recipes[i].id))
         }
     }
     // Inside your RecipeComponent class
@@ -41,7 +42,12 @@ export class RecipeComponent implements OnInit {
     }
 
     toggleHeart(recipe: Recipe) {
-        console.log(this.recipes)
+        console.log(this.liked_recipes)
     }
+
+    get recipeIndices() {
+        return this.liked_recipes ? Array.from({ length: this.liked_recipes.length }, (_, i) => i) : [];
+    }
+
 }
 

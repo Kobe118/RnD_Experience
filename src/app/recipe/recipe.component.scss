@@ -21,16 +21,16 @@
     border-radius: 10px;
     background-color: #eee; /* Grey background */
     margin: 10px; /* Spacing around each image container */
-    width: 120px; /* Fixed width */
-    height: 150px; /* Fixed height */
+    width: 150px; /* Fixed width */
+    height: 200px; /* Fixed height */
     text-align: center; /* Center text */
     display: inline-block; /* Display inline with block features */
   }
   
   /* Styles for the images */
   .image-with-border img {
-    width: 100px; /* Fixed width for the image */
-    height: 100px; /* Fixed height for the image */
+    width: 120px; /* Fixed width for the image */
+    height: 120px; /* Fixed height for the image */
     border-radius: 50%; /* Makes the image circle shaped */
     margin-top: 25px; /* Centers the image vertically */
     object-fit: cover; /* Ensures the image covers the area properly */
@@ -84,12 +84,17 @@
   .heart-btn.is-active:after {
     background: red; /* Fill the heart with red color */
   }
-  
-  
-  
+
   
   /* Styles for paragraphs (dish names) */
   .image-with-border p {
     margin: 0; /* Removes default margin */
     padding: 5px; /* Adds some padding inside the container */
   }
+
+.recipe_name{
+  width: 150px;  /* Fixed width */
+  word-wrap: break-word; /* For older browsers */
+  overflow-wrap: break-word; /* Ensures break for long words/URLs */
+  white-space: normal;
+}

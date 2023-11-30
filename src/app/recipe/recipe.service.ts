@@ -21,15 +21,16 @@ export class RecipeService {
         const { data } = this.supabase
             .storage
             .from('recipes_thumbnail_and_picture')
-            .getPublicUrl(id+'.png')
-
+            .getPublicUrl(id+'.jpg')
         return data.publicUrl;
     }
 
-    async getRecipes(){
+    async get_Liked_Recipes(){
         let { data: recipe, error } = await this.supabase
             .from('recipe')
             .select('id,name,made_by,manual')
+            .order('id', { ascending: false })
+            .limit(5);
         if (error) throw error;
         console.log(recipe)
         return recipe;
