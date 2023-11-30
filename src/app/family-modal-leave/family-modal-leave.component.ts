@@ -30,6 +30,7 @@ export class FamilyModalLeaveComponent implements OnInit{
         .delete()
         .eq('user', this.currentUser.user_id)
         .eq('family', this.family?.family_id);
+    this.modalRef.close();
 
   }
 }

@@ -6,6 +6,7 @@ import {User} from "./user.model";
 import {Family} from "./Family.model";
 import {FamilyModalAddComponent} from "../family-modal-add/family-modal-add.component";
 import {FamilyModalLeaveComponent} from "../family-modal-leave/family-modal-leave.component";
+import { ChangeDetectorRef } from '@angular/core'
 
 
 
@@ -29,7 +30,8 @@ export class FamiliesComponent implements OnInit {
   modaladdRef: MdbModalRef<FamilyModalAddComponent> | null = null;
   modalleaveRef: MdbModalRef<FamilyModalLeaveComponent> | null = null;
 
-  constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService) {}
+
+  constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService,  private cdr: ChangeDetectorRef) {}
 
   async getCurrentUser() {
     try {
@@ -94,6 +96,10 @@ export class FamiliesComponent implements OnInit {
     this.modalRef = this.modalService.open(FamilyModalComponent, {
       data: { currentUser: this.currentUser, family: family },
     });
+
+    this.modalRef.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   openModalAdd(family: Family) {
@@ -101,17 +107,27 @@ export class FamiliesComponent implements OnInit {
       data: { currentUser: this.currentUser, family: family, title: "Add member to " + family.family_name,  searchuser: true},
     });
 
+    this.modaladdRef.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   openModalJoin() {
     this.modaladdRef = this.modalService.open(FamilyModalAddComponent, {
       data: { currentUser: this.currentUser, family: null, title: "Search a family to join" , searchuser: false},
     });
+
+    this.modaladdRef.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   openModalLeave(family: Family) {
     this.modalleaveRef = this.modalService.open(FamilyModalLeaveComponent, {
       data: { currentUser: this.currentUser, family: family },
+    });
+    this.modalleaveRef.onClose.subscribe(() => {
+      this.ngOnInit();
     });
   }
 

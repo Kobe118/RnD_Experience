@@ -68,6 +68,7 @@ export class FamilyModalAddComponent implements OnInit{
            .select()
      }
     }
+    this.modalRef.close();
   }
 }
 

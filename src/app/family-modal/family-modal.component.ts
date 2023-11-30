@@ -47,6 +47,7 @@ export class FamilyModalComponent implements OnInit{
     }
 
     this.selectedUserIds = [];
+    this.modalRef.close();
 
   }
 }
