@@ -5,7 +5,6 @@ import {
     createClient,
     Session,
     SupabaseClient,
-    User,
 } from '@supabase/supabase-js'
 import { environment} from "./environments/environment/environment";
 
@@ -33,11 +32,22 @@ export class SupabaseService {
         return this._session
     }
 
-    profile(user: User) {
+    async getUserId(): Promise<string | undefined> {
+        const { data } = await this.supabase.auth.getSession();
+        this._session = data?.session;
+
+        if (this._session?.user?.id) {
+            return this._session.user.id;
+        }
+        return undefined;
+    }
+
+
+    profile(userId: string) {
         return this.supabase
             .from('users')
             .select(`name, first_name`)
-            .eq('id', user.id)
+            .eq('id', userId)
             .single()
     }
 
@@ -57,9 +67,39 @@ export class SupabaseService {
         const update = {
             ...profile,
             updated_at: new Date(),
-        }
+        };
 
-        return this.supabase.from('users').update(profile).eq('id',profile.id)
+        const userId = this.getUserId(); // Retrieve the current user's ID
+
+        if (userId) {
+            return this.supabase
+                .from('users') // Assuming 'profiles' is the table storing user profiles
+                .update(update)
+                .eq('id', userId);
+        } else {
+            throw new Error('User ID not available');
+        }
+    }
+
+
+    getIngredients() {
+        return this.supabase.from('ingredient').select('*').order('name');
+    }
+
+    getAllergies() {
+        return this.supabase.from('allergie').select('*').order('allergie');
+    }
+
+    linkIngredientToUserDislikes(userId: string, ingredientId: string){
+        return this.supabase
+            .from('user_has_dislikes')
+            .insert({ user_id: userId, ingredient_id: ingredientId });
+    }
+
+    linkAllergieToUserAllergies(userId: string, allergieId: string){
+        return this.supabase
+            .from('user_has_allergies')
+            .insert({ user_id: userId, ingredient_id: allergieId });
     }
 
     async getUserPictureUrl(filename: string) {

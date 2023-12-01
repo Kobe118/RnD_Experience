@@ -22,11 +22,6 @@ import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FamiliesComponent } from './families/families.component';
 import { ProfileComponent } from './profile/profile.component';
-import { WelcomeComponent } from './register/welcome/welcome.component';
-import { SignUpComponent } from './register/sign-up/sign-up.component';
-import { DietaryPreferenceComponent } from './register/dietary-preference/dietary-preference.component';
-import { CongratsComponent } from './register/congrats/congrats.component';
-import { AllergiesComponent } from './register/allergies/allergies.component';
 import { FamilyModalComponent } from './family-modal/family-modal.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
@@ -46,6 +41,7 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.component';
 import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-leave.component';
 import { FamilyCreateModalComponent } from './family-create-modal/family-create-modal.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -58,16 +54,11 @@ import { FamilyCreateModalComponent } from './family-create-modal/family-create-
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
-    WelcomeComponent,
-    SignUpComponent,
-    DietaryPreferenceComponent,
-    CongratsComponent,
-    AllergiesComponent,
     FamilyModalComponent,
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
-
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

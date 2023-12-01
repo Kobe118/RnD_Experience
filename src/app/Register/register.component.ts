@@ -1,15 +1,14 @@
 import { Component } from '@angular/core'
 import { FormBuilder } from '@angular/forms'
-import { SupabaseService} from "../../supabase.service";
-
+import { SupabaseService} from "../services/supabase.service";
 
 @Component({
-    selector: 'SignUpPage',
-    templateUrl: './SignUpPage.component.html',
-    styleUrls: ['./SignUpPage.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class SignUpPageComponent {
-    loading = false
+export class RegisterComponent {
+  loading = false
 
     signInForm = this.formBuilder.group({
         email: '',
@@ -50,4 +49,5 @@ export class SignUpPageComponent {
             this.loading = false
         }
     }
+
 }
