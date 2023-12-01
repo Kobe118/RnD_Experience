@@ -58,7 +58,7 @@ import { FamilyCreateModalComponent } from './family-create-modal/family-create-
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
-    RegisterComponent,
+    //RegisterComponent,
   ],
   imports: [
     BrowserModule,
