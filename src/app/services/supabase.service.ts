@@ -47,7 +47,7 @@ export class SupabaseService {
         return this._currentUser.value;
     }
 
-    async signUp(credentials: { email: string; password: string }) {
+    async signUp(credentials: { email: string; password: string; options: object}) {
         return new Promise(async (resolve, reject) => {
           const { error, data } = await this.supabase.auth.signUp(credentials);
           if (error) {
