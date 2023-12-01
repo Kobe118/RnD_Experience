@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="exampleModalLabel">Delete members of {{ family?.family_name }}</h4>
+    <h4 class="modal-title" id="exampleModalLabel">Edit {{ family?.family_name }}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
 </div>
 <div class="modal-body">
@@ -10,10 +10,17 @@
         </div>
     </div>
 
-</div>
-<div class="modal-footer">
-    <button type="button" class="button dark-gray" (click)="modalRef.close()">
-        Close
-    </button>
     <button type="button" class="button dark-green" (click)="deleteUsers()">Confirm</button>
+
+
 </div>
+
+<div class="modal-body">
+    <hr>
+    <p>Or want to delete the family?</p>
+    <button type="button" class="button dark-green" (click)="deleteFamily()">Delete {{ family?.family_name}}</button>
+</div>
+
+
+
+

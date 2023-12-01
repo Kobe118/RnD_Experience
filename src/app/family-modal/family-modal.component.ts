@@ -51,6 +51,16 @@ export class FamilyModalComponent implements OnInit{
 
   }
 
+  async deleteFamily() {
+    const { error } = await this.supabaseService.supabase
+        .from('families')
+        .delete()
+        .eq('id', this.family?.family_id)
+
+    this.modalRef.close();
+
+  }
+
   isClicked(user_id: string) {
     return this.selectedUserIds.includes(user_id);
 

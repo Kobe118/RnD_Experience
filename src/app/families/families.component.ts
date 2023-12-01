@@ -6,7 +6,7 @@ import {User} from "./user.model";
 import {Family} from "./Family.model";
 import {FamilyModalAddComponent} from "../family-modal-add/family-modal-add.component";
 import {FamilyModalLeaveComponent} from "../family-modal-leave/family-modal-leave.component";
-import { ChangeDetectorRef } from '@angular/core'
+import {FamilyCreateModalComponent} from "../family-create-modal/family-create-modal.component";
 @Component({
   selector: 'app-families',
   templateUrl: './families.component.html',
@@ -24,9 +24,11 @@ export class FamiliesComponent implements OnInit {
   modalRef: MdbModalRef<FamilyModalComponent> | null = null;
   modaladdRef: MdbModalRef<FamilyModalAddComponent> | null = null;
   modalleaveRef: MdbModalRef<FamilyModalLeaveComponent> | null = null;
+  modalcreateRef: MdbModalRef<FamilyCreateModalComponent> | null = null;
 
 
-  constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService,  private cdr: ChangeDetectorRef) {}
+
+  constructor(private readonly supabaseService: SupabaseService, private modalService: MdbModalService) {}
 
   async getCurrentUser() {
     try {
@@ -37,7 +39,7 @@ export class FamiliesComponent implements OnInit {
           user_id: data.user.id,
           last_name: "",
           first_name:  "",
-          picture_url: "" // You can set a default picture URL here if needed
+          picture_url: ""
         };
       } else {
         console.log('No authenticated user');
@@ -122,6 +124,15 @@ export class FamiliesComponent implements OnInit {
       data: { currentUser: this.currentUser, family: family },
     });
     this.modalleaveRef.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
+  openModalCreate() {
+    this.modalcreateRef = this.modalService.open(FamilyCreateModalComponent, {
+      data: { currentUser: this.currentUser },
+    });
+    this.modalcreateRef.onClose.subscribe(() => {
       this.ngOnInit();
     });
   }
