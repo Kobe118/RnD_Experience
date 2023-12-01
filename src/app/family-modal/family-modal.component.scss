@@ -12,4 +12,18 @@
 .user-container {
   display: flex;
   align-items: center;
+  cursor: pointer;
+  padding-left: 10px;
+  border-radius: 2em;
+  margin-bottom: 10px;
+}
+
+.user-container.clicked {
+  color: #204C1DFF;
+  box-shadow: 4px 3px 10px 1px rgba(0, 0, 0, 0.20);
+}
+
+.user-container.clicked img {
+  //border:   2px solid #204C1DFF;
+
 }

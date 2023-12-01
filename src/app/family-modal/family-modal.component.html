@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
     <div *ngFor="let user of family?.users">
-        <div *ngIf="user.user_id !== currentUser.user_id" class="user-container" (click)="selectUser(user.user_id)">
+        <div *ngIf="user.user_id !== currentUser.user_id" [ngClass]="{'clicked': isClicked(user.user_id)}" class="user-container" (click)="selectUser(user.user_id)">
             <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture">
             <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
         </div>

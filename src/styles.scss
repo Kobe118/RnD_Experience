@@ -47,6 +47,17 @@ p {
   border-radius: 200px;
 }
 
+.button:active {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  color: $light-gray;
+  transform: scale(0.98);
+}
+
+.button:hover {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+
+}
+
 .dark-green {
   background-color: $dark-green;
 }

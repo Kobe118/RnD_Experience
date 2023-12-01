@@ -50,4 +50,9 @@ export class FamilyModalComponent implements OnInit{
     this.modalRef.close();
 
   }
+
+  isClicked(user_id: string) {
+    return this.selectedUserIds.includes(user_id);
+
+  }
 }

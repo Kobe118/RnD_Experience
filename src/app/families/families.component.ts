@@ -7,11 +7,6 @@ import {Family} from "./Family.model";
 import {FamilyModalAddComponent} from "../family-modal-add/family-modal-add.component";
 import {FamilyModalLeaveComponent} from "../family-modal-leave/family-modal-leave.component";
 import { ChangeDetectorRef } from '@angular/core'
-
-
-
-
-
 @Component({
   selector: 'app-families',
   templateUrl: './families.component.html',
