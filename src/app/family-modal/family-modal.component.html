@@ -9,16 +9,18 @@
             <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
         </div>
     </div>
-
-    <button type="button" class="button dark-green" (click)="deleteUsers()">Confirm</button>
-
-
 </div>
 
-<div class="modal-body">
-    <hr>
+<div class="modal-footer">
+    <button type="button" class="button dark-gray" (click)="modalRef.close()">
+        Close
+    </button>
+    <button type="button" class="button dark-green" (click)="deleteUsers()">Confirm</button>
+</div>
+
+<div class="modal-footer" id="delete-family">
     <p>Or want to delete the family?</p>
-    <button type="button" class="button dark-green" (click)="deleteFamily()">Delete {{ family?.family_name}}</button>
+    <button type="button" class="button" (click)="deleteFamily()">Delete</button>
 </div>
 
 

@@ -23,7 +23,8 @@
   box-shadow: 4px 3px 10px 1px rgba(0, 0, 0, 0.20);
 }
 
-.user-container.clicked img {
-  //border:   2px solid #204C1DFF;
-
+#delete-family {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

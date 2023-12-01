@@ -56,7 +56,6 @@ export class FamilyModalComponent implements OnInit{
         .from('families')
         .delete()
         .eq('id', this.family?.family_id)
-
     this.modalRef.close();
 
   }

@@ -1,40 +1,42 @@
 <!DOCTYPE html>
+<div id="full-page">
 <app-default-header [title]= "'Your Famillies'" [subtitle]="'How are the families looking today?'"> </app-default-header>
 
-<div *ngFor="let family of userFamilies">
-    <div class="card">
-        <div class="card-body">
-            <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
-            <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>
-            <div *ngFor="let user of family.users">
-                <div class="user-container">
-                    <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture">
-                    <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
+    <div *ngFor="let family of userFamilies">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
+                <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>
+                <div *ngFor="let user of family.users">
+                    <div class="user-container">
+                        <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture">
+                        <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-header">
-            <div *ngIf="family.is_admin ; else elseBlock">
-                <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                        <button type="button" class="button" href="#" (click)="openModalAdd(family)">Add</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="button medium-green" (click)="openModal(family)" href="#">Edit</button>
-                    </li>
-                </ul>
+            <div class="card-header">
+                <div *ngIf="family.is_admin ; else elseBlock">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <button type="button" class="button" href="#" (click)="openModalAdd(family)">Add</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="button medium-green" (click)="openModal(family)" href="#">Edit</button>
+                        </li>
+                    </ul>
+                </div>
+                <ng-template #elseBlock>
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <button type="button" class="button" href="#" (click)="openModalLeave(family)">Leave</button>
+                        </li>
+                    </ul>
+                </ng-template>
             </div>
-            <ng-template #elseBlock>
-                <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                        <button type="button" class="button" href="#" (click)="openModalLeave(family)">Leave</button>
-                    </li>
-                </ul>
-            </ng-template>
         </div>
     </div>
+    <button type="button" class="button" id="new-family" href="#" (click)="openModalJoin()">Join a family</button>
+    <button type="button" class="button" id="create-family" href="#" (click)="openModalCreate()">Create a family</button>
 </div>
-<div class="row"><button type="button" class="button" id="new-family" href="#" (click)="openModalJoin()">Join a family</button></div>
-<div class="row"><button type="button" class="button" id="create-family" href="#" (click)="openModalCreate()">Create a family</button></div>
 
 

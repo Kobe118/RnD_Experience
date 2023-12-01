@@ -1,7 +1,8 @@
 .card {
-  width: 80%;
+  width: 90%;
   margin-left: 5%;
   margin-bottom: 5%;
+  margin-right: 5%;
 }
 
 .user-container {
@@ -25,6 +26,14 @@
   font-size: 0.6em;
 }
 
-#new-family, #create-family {
-  margin-left: 5%;
+#full-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+#new-family, #create-family {
+  width:80%;
+  margin-left: 10%;
+
+}
+
