@@ -39,7 +39,7 @@ p {
   border: none;
   color: $white;
   min-width: 10%;
-  padding: 5px 20px 5px 20px;
+  padding: 4px 15px 4px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -48,11 +48,28 @@ p {
   border-radius: 200px;
 }
 
+.button:active {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  color: $light-gray;
+  transform: scale(0.98);
+}
+
+.button:hover {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+
+}
+
 .dark-green {
   background-color: $dark-green;
 }
 .medium-green {
   background-color: $medium-green;
+}
+.dark-gray {
+  background-color: $dark-gray;
+}
+.light-gray {
+  background-color: $light-gray;
 }
 
 html, body {
@@ -62,4 +79,5 @@ html, body {
   margin: 5% 1.5% 0 1.5%;
   font-family: Inter, sans-serif;
 }
+ 
 
