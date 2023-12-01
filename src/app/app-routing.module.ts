@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from "./log-in/log-in.component";
-import { RegisterComponent } from "./register/register.component";
+//import { RegisterComponent } from "./register/register.component";
 import { FamiliesComponent } from "./families/families.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { MealPlansHomeComponent } from "./meal-plans/meal-plans-home/meal-plans-home.component";
@@ -13,7 +13,7 @@ import { AuthGuard } from './auth-guard';
 
 const routes: Routes = [
   { path: 'login', component: LogInComponent, },
-  { path: 'signup', component: RegisterComponent },
+  //{ path: 'signup', component: RegisterComponent },
   { path: 'families', component: FamiliesComponent, canActivate: [ AuthGuard] },
   { path: 'profile', component: ProfileComponent },
   { path: 'mealplanshome', component: MealPlansHomeComponent, canActivate: [ AuthGuard] },
