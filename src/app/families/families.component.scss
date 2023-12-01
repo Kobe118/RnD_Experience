@@ -1,0 +1,22 @@
+.card {
+  width: 80%;
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.user-container-text {
+  margin-top: 13px;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}

@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>DietaryPreference</title>
-</head>
-<body>
 <div>
     <h1>What is your dietary preference?</h1>
+</div>
+
+<div>
+    <!-- Display fetched preferences as buttons/options -->
+    <button *ngFor="let preference of preferences" (click)="selectPreference(preference)">
+        {{ preference.name }} <!-- Assuming 'name' is the property in the preference object -->
+    </button>
 </div>
 
 <div>
@@ -16,5 +17,3 @@
 </div>
 
 <router-outlet></router-outlet>
-</body>
-</html>
