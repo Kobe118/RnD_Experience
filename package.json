@@ -11,13 +11,16 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.0",
+    "@angular/cdk": "~16.2.12",
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
     "@angular/forms": "^16.2.0",
+    "@angular/material": "^16.2.12",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@supabase/supabase-js": "^2.38.4",
     "debug": "^4.3.1",
     "rxjs": "~7.8.0",
     "supabase": "^1.106.1",
@@ -42,5 +45,4 @@
   "optionalDependencies": {
     "fsevents": "^2.3.3"
   }
-
 }

@@ -1,18 +1,59 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
+import {NgOptimizedImage} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LogInComponent } from './log-in/log-in.component';
+
+import { DefaultHeaderComponent } from './default-header/default-header.component';
+import { MealPlansHomeComponent } from './meal-plans/meal-plans-home/meal-plans-home.component';
+import { RecipeComponent } from './recipe/recipe.component';
+import { HomeComponent } from './home/home.component';
+import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FamiliesComponent } from './families/families.component';
+import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LogInComponent,
+    DefaultHeaderComponent,
+    MealPlansHomeComponent,
+    RecipeComponent,
+    HomeComponent,
+    BottomNavigationComponent,
+    FamiliesComponent,
+    ProfileComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    NgOptimizedImage,
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
