@@ -104,8 +104,12 @@ export class SupabaseService {
       return localStorage.getItem('token');
     }
     
-    private getLocalUser(): string | null {
-      return localStorage.getItem('user');
+    private getLocalUser(): User | null {
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        return JSON.parse(userString);
+      }
+      return null;
     }
   
     private clearTokens(): void {
@@ -141,8 +145,8 @@ export class SupabaseService {
         // this function is used to check if the user is logged in which will be used in auth.guard.ts to protect the routes from unauthorized access
 
         
-        if(this.getLocalUser != null){
-          this._currentUser.next(this.getLocalUser);
+        if(this.getLocalUser() !== null){
+          this._currentUser.next(this.getLocalUser());
         }
         const user = this._currentUser.getValue(); // get the current value of the BehaviorSubject
         console.log('user: ', user);
