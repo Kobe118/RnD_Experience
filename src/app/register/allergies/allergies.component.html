@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Allergies</title>
+</head>
+<body>
+<div>
+    <h1>What are your allergies?</h1>
+</div>
+
+<div>
+    <!-- Display fetched preferences as buttons/options -->
+    <button *ngFor="let allergy of allergies" (click)="selectAllergies(allergy)">
+        {{ allergy.text }}
+    </button>
+</div>
+
+<div>
+    <button (click)="redirectToSignUpPage()">Continue</button>
+</div>
+<div>
+    <button (click)="redirectToDietaryPreferencePage()">Back</button>
+</div>
+<router-outlet></router-outlet>
+</body>
+</html>

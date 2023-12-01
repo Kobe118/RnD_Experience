@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<app-default-header [title]= "'Your Famillies'" [subtitle]="'How are the families looking today?'"> </app-default-header>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Family admin view</h5>
+
+        <div *ngFor="let url of imageurls">
+            <div class="user-container">
+                <img [src]="url" alt="Profile Picture" class="profile-picture">
+                <p class="user-container-text">this is family member</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a class="button" href="#">Add</a>
+            </li>
+            <li class="nav-item">
+                <a class="button medium-green" href="#">Edit</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Family member view</h5>
+    </div>
+    <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a class="button" href="#">Leave</a>
+            </li>
+        </ul>
+    </div>
+</div>

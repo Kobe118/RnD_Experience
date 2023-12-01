@@ -27,5 +27,6 @@ jobs:
     uses: ./.github/workflows/tests.yaml
 
   run_deploy:
-    needs: cache_checkout
+    needs: [cache_checkout, run_superlinter, run_tests]
     uses: ./.github/workflows/deploy.yaml
+    secrets: inherit
