@@ -12,7 +12,8 @@ export class HomeComponent implements OnInit {
   recipes: Recipe[] = [];
   preferredRecipes: PreferredRecipe[] = [];
   families: Family[] = [];
-  urls: string[] = [];
+  urlUpcoming: string[] = [];
+  urlPreferred: string[] = [];
   errorMessage?: string;
 
   constructor(private supabaseService: SupabaseService) {}
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
       const preferredRecipes = await this.supabaseService.getPreferredRecipes();
       if(preferredRecipes){
         this.preferredRecipes = preferredRecipes[0] as PreferredRecipe[];
-        this.loadImageUrls(this.recipes);
+        this.loadImagePreferredUrls(this.preferredRecipes);
       }
       const families = await this.supabaseService.getFamilies();
       if(preferredRecipes){
@@ -42,7 +43,13 @@ export class HomeComponent implements OnInit {
 
   async loadImageUrls(recipes:Recipe[]) {
     for (const x in recipes) {
-        this.urls.push(await this.supabaseService.getImageUrl(recipes[x].recipe));
+        this.urlUpcoming.push(await this.supabaseService.getImageUrl(recipes[x].recipe));
+    }
+  }
+
+  async loadImagePreferredUrls(preferredRecipes:PreferredRecipe[]) {
+    for (const x in preferredRecipes) {
+        this.urlPreferred.push(await this.supabaseService.getImageUrl(preferredRecipes[x].recipe));
     }
   }
 }
