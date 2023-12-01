@@ -23,7 +23,7 @@ import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FamiliesComponent } from './families/families.component';
 import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
+//import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,6 @@ import { RegisterComponent } from './register/register.component';
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
-    RegisterComponent,
   ],
   imports: [
     BrowserModule,
