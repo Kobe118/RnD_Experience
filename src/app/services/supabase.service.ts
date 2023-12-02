@@ -17,6 +17,15 @@ export interface Profile {
     name: string
     first_name: string
 }
+interface Recipe {
+    id: any;
+    name: any;
+    made_by: any;
+    manual: any;
+    is_liked?: boolean; // Optional property
+    image_url?:string;
+}
+
 
 @Injectable({
     providedIn: 'root',
@@ -182,8 +191,70 @@ export class SupabaseService {
       const { data } = this.supabase
           .storage
           .from('recipes_thumbnail_and_picture')
-          .getPublicUrl(id+'.png')
+          .getPublicUrl(id+'.jpg')
 
       return data.publicUrl;
     }
+
+    async reviewRecipe(recipeId:string,score:number){
+        const userId = this._currentUser.getValue().id;
+        const { data: existingReviews, error: selectError } = await this.supabase
+            .from('recipe_review')
+            .select('*')
+            .eq('recipe', recipeId)
+            .eq('user', userId);
+
+        // 检查是否存在错误
+        if (selectError) {
+            console.error(selectError);
+            return;
+        }
+        // 检查是否有现有的记录
+        if (existingReviews && existingReviews.length > 0) {
+            // 更新现有记录的评分
+            const { data: updatedData, error: updateError } = await this.supabase
+                .from('recipe_review')
+                .update({ score: score })
+                .match({ recipe: recipeId, user: userId })
+                .select();
+                console.log(updatedData)
+            if (updateError) {
+                console.error(updateError);
+            }
+        } else {
+            // 没有现有记录，插入新记录
+            const { data: insertedData, error: insertError } = await this.supabase
+                .from('recipe_review')
+                .insert([{ recipe: recipeId, user: userId, score: score }]);
+
+            if (insertError) {
+                console.error(insertError);
+
+            }
+        }
+    }
+
+
+
+    async get_Liked_Recipes():Promise <Recipe[]>{
+        let { data: recipe, error } = await this.supabase
+            .from('recipe')
+            .select('id,name,made_by,manual')
+            .order('id', { ascending: false })
+            .limit(5);
+        if (error) throw error;
+        const { data, error:e } = await this.supabase.rpc('get_preferred_recipes')
+        return recipe as Recipe[];
+    }
+
+    async get_recipe_allergies( recipe_id:string){
+        let { data: recipe, error } = await this.supabase
+            .from('recipe')
+            .select('allergie_in_recipe(allergie(id,allergie))')
+
+        if (error) throw error;
+        console.log(recipe)
+        return recipe;
+    }
 }
+

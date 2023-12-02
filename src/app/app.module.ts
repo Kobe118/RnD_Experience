@@ -28,6 +28,7 @@ import { SignUpComponent } from './register/sign-up/sign-up.component';
 import { DietaryPreferenceComponent } from './register/dietary-preference/dietary-preference.component';
 import { CongratsComponent } from './register/congrats/congrats.component';
 import { AllergiesComponent } from './register/allergies/allergies.component';
+import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AllergiesComponent } from './register/allergies/allergies.component';
     DietaryPreferenceComponent,
     CongratsComponent,
     AllergiesComponent,
+    RecipeDetailComponent,
   ],
   imports: [
     BrowserModule,

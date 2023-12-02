@@ -2,7 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from './recipe.service';
 import { Recipe } from './recipe.model';
-import {Observable} from "rxjs"; // Import the Recipe interface
+import {Observable} from "rxjs";
+import {SupabaseService} from "../services/supabase.service"; // Import the Recipe interface
 
 @Component({
     selector: 'app-recipe',
@@ -13,16 +14,21 @@ export class RecipeComponent implements OnInit {
     liked_numbers = 0;
     liked_recipes: Recipe[] = []; // Declare recipes as an array of Recipe
     liked_urls:String[] = [];
+    liked_recipes_liked:boolean[] = [];
+    unliked_recipes: Recipe[] = [];
+    unliked_urls:String[] = [];
+    unliked_recipe_liked:boolean[] = [];
     postId?: number; // Use '?' for optional property
     errorMessage?: string;
     generatedrecipe: string = "";  // Initialize as empty string
     showedrecipe:string = ""
-    constructor(private recipeService: RecipeService) {}
+    constructor(private recipeService: RecipeService,private supabaseService: SupabaseService) {}
 
     ngOnInit() {
-        this.recipeService.get_Liked_Recipes().then(recipes => {
+        this.supabaseService.get_Liked_Recipes().then(recipes => {
             if (recipes) {
                 this.liked_recipes = recipes;
+                this.liked_recipes_liked = new Array(this.liked_recipes.length).fill(true);
                 this.loadImageUrls(this.liked_recipes)
             }
         }).catch(error => {
@@ -32,7 +38,7 @@ export class RecipeComponent implements OnInit {
 
     async loadImageUrls(recipes:Recipe[]) {
         for (let i = 0; i < recipes.length; i++) {
-            this.liked_urls.push(await this.recipeService.getImageUrl(recipes[i].id))
+            this.liked_urls.push(await this.supabaseService.getImageUrl(recipes[i].id))
         }
     }
     // Inside your RecipeComponent class
@@ -41,8 +47,15 @@ export class RecipeComponent implements OnInit {
         this.showedrecipe = this.generatedrecipe
     }
 
-    toggleHeart(recipe: Recipe) {
-        console.log(this.liked_recipes)
+    toggle_like_Heart(index:number) {
+        if (this.liked_recipes_liked[index]){
+            this.supabaseService.reviewRecipe(this.liked_recipes[index].id,3)
+            this.liked_recipes_liked[index] = false
+        }
+        else {
+            this.supabaseService.reviewRecipe(this.liked_recipes[index].id,5)
+            this.liked_recipes_liked[index] = true
+        }
     }
 
     get recipeIndices() {

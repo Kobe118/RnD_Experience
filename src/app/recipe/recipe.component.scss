@@ -72,8 +72,9 @@
     transform-origin: 0 100%;
     color: red;
   }
-  
-  .heart-btn:after {
+
+
+.heart-btn:after {
     left: -5px; /* Adjust position to overlap the before pseudo-element */
     transform: rotate(45deg);
     transform-origin: 100% 100%;
