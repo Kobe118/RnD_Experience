@@ -1,5 +1,4 @@
-$primary: #406E3D;
-$secondary: #EEF2ED;
+
 $black: #041903;
 $white: #FDFFFC;
 $light-green: #EEF2ED;
@@ -8,10 +7,20 @@ $dark-green: #204C1D;
 $dark-gray: #707070;
 $light-gray: #EBEBEB;
 
+$primary: $medium-green;
+$font-family-base: 'Inter';
+$body-font-family: 'Inter';
+$font-family-sans-serif: 'Inter';
+$display-font-family: 'Inter';
+$display-font-style: 'Inter';
+$form-text-font-style: 'Arial';
+$body-bg: $white;
+$highlight-bg: $light-green;
+
 @import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
 
 * {
-  font-family: Inter, sans-serif;
+  font-family: 'Inter', sans-serif;
   max-width: 100%;
 }
 h1 {
@@ -89,5 +98,14 @@ html, body {
   padding: 2% 1.5% 5% 1.5%;
   font-family: Inter, sans-serif;
 }
+
+app-bottom-navigation {
+  margin-top: auto;
+}
+
+#full-page {
+  padding-bottom: 20%;
+}
+
  
 
