@@ -1,5 +1,5 @@
-@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
-
+$primary: #406E3D;
+$secondary: #EEF2ED;
 $black: #041903;
 $white: #FDFFFC;
 $light-green: #EEF2ED;
@@ -8,21 +8,26 @@ $dark-green: #204C1D;
 $dark-gray: #707070;
 $light-gray: #EBEBEB;
 
+@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
 * {
   font-family: Inter, sans-serif;
   max-width: 100%;
 }
 h1 {
   font-size: 1.75em; //28px convert to em, pixels/16=em
+  color: $black;
 }
 h2 {
   font-size: 1.375em; //22px;
+  color: $black;
 }
 h3 {
   font-size: 1.125em; //18px;
+  color: $black;
 }
 p {
-
+ color: $black;
 }
 .text-large {
   font-size: 1.125em; //18px;
@@ -62,6 +67,11 @@ p {
 .dark-green {
   background-color: $dark-green;
 }
+
+.dark-green-text {
+  color: $dark-green;
+}
+
 .medium-green {
   background-color: $medium-green;
 }
@@ -76,7 +86,7 @@ html, body {
   max-width: 100%;
   background-color: $white;
   height: 100%;
-  margin: 5% 1.5% 0 1.5%;
+  padding: 2% 1.5% 5% 1.5%;
   font-family: Inter, sans-serif;
 }
  
