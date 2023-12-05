@@ -1,4 +1,17 @@
-<header>
-    <h1>Generating New Plan</h1>
-    <p class="flush-text">Let's decide what we will have next day</p>
-</header>
+<body>
+    <header>
+        <h1>Generating New Plan</h1>
+        <p class="flush-text">Let's decide what we will have next day</p>
+    </header>
+    <main>
+        <div *ngFor="let day of weekdays" class="card" (click)="openModal(day)">
+            <div class="card-body">
+                <h5 class="card-title">{{ day }}</h5>
+                <p class="card-text">Click to select a dish.</p>
+            </div>
+            <div class="image-container">
+                <img src="assets/Add.png" alt="Image" class="card-image">
+            </div>
+        </div>
+    </main>
+</body>
