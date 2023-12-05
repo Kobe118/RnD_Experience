@@ -1,7 +1,7 @@
-import {Component, OnInit, Injectable} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { Router } from '@angular/router';
-import { SupabaseService } from "../../supabase.service";
+import {Router} from '@angular/router';
+import {SupabaseService} from "../../supabase.service";
 
 interface Day {
   date: string,
@@ -42,12 +42,26 @@ export class MealPlansHomeComponent implements OnInit{
     });console.log('Processed data:', this.days);
   }
 
+  private getNextMonday(): string {
+    const currentDate = new Date();
+    const currentDayOfWeek = currentDate.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+    const daysToMonday = currentDayOfWeek === 0 ? 1 : 8 - currentDayOfWeek;
+    const nextMondayDate = new Date(currentDate);
+    nextMondayDate.setDate(currentDate.getDate() + daysToMonday);
+
+    return nextMondayDate.toISOString().split('T')[0];
+  }
+
   navigateToCalender() {
     this.router.navigate(['MealPlansCalender']);
   }
 
-  navigateToAddMealPlan() {
+  async navigateToAddMealPlan() {
     this.router.navigate(['MealPlansGenerate']);
-
+    const nextMonday = this.getNextMonday();
+    console.log(nextMonday);
+    await this.supabaseService.CreateMealPlan('244f4431-3c7b-4e43-9bcd-93d93422e3ef', '2023-12-11').then((data) => {
+      console.log(data);
+    });
   }
 }

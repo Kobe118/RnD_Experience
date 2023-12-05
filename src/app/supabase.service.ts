@@ -105,4 +105,65 @@ export class SupabaseService {
             return Object.values(data);
         }
     }
+
+    async GetLikedRecipes(date:String, family_uuid:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_three_liked_recipes', {
+                date,
+                family_uuid
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async GetNonLikedRecipes(date:String, family_uuid:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_three_non_liked_recipes', {
+                date,
+                family_uuid
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async CreateMealPlan(family_uuid:String, week:String) {
+        let { data, error } = await this.supabase
+            .rpc('create_empty_mealplan', {
+                family_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
+        let { data, error } = await this.supabase
+            .rpc('insert_recipe_into_mealplan', {
+                day_of_week,
+                mealplan,
+                recipe
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
 }

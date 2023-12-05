@@ -16,6 +16,8 @@ import {SignUpPageComponent} from "./Register/SignUpPage/SignUpPage.component";
 import {CongratsPageComponent} from "./Register/CongratsPage/CongratsPage.component";
 import {AccountComponent} from "./Register/account/account.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ModalGeneratingComponent } from './meal-plans/modal-generating/modal-generating.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -27,7 +29,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         SignUpPageComponent,
         CongratsPageComponent,
         AccountComponent,
-
+        ModalGeneratingComponent,
     ],
     imports: [
         BrowserModule,
@@ -41,6 +43,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
+        NgbModule,
     ],
     providers: [],
     exports: [
