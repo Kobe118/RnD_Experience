@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<app-default-header [title]= "'Home'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
+<app-default-header [title]= "'Hello user'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
 <h1>Upcoming Meals</h1>
 <div class="boxes">
     <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
@@ -20,4 +20,7 @@
 </div>
 <h1>Families</h1>
 <div class="boxes">
+
 </div>
+
+<app-bottom-navigation></app-bottom-navigation>

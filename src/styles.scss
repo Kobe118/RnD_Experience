@@ -1,4 +1,3 @@
-@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
 
 $black: #041903;
 $white: #FDFFFC;
@@ -8,21 +7,36 @@ $dark-green: #204C1D;
 $dark-gray: #707070;
 $light-gray: #EBEBEB;
 
+$primary: $medium-green;
+$font-family-base: 'Inter';
+$body-font-family: 'Inter';
+$font-family-sans-serif: 'Inter';
+$display-font-family: 'Inter';
+$display-font-style: 'Inter';
+$form-text-font-style: 'Arial';
+$body-bg: $white;
+$highlight-bg: $light-green;
+
+@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
 * {
-  font-family: Inter, sans-serif;
+  font-family: 'Inter', sans-serif;
   max-width: 100%;
 }
 h1 {
   font-size: 1.75em; //28px convert to em, pixels/16=em
+  color: $black;
 }
 h2 {
   font-size: 1.375em; //22px;
+  color: $black;
 }
 h3 {
   font-size: 1.125em; //18px;
+  color: $black;
 }
 p {
-
+ color: $black;
 }
 .text-large {
   font-size: 1.125em; //18px;
@@ -39,7 +53,7 @@ p {
   border: none;
   color: $white;
   min-width: 10%;
-  padding: 5px 20px 5px 20px;
+  padding: 4px 15px 4px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -48,18 +62,50 @@ p {
   border-radius: 200px;
 }
 
+.button:active {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  color: $light-gray;
+  transform: scale(0.98);
+}
+
+.button:hover {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+
+}
+
 .dark-green {
   background-color: $dark-green;
 }
+
+.dark-green-text {
+  color: $dark-green;
+}
+
 .medium-green {
   background-color: $medium-green;
+}
+.dark-gray {
+  background-color: $dark-gray;
+}
+.light-gray {
+  background-color: $light-gray;
 }
 
 html, body {
   max-width: 100%;
   background-color: $white;
   height: 100%;
-  margin: 5% 1.5% 0 1.5%;
+  padding: 2% 1.5% 5% 1.5%;
   font-family: Inter, sans-serif;
 }
+
+app-bottom-navigation {
+  margin-top: auto;
+}
+
+#full-page {
+  padding-bottom: 20%;
+}
+
+ 
 

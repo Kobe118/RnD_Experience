@@ -8,6 +8,8 @@ mat-tab-nav-bar {
   left: 0;
   width: 100%;
   z-index: 1000;
+  background-color: $white;
+  padding-top: 6px;
 }
   
 mat-tab-link {
@@ -15,6 +17,7 @@ mat-tab-link {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 21%;
 }
   
  mat-icon {
@@ -22,8 +25,13 @@ mat-tab-link {
 }
 
 .active-link {
-  color: $dark-green; /* Adjust the text color for the active tab */
+  color: $medium-green; /* Adjust the text color for the active tab */
+
   mat-icon {
-    color: $dark-green; /* Adjust the color for the active icon */
+    color: $medium-green; /* Adjust the color for the active icon */
   }
+}
+
+mat-tab-link.active-link {
+  border-bottom: 3px solid $medium-green;
 }

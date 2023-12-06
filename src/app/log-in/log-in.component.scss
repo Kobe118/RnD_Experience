@@ -1,0 +1,31 @@
+#logo-title {
+  font-size: 43px;
+  font-family: Inter, sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+#logo-subtitle {
+  font-size: 22px;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  margin-top: -27px;
+}
+
+#logo {
+  margin-bottom: 10%;
+}
+
+#full-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.button {
+  margin-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+}

@@ -5,6 +5,6 @@
         <p class="flush-text">{{subtitle}}</p>
     </div>
     <div class="image">
-        <img (click)="redirectToProfilePage()" [src]="imageurl" class="profile-picture" alt="profile picture">
+        <img (click)="redirectToProfilePage()" [src]="imageurl" (error)="handleImageError()" class="profile-picture" alt="profile picture">
 
     </div>
