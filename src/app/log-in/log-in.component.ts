@@ -41,6 +41,6 @@ export class LogInComponent implements OnInit {
 
   // Method to navigate to the sign-up page
   redirectToSignUpPage() {
-    this.router.navigateByUrl('/signup', {replaceUrl: true});
+    this.router.navigateByUrl('/register', {replaceUrl: true});
   }
 }

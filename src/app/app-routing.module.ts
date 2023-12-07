@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from "./log-in/log-in.component";
-//import { RegisterComponent } from "./register/register.component";
+
+import { RegisterComponent } from "./register/register.component";
+
 import { FamiliesComponent } from "./families/families.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { MealPlansHomeComponent } from "./meal-plans/meal-plans-home/meal-plans-home.component";
@@ -14,9 +16,10 @@ import {SignUpComponent} from "./register/sign-up/sign-up.component";
 
 const routes: Routes = [
   { path: 'login', component: LogInComponent, },
-  { path: 'signup', component: SignUpComponent },
+
+  { path: 'register', component: RegisterComponent },
   { path: 'families', component: FamiliesComponent, canActivate: [ AuthGuard] },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [ AuthGuard] },
   { path: 'mealplanshome', component: MealPlansHomeComponent, canActivate: [ AuthGuard] },
   { path: 'mealplanscalendar', component: MealPlansCalendarComponent, canActivate: [ AuthGuard] },
   { path: 'recipe', component: RecipeComponent, canActivate: [ AuthGuard] },
