@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="exampleModalLabel">Edit {{ family?.family_name }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+</div>
+<div class="modal-body">
+    <div *ngFor="let user of family?.users">
+        <div *ngIf="user.user_id !== currentUser.user_id" [ngClass]="{'clicked': isClicked(user.user_id)}" class="user-container" (click)="selectUser(user.user_id)">
+            <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture">
+            <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="button dark-gray" (click)="modalRef.close()">
+        Close
+    </button>
+    <button type="button" class="button dark-green" (click)="deleteUsers()">Confirm</button>
+</div>
+
+<div class="modal-footer" id="delete-family">
+    <p>Or want to delete the family?</p>
+    <button type="button" class="button" (click)="deleteFamily()">Delete</button>
+</div>
+
+
+
+

@@ -120,6 +120,7 @@ export class SupabaseService {
     // Remove the stored session from LocalStorage
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      this._currentUser.next(null);
       return this.supabase.auth.signOut();
     }
 
