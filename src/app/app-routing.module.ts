@@ -9,11 +9,12 @@ import { MealPlansCalendarComponent }  from "./meal-plans/meal-plans-calendar/me
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth-guard';
+import {SignUpComponent} from "./register/sign-up/sign-up.component";
  
 
 const routes: Routes = [
   { path: 'login', component: LogInComponent, },
-  //{ path: 'signup', component: RegisterComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: 'families', component: FamiliesComponent, canActivate: [ AuthGuard] },
   { path: 'profile', component: ProfileComponent },
   { path: 'mealplanshome', component: MealPlansHomeComponent, canActivate: [ AuthGuard] },
