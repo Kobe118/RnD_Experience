@@ -1,14 +1,15 @@
-import { Component } from '@angular/core'
-import { FormBuilder } from '@angular/forms'
-import { SupabaseService} from "../services/supabase.service";
+import { SupabaseService } from "../services/supabase.service";
+import {Component} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import { Location } from "@angular/common";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  loading = false
+    loading = false
 
     signInForm = this.formBuilder.group({
         email: '',
@@ -19,7 +20,7 @@ export class RegisterComponent {
 
     constructor(
         private readonly supabaseService: SupabaseService,
-        private readonly formBuilder: FormBuilder
+        private readonly formBuilder: FormBuilder,
     ) {}
 
     async onSubmit(): Promise<void> {
@@ -33,6 +34,7 @@ export class RegisterComponent {
                 {
                     email: email,
                     password: password,
+                    options : {emailRedirectTo: "http://localhost:4200/register"},
                 })
             console.log(data.user)
             console.log(error)
@@ -49,5 +51,4 @@ export class RegisterComponent {
             this.loading = false
         }
     }
-
 }
