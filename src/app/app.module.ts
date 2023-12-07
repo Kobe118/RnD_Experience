@@ -41,6 +41,7 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.component';
 import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-leave.component';
 import { FamilyCreateModalComponent } from './family-create-modal/family-create-modal.component';
+import { GroceryListComponent } from './grocery-list/grocery-list.component';
 //import { RegisterComponent } from './register/register.component';
 
 @NgModule({
@@ -58,6 +59,7 @@ import { FamilyCreateModalComponent } from './family-create-modal/family-create-
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
+    GroceryListComponent,
     //RegisterComponent,
   ],
   imports: [
