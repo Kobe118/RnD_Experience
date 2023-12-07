@@ -45,6 +45,10 @@ import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.com
 import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-leave.component';
 import { FamilyCreateModalComponent } from './family-create-modal/family-create-modal.component';
 import { RegisterComponent } from './register/register.component';
+import { WelcomeComponent} from "./register/welcome/welcome.component";
+import {AllergiesComponent} from "./register/allergies/allergies.component";
+import { CongratsComponent} from "./register/congrats/congrats.component";
+import { DietaryPreferenceComponent} from "./register/dietary-preference/dietary-preference.component";
 
 @NgModule({
   declarations: [
@@ -63,6 +67,12 @@ import { RegisterComponent } from './register/register.component';
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
+    RegisterComponent,
+    SignUpComponent,
+    AllergiesComponent,
+    DietaryPreferenceComponent,
+    WelcomeComponent,
+    CongratsComponent,
   ],
   imports: [
     BrowserModule,
