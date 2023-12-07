@@ -51,4 +51,9 @@ export class RegisterComponent {
             this.loading = false
         }
     }
+    this.location.Location.subscribe(()=> {
+        if (this.location.isCurrentPathEqualTo('/')) {
+            this.stepper.selectedIndex = 2;
+        }
+    });
 }
