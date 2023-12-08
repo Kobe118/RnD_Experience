@@ -1,19 +1,27 @@
 <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
+    <!-- Input fields for first name and name -->
     <div>
-        <label for="fistname">First Name</label>
-        <input formControlName="firstname" id="fistname" type="text" />
+        <label for="firstname">First Name</label>
+        <input formControlName="firstname" id="firstname" type="text" />
     </div>
     <div>
         <label for="name">Name</label>
-        <input formControlName="name" id="name" type="url" />
+        <input formControlName="name" id="name" type="text" />
     </div>
 
+    <!-- Display user profile picture -->
+    <div *ngIf="user?.picture_url">
+        <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" />
+    </div>
+
+    <!-- Button to update profile -->
     <div>
         <button type="submit" class="button primary block" [disabled]="loading">
             {{ loading ? 'Loading ...' : 'Update' }}
         </button>
     </div>
 
+    <!-- Button to sign out -->
     <div>
         <button class="button block" (click)="signOut()">Sign Out</button>
     </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { SupabaseService } from "../services/supabase.service";
 import { Profile } from './profile.model';
+import {User} from "../families/user.model";
 
 
 @Component({
@@ -12,6 +13,8 @@ import { Profile } from './profile.model';
 export class ProfileComponent implements OnInit {
   loading = false;
   profile: Profile = {name: "", first_name: ""};
+  user: any = {};
+
 
   updateProfileForm = this.formBuilder.group({
     firstname: '',
@@ -33,6 +36,7 @@ export class ProfileComponent implements OnInit {
         name: name,
       });
     }
+    await this.getImageUrl();
   }
 
   async getProfile() {
@@ -52,6 +56,25 @@ export class ProfileComponent implements OnInit {
           firstname: first_name,
           name: name,
         });
+      } else {
+        throw new Error('User ID not found');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async getImageUrl() {
+    try {
+      this.loading = true;
+      const user = await this.supabaseService.getUserId(); // Retrieve the user
+      if (user) {
+        const imageUrl = await this.supabaseService.getUserPictureUrl(`${user.user_id}.jpg`);
+        this.user.picture_url = imageUrl; // Assign the fetched image URL to user.picture_url
       } else {
         throw new Error('User ID not found');
       }
@@ -91,6 +114,10 @@ export class ProfileComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+
+  handleImageError(user: User) {
+    user.picture_url = "\\assets\\default-user.jpg";
   }
 
   async signOut() {
