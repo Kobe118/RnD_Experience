@@ -4,11 +4,14 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {NgOptimizedImage} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatInputModule} from '@angular/material/input';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,7 +44,6 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.component';
 import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-leave.component';
 import { FamilyCreateModalComponent } from './family-create-modal/family-create-modal.component';
-import { SignUpComponent} from "./register/sign-up/sign-up.component";
 
 import { RegisterComponent } from './register/register.component';
 
@@ -56,15 +58,13 @@ import { RegisterComponent } from './register/register.component';
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
+
+    RegisterComponent,
     FamilyModalComponent,
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
     RegisterComponent,
-    SignUpComponent,
-    DietaryPreferenceComponent,
-    CongratsComponent,
-    AllergiesComponent,
     RecipeDetailComponent,
   ],
   imports: [
@@ -80,6 +80,11 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     NgOptimizedImage,
     HttpClientModule,
+
+    MatInputModule,
+    MatStepperModule,
+    MatButtonModule,
+    MatFormFieldModule,
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
