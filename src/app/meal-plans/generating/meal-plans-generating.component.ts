@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ModalGeneratingComponent} from "../modal-generating/modal-generating.component";
-import {SupabaseService} from "../../supabase.service";
+import {SupabaseService} from "../../services/supabase.service";
 import {MdbModalRef} from "mdb-angular-ui-kit/modal";
 
 @Component({

@@ -4,25 +4,28 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {NgOptimizedImage} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatInputModule} from '@angular/material/input';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { DefaultHeaderComponent } from './default-header/default-header.component';
-import { MealPlansHomeComponent } from './meal-plans/meal-plans-home/meal-plans-home.component';
+import { MealPlansHomeComponent } from './meal-plans/home/meal-plans-home.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FamiliesComponent } from './families/families.component';
 import { ProfileComponent } from './profile/profile.component';
-import { FamilyModalComponent } from './family-modal/family-modal.component';
+import { FamilyModalComponent } from './families/family-modal/family-modal.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -38,12 +41,12 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.component';
-import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-leave.component';
-import { FamilyCreateModalComponent } from './family-create-modal/family-create-modal.component';
-import { SignUpComponent} from "./register/sign-up/sign-up.component";
-
+import { FamilyModalAddComponent } from './families/family-modal-add/family-modal-add.component';
+import { FamilyModalLeaveComponent } from './families/family-modal-leave/family-modal-leave.component';
+import { FamilyCreateModalComponent } from './families/family-create-modal/family-create-modal.component';
+import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { RegisterComponent } from './register/register.component';
+import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 
 @NgModule({
   declarations: [
@@ -56,12 +59,15 @@ import { RegisterComponent } from './register/register.component';
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
+
+    RegisterComponent,
     FamilyModalComponent,
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
+    GroceryListComponent,
     RegisterComponent,
-    SignUpComponent,
+    RecipeDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +82,11 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     NgOptimizedImage,
     HttpClientModule,
+
+    MatInputModule,
+    MatStepperModule,
+    MatButtonModule,
+    MatFormFieldModule,
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,

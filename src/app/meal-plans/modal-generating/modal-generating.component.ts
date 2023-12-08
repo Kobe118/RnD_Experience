@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SupabaseService} from "../../supabase.service";
+import {SupabaseService} from "../../services/supabase.service";
 import {MdbModalRef} from "mdb-angular-ui-kit/modal";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 interface Recipe {
