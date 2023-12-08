@@ -458,9 +458,24 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         return ingredientsWithDetails;
     }
 
-  getAllergies() {
-    return this.supabase.from('allergie').select('*').order('allergie');
-  }
+    async getAllergies() {
+      let allergies: any[] = [];
+
+        try {
+            let { data: allergiesData, error: allergiesError } = await this.supabase
+                .from('allergie')
+                .select("*");
+
+            if (allergiesError) throw allergiesError;
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies); // 调试输出
+        return Object.values(allergies);
+    }
 
   linkIngredientToUserDislikes(userId: string, ingredientId: string){
     return this.supabase
