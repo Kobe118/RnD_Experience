@@ -94,7 +94,7 @@ Deno.serve(async (req) => {
         "Given the possible allergy sources from our database be aware that you dont have to a" +
         "void them but respond to me if the allergy sources exist in the recipe["+ allergie_sources.join(", ") +"] " +
         "the allergies from the user that you should avoid[" + userAllergies.join(", ") + "], " +
-        "preferences from the user [" + preferences.join(", ") +
+        "also the user dont like [" + preferences.join(", ") +
         "], and the message from the user '" + message +
         "', please generate a recipe avoiding [" + exist_recipes.join(", ") +
         "]. Format the response in JSON with the following structure: recipe name,allergySources, ingredients (amount, unit, name), and steps. " +

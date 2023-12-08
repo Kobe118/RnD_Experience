@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
 import { HttpClient } from '@angular/common/http';
+import { SupabaseService } from "../services/supabase.service"; // Import the Recipe interface
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -15,12 +16,13 @@ export class RecipeService {
         'YXD88DMcwjimkQ0LDlmDGmKa6-A7smgjdPP4';
     private supabase = createClient(this.supabaseUrl, this.supabaseKey);
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,private supabaseService: SupabaseService) {}
 
     async postRecipeData(input: any) {
+
         let {data:data,error} = await this.supabase.functions.invoke('openai',{body:input})
         if (error) throw error;
         console.log(data)
-        return data.choices[0].message.content;
+        return data.id;
     }
 }
