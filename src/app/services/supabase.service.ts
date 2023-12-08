@@ -26,7 +26,11 @@ interface Recipe {
     image_url?:string;
 }
 
-
+interface IngredientDetail {
+    name: string;
+    quantity: number;
+    unit: string;
+}
 @Injectable({
     providedIn: 'root',
 })
@@ -276,18 +280,114 @@ export class SupabaseService {
             .order('id', { ascending: false })
             .limit(5);
         if (error) throw error;
-        const { data, error:e } = await this.supabase.rpc('get_preferred_recipes')
         return recipe as Recipe[];
     }
-
-    async get_recipe_allergies( recipe_id:string){
+    async get_recipe_by_id(recipe_id:string){
         let { data: recipe, error } = await this.supabase
             .from('recipe')
-            .select('allergie_in_recipe(allergie(id,allergie))')
-
+            .select('id,name,made_by,manual')
+            .eq('id',recipe_id)
+            .limit(1);
         if (error) throw error;
-        console.log(recipe)
         return recipe;
     }
+
+    // async get_recipe_allergies( recipe_id:string){
+    //     let allergies:string[] = [];
+    //     let { data: recipe, error } = await this.supabase
+    //         .from('recipe')
+    //         .select('allergie_in_recipe(allergie)')
+    //         .eq('id',recipe_id);
+    //     if(recipe&&recipe[0]){
+    //         for (let i = 0; i < recipe[0].allergie_in_recipe.length; i++) {
+    //             let { data: allergie, error } = await this.supabase
+    //                 .from('allergie')
+    //                 .select("allergie")
+    //                 // Filters
+    //                 .eq('id', recipe[0].allergie_in_recipe[i].allergie)
+    //             if (allergie&&allergie[0]){
+    //                 allergies.push(allergie[0].allergie)
+    //             }
+    //         }
+    //     }
+    //     if (error) throw error;
+    //     console.log(allergies)
+    //     return allergies;
+    // }
+    async get_recipe_allergies(recipe_id: string) {
+        let allergies: string[] = [];
+
+        try {
+            // 获取包含过敏原信息的食谱数据
+            let { data: allergies_id, error: recipeError } = await this.supabase
+                .from('allergie_in_recipe')
+                .select('allergie')
+                .eq('recipe', recipe_id);
+            if (recipeError|| !allergies_id) throw recipeError;
+            console.log("get allergies"+allergies_id.length)
+
+            const allergieIds = allergies_id.map(a=>a.allergie);
+            let { data: allergiesData, error: allergiesError } = await this.supabase
+                .from('allergie')
+                .select("allergie")
+                .in('id', allergieIds);
+
+            if (allergiesError) throw allergiesError;
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies); // 调试输出
+        return allergies;
+    }
+
+    async get_recipe_ingredients(recipe_id: string): Promise<IngredientDetail[]> {
+        let ingredientsWithDetails: IngredientDetail[] = [];
+
+        try {
+            // 获取食谱的原材料ID、数量和单位
+            let { data: ingredientsInfo, error: ingredientsError } = await this.supabase
+                .from('ingredient_in_recipe')
+                .select('ingredient, quantity, unit')
+                .eq('recipe', recipe_id);
+
+            if (ingredientsError || !ingredientsInfo) throw ingredientsError;
+            console.log("Ingredient IDs:", ingredientsInfo);
+
+            // 获取原材料名称
+            const ingredientIds = ingredientsInfo.map(a => a.ingredient);
+            let { data: ingredientsData, error: dataError } = await this.supabase
+                .from('ingredient')
+                .select("id, name")
+                .in('id', ingredientIds);
+
+            if (dataError) throw dataError;
+
+            // 组合原材料名称、数量和单位
+            if (ingredientsData && ingredientsData.length > 0) {
+                ingredientsWithDetails = ingredientsInfo.map(ingredientInfo => {
+                    // @ts-ignore
+                    const ingredientData = ingredientsData.find(i => i.id === ingredientInfo.ingredient);
+                    return {
+                        name: ingredientData ? ingredientData.name : 'Unknown', // 更直接的null检查
+                        quantity: ingredientInfo.quantity,
+                        unit: ingredientInfo.unit
+                    };
+                });
+            } else {
+                console.log("No ingredient data found");
+            }
+        } catch (error) {
+            console.error("Error fetching ingredients:", error);
+        }
+
+        console.log("Ingredients with details:", ingredientsWithDetails); // 调试输出
+        return ingredientsWithDetails;
+    }
+
+
+
 }
 
