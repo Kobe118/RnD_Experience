@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { SupabaseService, Profile } from "../services/supabase.service";
+import { SupabaseService } from "../services/supabase.service";
+import { Profile } from './profile.model';
 
 @Component({
   selector: 'app-profile',

@@ -16,7 +16,7 @@
 <div class="boxes">
     <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
         <div class="image-with-border">
-            <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}">
+            <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
         </div>
         <p>{{ preferredRecipe.name }}</p>
     </div>
