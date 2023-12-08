@@ -1,7 +1,6 @@
 import { SupabaseService } from "../services/supabase.service";
 import {Component} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import { Location } from "@angular/common";
 
 @Component({
     selector: 'app-register',

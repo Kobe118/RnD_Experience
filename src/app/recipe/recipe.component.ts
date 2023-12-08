@@ -2,7 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from './recipe.service';
 import { Recipe } from './recipe.model';
-import {Observable} from "rxjs"; // Import the Recipe interface
+import { ActivatedRoute,Router } from '@angular/router';
+import {Observable} from "rxjs";
+import {SupabaseService} from "../services/supabase.service"; // Import the Recipe interface
 
 @Component({
     selector: 'app-recipe',
@@ -10,19 +12,25 @@ import {Observable} from "rxjs"; // Import the Recipe interface
     styleUrls: ['./recipe.component.scss']
 })
 export class RecipeComponent implements OnInit {
-    recipes: Recipe[] = []; // Declare recipes as an array of Recipe
-    urls:String[] = [];
+    liked_numbers = 0;
+    liked_recipes: Recipe[] = []; // Declare recipes as an array of Recipe
+    liked_urls:String[] = [];
+    liked_recipes_liked:boolean[] = [];
+    unliked_recipes: Recipe[] = [];
+    unliked_urls:String[] = [];
+    unliked_recipe_liked:boolean[] = [];
     postId?: number; // Use '?' for optional property
     errorMessage?: string;
     generatedrecipe: string = "";  // Initialize as empty string
     showedrecipe:string = ""
-    constructor(private recipeService: RecipeService) {}
+    constructor(private recipeService: RecipeService,private supabaseService: SupabaseService, private router: Router ) {}
 
     ngOnInit() {
-        this.recipeService.getRecipes().then(recipes => {
+        this.supabaseService.get_Liked_Recipes().then(recipes => {
             if (recipes) {
-                this.recipes = recipes;
-                this.loadImageUrls(this.recipes)
+                this.liked_recipes = recipes;
+                this.liked_recipes_liked = new Array(this.liked_recipes.length).fill(true);
+                this.loadImageUrls(this.liked_recipes)
             }
         }).catch(error => {
             console.error('Error fetching recipes:', error);
@@ -30,8 +38,8 @@ export class RecipeComponent implements OnInit {
     }
 
     async loadImageUrls(recipes:Recipe[]) {
-        for (const recipe in recipes) {
-            this.urls.push(await this.recipeService.getImageUrl("65829b95-426e-4eb3-8844-f261805dbee3"));
+        for (let i = 0; i < recipes.length; i++) {
+            this.liked_urls.push(await this.supabaseService.getImageUrl(recipes[i].id))
         }
     }
     // Inside your RecipeComponent class
@@ -40,8 +48,24 @@ export class RecipeComponent implements OnInit {
         this.showedrecipe = this.generatedrecipe
     }
 
-    toggleHeart(recipe: Recipe) {
-        console.log(this.recipes)
+    toggle_like_Heart(index:number) {
+        if (this.liked_recipes_liked[index]){
+            this.supabaseService.reviewRecipe(this.liked_recipes[index].id,3)
+            this.liked_recipes_liked[index] = false
+        }
+        else {
+            this.supabaseService.reviewRecipe(this.liked_recipes[index].id,5)
+            this.liked_recipes_liked[index] = true
+        }
     }
+
+    get recipeIndices() {
+        return this.liked_recipes ? Array.from({ length: this.liked_recipes.length }, (_, i) => i) : [];
+    }
+
+    navigateToRecipeDetail(id: string) {
+        this.router.navigate(['/recipe_detail', id]); // 导航到recipe_detail/:id
+    }
+
 }
 

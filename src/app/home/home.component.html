@@ -2,6 +2,9 @@
 <app-default-header [title]= "'Hello user'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
 <h1>Upcoming Meals</h1>
 <div class="boxes">
+    <div *ngIf="recipes?.length == 0;" class="empty-state">
+        <p>No upcoming meals available</p>
+    </div>
     <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
         <div class="image-with-border">
             <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}">
@@ -19,8 +22,35 @@
     </div>
 </div>
 <h1>Families</h1>
-<div class="boxes">
-
+<div *ngFor="let family of userFamilies">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
+            <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>
+            <div *ngFor="let user of family.users">
+                <div class="user-container">
+                    <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture">
+                    <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-header">
+            <div *ngIf="family.is_admin ; else elseBlock">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
+                    </li>
+                </ul>
+            </div>
+            <ng-template #elseBlock>
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                    </li>
+                </ul>
+            </ng-template>
+        </div>
+    </div>
 </div>
 
 <app-bottom-navigation></app-bottom-navigation>

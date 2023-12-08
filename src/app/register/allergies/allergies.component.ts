@@ -36,6 +36,7 @@ export class AllergiesComponent {
                 // Handle error scenarios
             } else {
                 this.allergies = data || [];
+                console.log(data);
             }
         });
     }
@@ -43,6 +44,7 @@ export class AllergiesComponent {
     selectAllergies(allergies: any) {
         const allergieId = allergies.id;
 
+        console.log(allergies.allergie)
         if (this.userId !== undefined) {
             this.supabaseService.linkAllergieToUserAllergies(this.userId, allergieId);
         } else {

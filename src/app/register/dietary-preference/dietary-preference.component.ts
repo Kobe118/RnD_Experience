@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../supabase.service';
-import {NavigationService} from "../../NavigationService";
+import {NavigationService} from "../../services/navigation.service";
 
 @Component({
     selector: 'app-dietary-preference',
@@ -63,9 +63,9 @@ export class DietaryPreferenceComponent implements OnInit {
     }
 
     redirectToAllergiesPage() {
-        this.navigationService.redirectToPage(this.navigationService.AllergiesPage); // Use the service to navigate
+        this.navigationService.redirectToPage(this.navigationService.Allergies); // Use the service to navigate
     }
     redirectToWelcomePage() {
-        this.navigationService.redirectToPage(this.navigationService.WelcomePage); // Use the service to navigate
+        this.navigationService.redirectToPage(this.navigationService.Welcome); // Use the service to navigate
     }
 }

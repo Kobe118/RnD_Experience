@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {SupabaseService} from "../services/supabase.service";
+import {SupabaseService} from "../../services/supabase.service";
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import {Family} from "../families/Family.model";
-import {User} from "../families/user.model";
+import {Family} from "../family.model";
+import {User} from "../user.model";
 
 @Component({
   selector: 'app-family-modal',

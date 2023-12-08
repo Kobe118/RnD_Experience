@@ -17,7 +17,20 @@ export interface Profile {
     name: string
     first_name: string
 }
+interface Recipe {
+    id: any;
+    name: any;
+    made_by: any;
+    manual: any;
+    is_liked?: boolean; // Optional property
+    image_url?:string;
+}
 
+interface IngredientDetail {
+    name: string;
+    quantity: number;
+    unit: string;
+}
 @Injectable({
     providedIn: 'root',
 })
@@ -116,6 +129,15 @@ export class SupabaseService {
       localStorage.removeItem('token');
     }
 
+    async getUserId(){
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        console.log("wtf: ", JSON.parse(userString));
+        return JSON.parse(userString);
+      }
+      return null;
+    }
+
     signOut() {
     // Remove the stored session from LocalStorage
       localStorage.removeItem('token');
@@ -144,7 +166,6 @@ export class SupabaseService {
 
     isLoggedIn() {
         // this function is used to check if the user is logged in which will be used in auth.guard.ts to protect the routes from unauthorized access
-
         
         if(this.getLocalUser() !== null){
           this._currentUser.next(this.getLocalUser());
@@ -215,8 +236,164 @@ export class SupabaseService {
       const { data } = this.supabase
           .storage
           .from('recipes_thumbnail_and_picture')
-          .getPublicUrl(id+'.png')
+          .getPublicUrl(id+'.jpg')
 
       return data.publicUrl;
     }
+
+    async reviewRecipe(recipeId:string,score:number){
+        const userId = this._currentUser.getValue().id;
+        const { data: existingReviews, error: selectError } = await this.supabase
+            .from('recipe_review')
+            .select('*')
+            .eq('recipe', recipeId)
+            .eq('user', userId);
+
+        // 检查是否存在错误
+        if (selectError) {
+            console.error(selectError);
+            return;
+        }
+        // 检查是否有现有的记录
+        if (existingReviews && existingReviews.length > 0) {
+            // 更新现有记录的评分
+            const { data: updatedData, error: updateError } = await this.supabase
+                .from('recipe_review')
+                .update({ score: score })
+                .match({ recipe: recipeId, user: userId })
+                .select();
+                console.log(updatedData)
+            if (updateError) {
+                console.error(updateError);
+            }
+        } else {
+            // 没有现有记录，插入新记录
+            const { data: insertedData, error: insertError } = await this.supabase
+                .from('recipe_review')
+                .insert([{ recipe: recipeId, user: userId, score: score }]);
+
+            if (insertError) {
+                console.error(insertError);
+
+            }
+        }
+    }
+
+    async get_Liked_Recipes():Promise <Recipe[]>{
+        let { data: recipe, error } = await this.supabase
+            .from('recipe')
+            .select('id,name,made_by,manual')
+            .order('id', { ascending: false })
+            .limit(5);
+        if (error) throw error;
+        return recipe as Recipe[];
+    }
+    async get_recipe_by_id(recipe_id:string){
+        let { data: recipe, error } = await this.supabase
+            .from('recipe')
+            .select('id,name,made_by,manual')
+            .eq('id',recipe_id)
+            .limit(1);
+        if (error) throw error;
+        return recipe;
+    }
+
+    // async get_recipe_allergies( recipe_id:string){
+    //     let allergies:string[] = [];
+    //     let { data: recipe, error } = await this.supabase
+    //         .from('recipe')
+    //         .select('allergie_in_recipe(allergie)')
+    //         .eq('id',recipe_id);
+    //     if(recipe&&recipe[0]){
+    //         for (let i = 0; i < recipe[0].allergie_in_recipe.length; i++) {
+    //             let { data: allergie, error } = await this.supabase
+    //                 .from('allergie')
+    //                 .select("allergie")
+    //                 // Filters
+    //                 .eq('id', recipe[0].allergie_in_recipe[i].allergie)
+    //             if (allergie&&allergie[0]){
+    //                 allergies.push(allergie[0].allergie)
+    //             }
+    //         }
+    //     }
+    //     if (error) throw error;
+    //     console.log(allergies)
+    //     return allergies;
+    // }
+    async get_recipe_allergies(recipe_id: string) {
+        let allergies: string[] = [];
+
+        try {
+            // 获取包含过敏原信息的食谱数据
+            let { data: allergies_id, error: recipeError } = await this.supabase
+                .from('allergie_in_recipe')
+                .select('allergie')
+                .eq('recipe', recipe_id);
+            if (recipeError|| !allergies_id) throw recipeError;
+            console.log("get allergies"+allergies_id.length)
+
+            const allergieIds = allergies_id.map(a=>a.allergie);
+            let { data: allergiesData, error: allergiesError } = await this.supabase
+                .from('allergie')
+                .select("allergie")
+                .in('id', allergieIds);
+
+            if (allergiesError) throw allergiesError;
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies); // 调试输出
+        return allergies;
+    }
+
+    async get_recipe_ingredients(recipe_id: string): Promise<IngredientDetail[]> {
+        let ingredientsWithDetails: IngredientDetail[] = [];
+
+        try {
+            // 获取食谱的原材料ID、数量和单位
+            let { data: ingredientsInfo, error: ingredientsError } = await this.supabase
+                .from('ingredient_in_recipe')
+                .select('ingredient, quantity, unit')
+                .eq('recipe', recipe_id);
+
+            if (ingredientsError || !ingredientsInfo) throw ingredientsError;
+            console.log("Ingredient IDs:", ingredientsInfo);
+
+            // 获取原材料名称
+            const ingredientIds = ingredientsInfo.map(a => a.ingredient);
+            let { data: ingredientsData, error: dataError } = await this.supabase
+                .from('ingredient')
+                .select("id, name")
+                .in('id', ingredientIds);
+
+            if (dataError) throw dataError;
+
+            // 组合原材料名称、数量和单位
+            if (ingredientsData && ingredientsData.length > 0) {
+                ingredientsWithDetails = ingredientsInfo.map(ingredientInfo => {
+                    // @ts-ignore
+                    const ingredientData = ingredientsData.find(i => i.id === ingredientInfo.ingredient);
+                    return {
+                        name: ingredientData ? ingredientData.name : 'Unknown', // 更直接的null检查
+                        quantity: ingredientInfo.quantity,
+                        unit: ingredientInfo.unit
+                    };
+                });
+            } else {
+                console.log("No ingredient data found");
+            }
+        } catch (error) {
+            console.error("Error fetching ingredients:", error);
+        }
+
+        console.log("Ingredients with details:", ingredientsWithDetails); // 调试输出
+        return ingredientsWithDetails;
+    }
+
+
+
 }
+
