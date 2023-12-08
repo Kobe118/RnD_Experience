@@ -71,6 +71,13 @@ export class SupabaseService {
         });
     }
 
+    async getProfile(){
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        return JSON.parse(userString);
+      }
+    }
+
     profile(user: User) {
         return this.supabase
             .from('users')
@@ -151,7 +158,6 @@ export class SupabaseService {
             ...profile,
             updated_at: new Date(),
         }
-
         return this.supabase.from('users').update(profile).eq('id',profile.id)
     }
 
@@ -160,7 +166,6 @@ export class SupabaseService {
             .storage
             .from('profile_pictures')
             .getPublicUrl(filename);
-
         return data.publicUrl;
     }
 
@@ -298,6 +303,66 @@ export class SupabaseService {
         return recipe;
     }
 
+    async GetLikedRecipes(date:String, family_uuid:String) {
+      let { data, error } = await this.supabase
+          .rpc('get_three_liked_recipes', {
+              date,
+              family_uuid
+          })
+      if (error) {
+          console.error(error);
+          return [];
+      } else {
+          console.log(data);
+          return Object.values(data);
+      }
+  }
+
+  async GetNonLikedRecipes(date:String, family_uuid:String) {
+      let { data, error } = await this.supabase
+          .rpc('get_three_non_liked_recipes', {
+              date,
+              family_uuid
+          })
+      if (error) {
+          console.error(error);
+          return [];
+      } else {
+          console.log(data);
+          return Object.values(data);
+      }
+  }
+  async CreateMealPlan(family_uuid:String, week:String) {
+    let { data, error } = await this.supabase
+        .rpc('create_empty_mealplan', {
+            family_uuid,
+            week
+        })
+    if (error) {
+        console.error(error);
+        return [];
+    } else {
+        console.log(data);
+        return Object.values(data);
+    }
+}
+
+async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
+    let { data, error } = await this.supabase
+        .rpc('insert_recipe_into_mealplan', {
+            day_of_week,
+            mealplan,
+            recipe
+        })
+    if (error) {
+        console.error(error);
+        return [];
+    } else {
+        console.log(data);
+        return Object.values(data);
+    }
+  }
+
     // async get_recipe_allergies( recipe_id:string){
     //     let allergies:string[] = [];
     //     let { data: recipe, error } = await this.supabase
@@ -392,8 +457,5 @@ export class SupabaseService {
         console.log("Ingredients with details:", ingredientsWithDetails); // 调试输出
         return ingredientsWithDetails;
     }
-
-
-
 }
 

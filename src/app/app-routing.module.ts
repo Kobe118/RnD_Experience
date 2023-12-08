@@ -4,8 +4,9 @@ import { LogInComponent } from "./log-in/log-in.component";
 import { RegisterComponent } from "./register/register.component";
 import { FamiliesComponent } from "./families/families.component";
 import { ProfileComponent } from "./profile/profile.component";
-import { MealPlansHomeComponent } from "./meal-plans/meal-plans-home/meal-plans-home.component";
-import { MealPlansCalendarComponent }  from "./meal-plans/meal-plans-calendar/meal-plans-calendar.component";
+import { MealPlansHomeComponent } from "./meal-plans/home/meal-plans-home.component";
+import { MealPlansCalendarComponent }  from "./meal-plans/calendar/meal-plans-calendar.component";
+import { MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-generating.component";
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth-guard';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [ AuthGuard] },
   { path: 'mealplanshome', component: MealPlansHomeComponent, canActivate: [ AuthGuard] },
   { path: 'mealplanscalendar', component: MealPlansCalendarComponent, canActivate: [ AuthGuard] },
+  { path: 'mealplansgenerating', component: MealPlansGeneratingComponent, canActivate: [ AuthGuard] },
   { path: 'recipe', component: RecipeComponent, canActivate: [ AuthGuard] },
   { path: 'recipe_detail/:id', component:RecipeDetailComponent, canActivate: [ AuthGuard]},
   { path: 'Home', component: HomeComponent, canActivate: [ AuthGuard] },

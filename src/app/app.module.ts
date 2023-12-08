@@ -18,7 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { DefaultHeaderComponent } from './default-header/default-header.component';
-import { MealPlansHomeComponent } from './meal-plans/meal-plans-home/meal-plans-home.component';
+import { MealPlansHomeComponent } from './meal-plans/home/meal-plans-home.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';

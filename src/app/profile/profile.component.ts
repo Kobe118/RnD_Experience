@@ -36,8 +36,10 @@ export class ProfileComponent implements OnInit {
     try {
       this.loading = true;
       const user = await this.supabaseService.getUserId(); // Retrieve the user 
+      console.log("profile user: ", user);
       if (user) {
-        const userProfile = await this.supabaseService.profile(user);
+        const userProfile = await this.supabaseService.profile(user.id);
+        console.log("profile user profile: ", userProfile);
         const { first_name, name } = this.profile;
         this.updateProfileForm.patchValue({
           firstname: first_name,
@@ -62,7 +64,7 @@ export class ProfileComponent implements OnInit {
       const name = this.updateProfileForm.value.name as string;
       const userId = await this.supabaseService.getUserId(); // Retrieve the user ID
 
-      if (userId) {
+      if (userId.id) {
         const { error } = await this.supabaseService.updateProfile({
           id: userId,
           first_name: firstname,
