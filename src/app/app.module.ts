@@ -68,7 +68,6 @@ import { SignUpComponent} from "./register/sign-up/sign-up.component";
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
-    RegisterComponent,
     SignUpComponent,
     AllergiesComponent,
     DietaryPreferenceComponent,
