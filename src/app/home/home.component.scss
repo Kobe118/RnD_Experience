@@ -4,6 +4,16 @@
   overflow-x: auto; /* Enables horizontal scrolling */
   white-space: nowrap; /* Ensures the divs don't wrap */
   }
+  
+  /* Styles for the images */
+  .image-with-border img {
+    width: 120px; /* Fixed width for the image */
+    height: 120px; /* Fixed height for the image */
+    border-radius: 50%; /* Makes the image circle shaped */
+    margin-top: 25px; /* Centers the image vertically */
+    object-fit: cover; /* Ensures the image covers the area properly */
+    display: inline-block; /* This will allow the image to be centered by text-align */
+  }
 
 .recipe-small-view p {
   text-align: center;

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core'
+import { Recipe,IngredientDetail } from '../recipe/recipe.model'
+import { Profile } from '../profile/profile.model'
 import {
     AuthChangeEvent,
     AuthSession,
@@ -12,25 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 
 
-export interface Profile {
-    id?: string
-    name: string
-    first_name: string
-}
-interface Recipe {
-    id: any;
-    name: any;
-    made_by: any;
-    manual: any;
-    is_liked?: boolean; // Optional property
-    image_url?:string;
-}
-
-interface IngredientDetail {
-    name: string;
-    quantity: number;
-    unit: string;
-}
 @Injectable({
     providedIn: 'root',
 })
@@ -41,7 +24,6 @@ export class SupabaseService {
 
     constructor() {
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
-      console.log("REFRESHTOKEN:", this.getRefreshToken());
       console.log("USER:", this.getLocalUser());
     }
 
@@ -79,6 +61,7 @@ export class SupabaseService {
     }
 
     profile(user: User) {
+        console.log(user.id)
         return this.supabase
             .from('users')
             .select(`name, first_name`)
@@ -96,7 +79,6 @@ export class SupabaseService {
             credentials
           );
           this._currentUser.next(data?.user); // pass the user to the currentUser BehaviorSubject
-          console.log("USER:", this.currentUser);
     
           if (error) {
             reject(error);
@@ -105,9 +87,6 @@ export class SupabaseService {
             const account = data.user;
             this.setRefreshToken(refreshToken);
             this.setLocalUser(account)
-            console.log("REFRESHTOKEN:", this.getRefreshToken());
-            console.log("USERSESSION:", data.session);
-            console.log("USERDATA:", data.user);
             resolve(data);
           }
         });
@@ -139,7 +118,6 @@ export class SupabaseService {
     async getUserId(){
       const userString = localStorage.getItem('user');
       if (userString) {
-        console.log("wtf: ", JSON.parse(userString));
         return JSON.parse(userString);
       }
       return null;
@@ -515,11 +493,43 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         return ingredientsWithDetails;
     }
 
-  getAllergies() {
-    return this.supabase.from('allergie').select('*').order('allergie');
-  }
+    async getAllergies() {
+      let allergies: any[] = [];
 
-  linkIngredientToUserDislikes(userId: string, ingredientId: string){
+        try {
+            let { data: allergiesData, error: allergiesError } = await this.supabase
+                .from('allergie')
+                .select("*");
+
+            if (allergiesError) throw allergiesError;
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies); // 调试输出
+        return Object.values(allergies);
+    }
+
+    async uploadFile(file: File,user: User): Promise<{ path: string }> {
+        try {
+            const { data, error } = await this.supabase.storage
+                .from('profile_pictures')
+                .upload(user.id+'.jpg', file, { upsert: true });
+
+            if (error) {
+                throw error;
+            } else {
+                return data; // Assuming 'data' contains the { path: string } structure
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    linkIngredientToUserDislikes(userId: string, ingredientId: string){
     return this.supabase
         .from('user_has_dislikes')
         .insert({ user_id: userId, ingredient_id: ingredientId });

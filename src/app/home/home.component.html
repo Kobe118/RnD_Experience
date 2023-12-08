@@ -8,13 +8,11 @@
         <div *ngIf="recipes?.length == 0;" class="empty-state">
             <p id="not-available"><i>No upcoming meals available.</i></p>
         </div>
-
         <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
             <div class="recipe-card">
                 <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}" class="recipe-image">
                 <p class="recipe-name">{{ recipe.recipe_name }}</p>
             </div>
-
         </div>
     </div>
 
