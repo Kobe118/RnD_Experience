@@ -1,0 +1,15 @@
+<div id="full-page">
+
+    <h1 class="text-center">What are your allergies?</h1>
+    <div id="allergies">
+        <button class="button-white" *ngFor="let allergy of allergies" (click)="selectAllergies(allergy)"> {{ allergy.allergie }} </button>
+    </div>
+
+    <div id="bottom-buttons">
+        <button class="button-back" (click)="redirectToDietaryPreferencePage()">🡄</button>
+        <button class="button wide" id="continue" (click)="redirectToSignUpPage()">Continue</button>
+    </div>
+
+</div>
+
+<router-outlet></router-outlet>

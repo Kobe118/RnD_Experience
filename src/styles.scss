@@ -1,3 +1,4 @@
+
 $black: #041903;
 $white: #FDFFFC;
 $light-green: #EEF2ED;
@@ -6,34 +7,44 @@ $dark-green: #204C1D;
 $dark-gray: #707070;
 $light-gray: #EBEBEB;
 
+$primary: $medium-green;
+$font-family-base: 'Inter';
+$body-font-family: 'Inter';
+$font-family-sans-serif: 'Inter';
+$display-font-family: 'Inter';
+$display-font-style: 'Inter';
+$form-text-font-style: 'Arial';
+$body-bg: $white;
+$highlight-bg: $light-green;
+
+@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
 * {
-  font-family: Inter, sans-serif;
+  font-family: 'Inter', sans-serif;
   max-width: 100%;
 }
 h1 {
-  font-size: 28px; //convert to em, pixels/16=em
+  font-size: 1.75em; //28px convert to em, pixels/16=em
+  color: $black;
 }
 h2 {
-  font-size: 22px;
+  font-size: 1.375em; //22px;
+  color: $black;
 }
 h3 {
-  font-size: 18px;
+  font-size: 1.125em; //18px;
+  color: $black;
 }
 p {
-
+ color: $black;
 }
 .text-large {
-  font-size: 18px;
+  font-size: 1.125em; //18px;
 }
 .text-small {
-  font-size: 14px;
+  font-size: 1.125em; //18px;
 }
 
-.scrollable-hor {
-  max-width: 100%;
-  overflow-x: scroll;
-
-}
 .flush-text {
   margin-top: -3%;
 }
@@ -42,7 +53,8 @@ p {
   border: none;
   color: $white;
   min-width: 10%;
-  padding: 10px 20px 10px 20px;
+
+  padding: 4px 15px 4px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -51,42 +63,116 @@ p {
   border-radius: 200px;
 }
 
+.button:active {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  color: $light-gray;
+  transform: scale(0.98);
+}
+
+.button:hover {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+
+}
+
+.wide {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .dark-green {
   background-color: $dark-green;
 }
+
+.dark-green-text {
+  color: $dark-green;
+}
+
 .medium-green {
   background-color: $medium-green;
 }
-
-.image-cropper {
-  width: 100px;
-  height: 100px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
+.dark-gray {
+  background-color: $dark-gray;
 }
-.profile-pic {
-  display: inline;
-  margin: 0 auto;
-  margin-left: -25%; //centers the image
-  height: 100%;
-  width: auto;
+.light-gray {
+  background-color: $light-gray;
 }
 
 html, body {
   max-width: 100%;
   background-color: $white;
+  height: 100%;
+  padding: 2% 1.5% 5% 1.5%;
+  font-family: Inter, sans-serif;
 }
 
-header {
-  margin: 10% 2.5% 6% 2.5%;
+app-bottom-navigation {
+  margin-top: auto;
 }
 
-main {
-  margin: 5% 2.5% 0 2.5%;
+#full-page-wo-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 0 0;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+.button-white {
+  border: none;
+  min-width: 10%;
+  padding: 4px 15px 4px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 200px;
+  background-color: $white;
+  color: $black;
+  box-shadow: 0 3px 7px 1px rgba(0, 0, 0, 0.14);
+}
+
+.button-white:active {
+  background-color: $medium-green;
+  color: $white;
+  transform: scale(0.98);
+}
+
+.button-back {
+  border: none;
+  min-width: 10%;
+  padding: 4px 15px 4px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 200px;
+  background-color: $white;
+  color: $black;
+}
+
+#allergies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.text-center {
+  margin-bottom: 10%;
+}
+
+#bottom-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10%;
+  padding-bottom: 10%;
+}
+
+#full-page {
+  justify-content: center;
+  height: 100%;
+}
+

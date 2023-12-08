@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<div id="full-page-wo-nav">
+    <h1 class="text-center" id="title"><b>Sign in via magic link</b></h1>
+    <p id="sub-title">Enter your email below.</p>
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="text-center">
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="email" id="email"  formControlName="email" class="form-control" />
+            <label mdbLabel class="form-label" for="email">Email Address</label>
+        </mdb-form-control>
+
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="firstname" id="firstname" formControlName="firstname" class="form-control" />
+            <label mdbLabel class="form-label" for="firstname">First Name</label>
+        </mdb-form-control>
+
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="lastname" id="lastname" formControlName="lastname" class="form-control" />
+            <label mdbLabel class="form-label" for="lastname">Last Name</label>
+        </mdb-form-control>
+
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="password" id="password"  formControlName="password" class="form-control" />
+            <label mdbLabel class="form-label" for="password">Password</label>
+        </mdb-form-control>
+
+
+
+        <button mdbRipple type="submit" class="button" [disabled]="loading">
+            {{ loading ? 'Loading' : 'Send magic link' }}
+        </button>
+    </form>
+</div>
