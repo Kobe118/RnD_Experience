@@ -26,11 +26,16 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   navigateToCalender() {
-    this.router.navigate(['MealPlansCalender']);
+    this.router.navigate(['mealplanscalendar']);
   }
 
   navigateToAddMealPlan() {
-    this.router.navigate(['MealPlansGenerate']);
+    this.router.navigate(['mealplansgenerating']);
+
+  }
+
+  navigateToGroceryList() {
+    this.router.navigate(['grocerylist']);
 
   }
 }

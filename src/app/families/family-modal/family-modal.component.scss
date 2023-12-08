@@ -1,0 +1,30 @@
+.user-container-text {
+  margin-top: 13px;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 10px;
+  border-radius: 2em;
+  margin-bottom: 10px;
+}
+
+.user-container.clicked {
+  color: #204C1DFF;
+  box-shadow: 4px 3px 10px 1px rgba(0, 0, 0, 0.20);
+}
+
+#delete-family {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
