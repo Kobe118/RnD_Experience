@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import {Recipe,IngredientDetail} from '../recipe/recipe.model'
+import { Recipe,IngredientDetail } from '../recipe/recipe.model'
+import { Profile } from '../profile/profile.model'
 import {
     AuthChangeEvent,
     AuthSession,
@@ -13,12 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 
 
-export interface Profile {
-    id?: string
-    name: string
-    first_name: string
-}
-
 @Injectable({
     providedIn: 'root',
 })
@@ -29,7 +24,6 @@ export class SupabaseService {
 
     constructor() {
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
-      console.log("REFRESHTOKEN:", this.getRefreshToken());
       console.log("USER:", this.getLocalUser());
     }
 
@@ -84,7 +78,6 @@ export class SupabaseService {
             credentials
           );
           this._currentUser.next(data?.user); // pass the user to the currentUser BehaviorSubject
-          console.log("USER:", this.currentUser);
     
           if (error) {
             reject(error);
@@ -93,9 +86,6 @@ export class SupabaseService {
             const account = data.user;
             this.setRefreshToken(refreshToken);
             this.setLocalUser(account)
-            console.log("REFRESHTOKEN:", this.getRefreshToken());
-            console.log("USERSESSION:", data.session);
-            console.log("USERDATA:", data.user);
             resolve(data);
           }
         });
@@ -127,7 +117,6 @@ export class SupabaseService {
     async getUserId(){
       const userString = localStorage.getItem('user');
       if (userString) {
-        console.log("wtf: ", JSON.parse(userString));
         return JSON.parse(userString);
       }
       return null;
