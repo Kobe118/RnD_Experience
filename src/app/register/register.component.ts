@@ -33,7 +33,7 @@ export class RegisterComponent {
                 {
                     email: email,
                     password: password,
-                    options : {emailRedirectTo: "http://localhost:4200/register"},
+                    options : {emailRedirectTo: "http://localhost:4200/allergies"},
                 })
             console.log(data.user)
             console.log(error)

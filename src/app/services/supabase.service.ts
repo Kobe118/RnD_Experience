@@ -359,5 +359,21 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         return Object.values(data);
     }
   }
+
+  getAllergies() {
+    return this.supabase.from('allergie').select('*').order('allergie');
+  }
+
+  linkIngredientToUserDislikes(userId: string, ingredientId: string){
+    return this.supabase
+        .from('user_has_dislikes')
+        .insert({ user_id: userId, ingredient_id: ingredientId });
+  }
+
+  linkAllergieToUserAllergies(userId: string, allergieId: string){
+      return this.supabase
+          .from('user_has_allergies')
+          .insert({ user_id: userId, ingredient_id: allergieId });
+  }
 }
 
