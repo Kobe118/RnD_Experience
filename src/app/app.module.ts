@@ -62,6 +62,10 @@ import { RegisterComponent } from './register/register.component';
     FamilyCreateModalComponent,
     RegisterComponent,
     SignUpComponent,
+    DietaryPreferenceComponent,
+    CongratsComponent,
+    AllergiesComponent,
+    RecipeDetailComponent,
   ],
   imports: [
     BrowserModule,

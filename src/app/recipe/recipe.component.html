@@ -5,27 +5,29 @@
 <h3>Your likes</h3>
 <div class="liked-recipes">
     <!-- recipes.component.html -->
-    <div *ngFor="let recipe of recipes" class="recipe-small-view">
+    <div *ngFor="let index of recipeIndices" class="recipe-small-view">
         <div class="image-with-border">
-            <img [src]="urls[0]" alt="Image of {{ recipe.name }}">
-            <button class="btn btn-outline-secondary" (click)="toggleHeart(recipe)">
-                <i [class]="0 ? 'fas fa-heart' : 'far fa-heart'"></i>
+            <img [src]="liked_urls[index]" alt="Image of {{ liked_recipes[index].name }}">
+            <button class="btn btn-outline-secondary" (click)="toggle_like_Heart(index)">
+                <i [class]="liked_recipes_liked[index] ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
             </button>
+
+            <p class = "recipe_name">{{ liked_recipes[index].name }}</p>
         </div>
-        <p>{{ recipe.name }}</p>
     </div>
 </div>
 <h3>Your nono's</h3>
 <div class="disliked-recipes">
     <!-- recipes.component.html -->
-    <div *ngFor="let recipe of recipes" class="recipe-small-view">
+    <div *ngFor="let index of recipeIndices" class="recipe-small-view">
         <div class="image-with-border">
-            <img [src]="urls[0]" alt="Image of {{ recipe.name }}">
-            <button class="btn btn-outline-secondary" (click)="toggleHeart(recipe)">
-                <i [class]="0 ? 'fas fa-heart' : 'far fa-heart'"></i>
+            <img [src]="liked_urls[index]" alt="Image of {{ liked_recipes[index].name }}">
+            <button class="btn btn-outline-secondary"  (click)="toggle_like_Heart(index)">
+                <i class="bi bi-heart" [class.red] = "liked_recipes_liked[index]"></i>
             </button>
+
+            <p class = "recipe_name">{{ liked_recipes[index].name }}</p>
         </div>
-        <p>{{ recipe.name }}</p>
     </div>
 </div>
 
