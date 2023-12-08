@@ -512,7 +512,24 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         return Object.values(allergies);
     }
 
-  linkIngredientToUserDislikes(userId: string, ingredientId: string){
+    async uploadFile(file: File,user: User): Promise<{ path: string }> {
+        try {
+            const { data, error } = await this.supabase.storage
+                .from('profile_pictures')
+                .upload(user.id+'.jpg', file, { upsert: true });
+
+            if (error) {
+                throw error;
+            } else {
+                return data; // Assuming 'data' contains the { path: string } structure
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    linkIngredientToUserDislikes(userId: string, ingredientId: string){
     return this.supabase
         .from('user_has_dislikes')
         .insert({ user_id: userId, ingredient_id: ingredientId });

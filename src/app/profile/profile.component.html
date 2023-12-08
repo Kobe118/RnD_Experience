@@ -9,6 +9,12 @@
         <input formControlName="name" id="name" type="text" />
     </div>
 
+    <!-- Input for uploading a profile picture -->
+    <div>
+        <label for="profilePicture">Upload Profile Picture</label>
+        <input type="file" id="profilePicture" (change)="onFileInputChange($event)" accept="image/*" />
+    </div>
+
     <!-- Display user profile picture -->
     <div *ngIf="user?.picture_url">
         <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" />

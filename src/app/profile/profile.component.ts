@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
       this.loading = true;
       const user = await this.supabaseService.getUserId(); // Retrieve the user
       if (user) {
-        const imageUrl = await this.supabaseService.getUserPictureUrl(`${user.user_id}.jpg`);
+        const imageUrl = await this.supabaseService.getUserPictureUrl(`${user.id}.jpg`);
         this.user.picture_url = imageUrl; // Assign the fetched image URL to user.picture_url
       } else {
         throw new Error('User ID not found');
@@ -115,6 +115,24 @@ export class ProfileComponent implements OnInit {
       this.loading = false;
     }
   }
+
+  async onFileInputChange(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      try {
+        const user = await this.supabaseService.getUserId();
+        const response = await this.supabaseService.uploadFile(file, user);
+        console.log('File upload response:', response);
+        console.log('id', user)
+        // Handle success or display information about the uploaded file
+      } catch (error) {
+        console.error('File upload error:', error);
+        // Handle error while uploading the file
+      }
+    }
+  }
+
 
   handleImageError(user: User) {
     user.picture_url = "\\assets\\default-user.jpg";
