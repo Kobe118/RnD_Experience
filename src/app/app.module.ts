@@ -25,7 +25,7 @@ import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FamiliesComponent } from './families/families.component';
 import { ProfileComponent } from './profile/profile.component';
-import { FamilyModalComponent } from './family-modal/family-modal.component';
+import { FamilyModalComponent } from './families/family-modal/family-modal.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -41,15 +41,12 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { FamilyModalAddComponent } from './family-modal-add/family-modal-add.component';
-import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-leave.component';
-import { FamilyCreateModalComponent } from './family-create-modal/family-create-modal.component';
+import { FamilyModalAddComponent } from './families/family-modal-add/family-modal-add.component';
+import { FamilyModalLeaveComponent } from './families/family-modal-leave/family-modal-leave.component';
+import { FamilyCreateModalComponent } from './families/family-create-modal/family-create-modal.component';
+import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { RegisterComponent } from './register/register.component';
-import { WelcomeComponent} from "./register/welcome/welcome.component";
-import {AllergiesComponent} from "./register/allergies/allergies.component";
-import { CongratsComponent} from "./register/congrats/congrats.component";
-import { DietaryPreferenceComponent} from "./register/dietary-preference/dietary-preference.component";
-import { SignUpComponent} from "./register/sign-up/sign-up.component";
+import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 
 @NgModule({
   declarations: [
@@ -68,11 +65,9 @@ import { SignUpComponent} from "./register/sign-up/sign-up.component";
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
-    SignUpComponent,
-    AllergiesComponent,
-    DietaryPreferenceComponent,
-    WelcomeComponent,
-    CongratsComponent,
+    GroceryListComponent,
+    RegisterComponent,
+    RecipeDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,24 +17,6 @@ export class RecipeService {
 
     constructor(private http: HttpClient) {}
 
-    async getImageUrl(id: string) {
-        const { data } = this.supabase
-            .storage
-            .from('recipes_thumbnail_and_picture')
-            .getPublicUrl(id+'.png')
-
-        return data.publicUrl;
-    }
-
-    async getRecipes(){
-        let { data: recipe, error } = await this.supabase
-            .from('recipe')
-            .select('id,name,made_by,manual')
-        if (error) throw error;
-        console.log(recipe)
-        return recipe;
-    }
-
     async postRecipeData(input: any) {
         let {data:data,error} = await this.supabase.functions.invoke('openai',{body:input})
         if (error) throw error;
