@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { SupabaseService } from "../services/supabase.service";
 import { Profile } from './profile.model';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -10,7 +11,8 @@ import { Profile } from './profile.model';
 })
 export class ProfileComponent implements OnInit {
   loading = false;
-  profile!: Profile;
+  profile: Profile = {name: "", first_name: ""};
+
   updateProfileForm = this.formBuilder.group({
     firstname: '',
     name: ''
@@ -39,9 +41,13 @@ export class ProfileComponent implements OnInit {
       const user = await this.supabaseService.getUserId(); // Retrieve the user 
       console.log("profile user: ", user);
       if (user) {
-        const userProfile = await this.supabaseService.profile(user.id);
-        console.log("profile user profile: ", userProfile);
-        const { first_name, name } = this.profile;
+        const userProfile = await this.supabaseService.profile(user);
+        console.log("profile user profile: ", userProfile.data);
+
+        this.profile.name = userProfile.data?.name
+        this.profile.first_name = userProfile.data?.first_name
+
+        const { name, first_name } = this.profile;
         this.updateProfileForm.patchValue({
           firstname: first_name,
           name: name,
@@ -63,11 +69,11 @@ export class ProfileComponent implements OnInit {
       this.loading = true;
       const firstname = this.updateProfileForm.value.firstname as string;
       const name = this.updateProfileForm.value.name as string;
-      const userId = await this.supabaseService.getUserId(); // Retrieve the user ID
+      const user = await this.supabaseService.getUserId(); // Retrieve the user ID
 
-      if (userId.id) {
+      if (user.id) {
         const { error } = await this.supabaseService.updateProfile({
-          id: userId,
+          id: user.id,
           first_name: firstname,
           name: name,
         });
