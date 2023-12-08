@@ -53,6 +53,7 @@ p {
   border: none;
   color: $white;
   min-width: 10%;
+
   padding: 4px 15px 4px 15px;
   text-align: center;
   text-decoration: none;
@@ -71,6 +72,11 @@ p {
 .button:hover {
   box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
 
+}
+
+.wide {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .dark-green {
@@ -103,9 +109,70 @@ app-bottom-navigation {
   margin-top: auto;
 }
 
-#full-page {
-  padding-bottom: 20%;
+#full-page-wo-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 0 0;
 }
 
- 
+.button-white {
+  border: none;
+  min-width: 10%;
+  padding: 4px 15px 4px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 200px;
+  background-color: $white;
+  color: $black;
+  box-shadow: 0 3px 7px 1px rgba(0, 0, 0, 0.14);
+}
+
+.button-white:active {
+  background-color: $medium-green;
+  color: $white;
+  transform: scale(0.98);
+}
+
+.button-back {
+  border: none;
+  min-width: 10%;
+  padding: 4px 15px 4px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 200px;
+  background-color: $white;
+  color: $black;
+}
+
+#allergies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.text-center {
+  margin-bottom: 10%;
+}
+
+#bottom-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10%;
+  padding-bottom: 10%;
+}
+
+#full-page {
+  justify-content: center;
+  height: 100%;
+}
 

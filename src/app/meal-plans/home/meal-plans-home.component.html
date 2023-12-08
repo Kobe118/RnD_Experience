@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <title>Meal Plans Home Page</title>
+</head>
+<body>
+
+<header>
+    <h1>Your Meal-Plans</h1>
+    <p class="flush-text">What will we have today?</p>
+</header>
+
+<div class="profile-circle">
+    <img class="profile-image" src="assets/profile-pic.webp" alt="Profile Image">
+</div>
+<main>
+    <section *ngFor="let family of families">
+        <div class="family-container">
+            <h2>{{ family.family_name }}</h2>
+            <button class="circular-button add" (click)="navigateToCalender()"></button>
+            <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan()"></button>
+        </div>
+
+        <div class="container mt-4">
+            <div class="card bg-light">
+                <div class="card-body scrolling-wrapper scrollable-card-container">
+                    <div class="card card-container" *ngFor="let day of days">
+                        <img src="'https://ztcqcptzuazkqtmcpsxw.supabase.co/storage/v1/object/public/recipes_thumbnail_and_picture/' + {{day.recipe}}" class="card-img-top" alt="Image 1" width="250px" height="250px">
+                        <div class="card-header">{{ day.day_of_week.trim() }}</div>
+                        <div class="card-body">
+                            <p class="card-title">Attendees</p>
+                            <ng-container *ngIf="day.users.length > 0; else noAttendees">
+                                <p class="card-text">
+                                    <ng-container *ngFor="let user of day.users; let last = last">
+                                        {{ user.user_name }}{{ !last ? ',' : '' }}
+                                    </ng-container>
+                                </p>
+                            </ng-container>
+                            <ng-template #noAttendees>
+                                <p class="card-text">No attendees</p>
+                            </ng-template>
+                        </div>
+                        <div class="card-footer">
+              <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
+                {{ day.will_attend ? '✔ Attending' : '✘ Not Attending' }}
+              </span>
+                            <button class="circular-button refresh"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>

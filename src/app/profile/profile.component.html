@@ -1,2 +1,20 @@
-<h1>Profile</h1>
-    <button (click)="logout()">Logout</button>
+<form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
+    <div>
+        <label for="fistname">fistName</label>
+        <input formControlName="firstname" id="fistname" type="text" />
+    </div>
+    <div>
+        <label for="name">Name</label>
+        <input formControlName="name" id="name" type="url" />
+    </div>
+
+    <div>
+        <button type="submit" class="button primary block" [disabled]="loading">
+            {{ loading ? 'Loading ...' : 'Update' }}
+        </button>
+    </div>
+
+    <div>
+        <button class="button block" (click)="signOut()">Sign Out</button>
+    </div>
+</form>
