@@ -514,5 +514,21 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         console.log("Ingredients with details:", ingredientsWithDetails); // 调试输出
         return ingredientsWithDetails;
     }
+
+  getAllergies() {
+    return this.supabase.from('allergie').select('*').order('allergie');
+  }
+
+  linkIngredientToUserDislikes(userId: string, ingredientId: string){
+    return this.supabase
+        .from('user_has_dislikes')
+        .insert({ user_id: userId, ingredient_id: ingredientId });
+  }
+
+  linkAllergieToUserAllergies(userId: string, allergieId: string){
+      return this.supabase
+          .from('user_has_allergies')
+          .insert({ user_id: userId, ingredient_id: allergieId });
+  }
 }
 
