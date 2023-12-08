@@ -1,19 +1,13 @@
-<div>
-    <h1>What is your dietary preference?</h1>
-</div>
+<div id="full-page">
+    <h1 class="text-center">What is your dietary preference?</h1>
+    <div id="allergies">
+        <button class="button-white" *ngFor="let preference of preferences" (click)="selectPreference(preference)">{{ preference.name }}</button>
+    </div>
 
-<div>
-    <!-- Display fetched preferences as buttons/options -->
-    <button *ngFor="let preference of preferences" (click)="selectPreference(preference)">
-        {{ preference.name }} <!-- Assuming 'name' is the property in the preference object -->
-    </button>
-</div>
+    <div id="bottom-buttons">
+        <button class="button-back" (click)="redirectToWelcomePage()">🡄</button>
+        <button class="button wide" (click)="redirectToAllergiesPage()">Continue</button>
+    </div>
 
-<div>
-    <button (click)="redirectToAllergiesPage()">Continue</button>
 </div>
-<div>
-    <button (click)="redirectToWelcomePage()">Back</button>
-</div>
-
 <router-outlet></router-outlet>
