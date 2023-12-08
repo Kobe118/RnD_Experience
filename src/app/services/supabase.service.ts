@@ -125,6 +125,15 @@ export class SupabaseService {
       localStorage.removeItem('token');
     }
 
+    async getUserId(){
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        console.log("wtf: ", JSON.parse(userString));
+        return JSON.parse(userString);
+      }
+      return null;
+    }
+
     signOut() {
     // Remove the stored session from LocalStorage
       localStorage.removeItem('token');
@@ -153,7 +162,6 @@ export class SupabaseService {
 
     isLoggedIn() {
         // this function is used to check if the user is logged in which will be used in auth.guard.ts to protect the routes from unauthorized access
-
         
         if(this.getLocalUser() !== null){
           this._currentUser.next(this.getLocalUser());
@@ -266,8 +274,6 @@ export class SupabaseService {
             }
         }
     }
-
-
 
     async get_Liked_Recipes():Promise <Recipe[]>{
         let { data: recipe, error } = await this.supabase

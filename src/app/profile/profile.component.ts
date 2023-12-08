@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { SupabaseService, Profile } from "../supabase.service";
+import { SupabaseService, Profile } from "../services/supabase.service";
 
 @Component({
   selector: 'app-profile',
@@ -35,9 +35,9 @@ export class ProfileComponent implements OnInit {
   async getProfile() {
     try {
       this.loading = true;
-      const userId = await this.supabaseService.getUserId(); // Retrieve the user ID
-      if (userId) {
-        const userProfile = await this.supabaseService.profile(userId);
+      const user = await this.supabaseService.getUserId(); // Retrieve the user 
+      if (user) {
+        const userProfile = await this.supabaseService.profile(user);
         const { first_name, name } = this.profile;
         this.updateProfileForm.patchValue({
           firstname: first_name,
