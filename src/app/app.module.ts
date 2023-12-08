@@ -43,7 +43,7 @@ import { FamilyModalLeaveComponent } from './family-modal-leave/family-modal-lea
 import { FamilyCreateModalComponent } from './family-create-modal/family-create-modal.component';
 import { SignUpComponent} from "./register/sign-up/sign-up.component";
 
-//import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +60,7 @@ import { SignUpComponent} from "./register/sign-up/sign-up.component";
     FamilyModalAddComponent,
     FamilyModalLeaveComponent,
     FamilyCreateModalComponent,
-    //RegisterComponent,
+    RegisterComponent,
     SignUpComponent,
   ],
   imports: [

@@ -53,6 +53,7 @@ p {
   border: none;
   color: $white;
   min-width: 10%;
+
   padding: 4px 15px 4px 15px;
   text-align: center;
   text-decoration: none;
@@ -61,8 +62,6 @@ p {
   margin: 4px 2px;
   border-radius: 200px;
 }
-
-
 
 .button:active {
   box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
@@ -176,6 +175,4 @@ app-bottom-navigation {
   justify-content: center;
   height: 100%;
 }
-
- 
 
