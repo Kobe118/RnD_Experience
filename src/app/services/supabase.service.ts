@@ -473,5 +473,19 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
           .from('user_has_allergies')
           .insert({ user_id: userId, ingredient_id: allergieId });
   }
+
+    async getMealPlanInfo(mealplan:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_recipes_in_mealplan_id', {
+                mealplan
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
 }
 

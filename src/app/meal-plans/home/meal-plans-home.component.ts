@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {SupabaseService} from "../../supabase.service";
 
 interface Day {
-  date: string,
+  date: string;
   recipe: string;
   day_of_week: string;
   will_attend: boolean;
@@ -21,6 +21,10 @@ interface Family {
   family_id: string;
   family_name: string;
 }
+
+interface MealPlan {
+  mealplan: string;
+}
 @Component({
   selector: 'MealPlansHome',
   templateUrl: './meal-plans-home.component.html',
@@ -29,6 +33,7 @@ interface Family {
 export class MealPlansHomeComponent implements OnInit{
   days: Day[] = [];
   families: Family[] = [];
+  mealplan: MealPlan[] = [];
 
   constructor(private http: HttpClient, private router: Router, private supabaseService: SupabaseService) {}
   async ngOnInit(): Promise<void> {
@@ -53,19 +58,24 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   navigateToCalender() {
-    this.router.navigate(['MealPlansCalender']);
+    this.router.navigate(['mealplanscalender']);
   }
 
   async navigateToAddMealPlan() {
-    this.router.navigate(['MealPlansGenerate']);
     const nextMonday = this.getNextMonday();
     console.log(nextMonday);
     await this.supabaseService.CreateMealPlan('244f4431-3c7b-4e43-9bcd-93d93422e3ef', '2023-12-11').then((data) => {
       console.log(data);
+      this.mealplan = data[0] as MealPlan[];
+      if (this.mealplan == null) {
+        this.supabaseService.GetMealPlan('244f4431-3c7b-4e43-9bcd-93d93422e3ef','2023-12-11').then((data) => {
+          console.log(data);
+          this.mealplan = data[0] as MealPlan[];
+        });
+      }
+      this.router.navigate(['mealplansgenerating']);
     });
-    await this.supabaseService.GetMealPlan('244f4431-3c7b-4e43-9bcd-93d93422e3ef','2023-12-11').then((data) => {
-      console.log(data);
-    });
+
   }
 
   navigateToGroceryList() {

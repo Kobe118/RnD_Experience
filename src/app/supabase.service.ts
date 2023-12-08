@@ -136,11 +136,11 @@ export class SupabaseService {
         }
     }
 
-    async CreateMealPlan(family_uuid:String, week:String) {
+    async CreateMealPlan(family_uuid:String, first_day_of_week:String) {
         let { data, error } = await this.supabase
             .rpc('create_empty_mealplan', {
                 family_uuid,
-                week
+                first_day_of_week
             })
         if (error) {
             console.error(error);
@@ -167,13 +167,21 @@ export class SupabaseService {
         }
     }
 
+
     async GetMealPlan(family_uuid:String, week:String) {
         let { data, error } = await this.supabase
             .rpc('get_mealplan_id', {
                 family_uuid,
                 week
             })
-        if (error) console.error(error)
-        else console.log(data)
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
     }
+
+
 }
