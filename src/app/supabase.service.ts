@@ -10,9 +10,9 @@ import { environment} from "./environments/environment/environment";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 
 export interface Profile {
-    id?: string
-    name: string
-    first_name: string
+    id: string;
+    name: string;
+    first_name: string;
 }
 
 @Injectable({
@@ -26,7 +26,7 @@ export class SupabaseService {
         this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
     }
 
-    get session() {
+    getSession() {
         this.supabase.auth.getSession().then(({ data }) => {
             this._session = data.session
         })
@@ -42,6 +42,7 @@ export class SupabaseService {
         }
         return undefined;
     }
+
 
 
     profile(userId: string) {
