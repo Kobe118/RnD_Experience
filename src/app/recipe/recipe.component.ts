@@ -18,7 +18,11 @@ export class RecipeComponent implements OnInit {
     liked_recipes_liked:boolean[] = [];
     unliked_recipes: Recipe[] = [];
     unliked_urls:String[] = [];
-    unliked_recipe_liked:boolean[] = [];
+    unliked_recipe_unliked:boolean[] = [];
+    recommended_recipes: Recipe[] = [];
+    recommended_urls:String[] = [];
+    recommended_recipes_liked:boolean[] = [];
+    recommended_recipes_unliked:boolean[] = [];
     postId?: number; // Use '?' for optional property
     errorMessage?: string;
     generatedrecipe: string = "";  // Initialize as empty string
@@ -30,16 +34,47 @@ export class RecipeComponent implements OnInit {
             if (recipes) {
                 this.liked_recipes = recipes;
                 this.liked_recipes_liked = new Array(this.liked_recipes.length).fill(true);
-                this.loadImageUrls(this.liked_recipes)
+                this.load_liked_image(this.liked_recipes)
             }
+            this.supabaseService.get_unLiked_Recipes().then(recipes => {
+                if (recipes) {
+                    this.unliked_recipes = recipes;
+                    this.unliked_recipe_unliked = new Array(this.unliked_recipes.length).fill(true);
+                    this.load_unliked_image(this.unliked_recipes)
+                }
+                this.supabaseService.get_Other_Recipes(this.liked_recipes,this.unliked_recipes).then(recipes => {
+                    if (recipes) {
+                        this.recommended_recipes = recipes;
+                        this.recommended_recipes_liked = new Array(this.recommended_recipes.length).fill(false);
+                        this.recommended_recipes_unliked = new Array(this.recommended_recipes.length).fill(false);
+                        this.load_recommended_image(this.recommended_recipes)
+                    }
+                }).catch(error => {
+                    console.error('Error fetching recipes:', error);
+                });
+            }).catch(error => {
+                console.error('Error fetching recipes:', error);
+            });
         }).catch(error => {
             console.error('Error fetching recipes:', error);
         });
+
+
     }
 
-    async loadImageUrls(recipes:Recipe[]) {
+    async load_liked_image(recipes:Recipe[]) {
         for (let i = 0; i < recipes.length; i++) {
             this.liked_urls.push(await this.supabaseService.getImageUrl(recipes[i].id))
+        }
+    }
+    async load_unliked_image(recipes:Recipe[]) {
+        for (let i = 0; i < recipes.length; i++) {
+            this.unliked_urls.push(await this.supabaseService.getImageUrl(recipes[i].id))
+        }
+    }
+    async load_recommended_image(recipes:Recipe[]) {
+        for (let i = 0; i < recipes.length; i++) {
+            this.recommended_urls.push(await this.supabaseService.getImageUrl(recipes[i].id))
         }
     }
     // Inside your RecipeComponent class
@@ -58,11 +93,48 @@ export class RecipeComponent implements OnInit {
             this.liked_recipes_liked[index] = true
         }
     }
+    unlike_recipe(index:number) {
+        if (this.unliked_recipe_unliked[index]){
+            this.supabaseService.reviewRecipe(this.unliked_recipes[index].id,3)
+            this.unliked_recipe_unliked[index] = false
+        }
+        else {
+            this.supabaseService.reviewRecipe(this.unliked_recipes[index].id,0)
+            this.unliked_recipe_unliked[index] = true
+        }
+    }
+
+    like_recommended_recipe(index:number) {
+        if (this.recommended_recipes_liked[index]){
+            this.supabaseService.reviewRecipe(this.recommended_recipes[index].id,3)
+            this.recommended_recipes_liked[index] = false
+        }
+        else {
+            this.supabaseService.reviewRecipe(this.recommended_recipes[index].id,5)
+            this.recommended_recipes_liked[index] = true
+        }
+    }
+    unlike_recommended_recipe(index:number) {
+        if (this.recommended_recipes_unliked[index]){
+            this.supabaseService.reviewRecipe(this.recommended_recipes[index].id,3)
+            this.recommended_recipes_unliked[index] = false
+        }
+        else {
+            this.supabaseService.reviewRecipe(this.recommended_recipes[index].id,0)
+            this.recommended_recipes_unliked[index] = true
+        }
+    }
 
     get recipeIndices() {
         return this.liked_recipes ? Array.from({ length: this.liked_recipes.length }, (_, i) => i) : [];
     }
+    get unliked_recipeIndices() {
+        return this.unliked_recipes ? Array.from({ length: this.unliked_recipes.length }, (_, i) => i) : [];
+    }
 
+    get recommended_recipeIndices() {
+        return this.recommended_recipes ? Array.from({ length: this.recommended_recipes.length }, (_, i) => i) : [];
+    }
     navigateToRecipeDetail(id: string) {
         this.router.navigate(['/recipe_detail', id]); // 导航到recipe_detail/:id
     }
