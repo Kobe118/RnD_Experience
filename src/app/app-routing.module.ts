@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'mealplansgenerating', component: MealPlansGeneratingComponent, canActivate: [ AuthGuard] },
   { path: 'grocerylist', component: GroceryListComponent, canActivate: [ AuthGuard] },
   { path: 'recipe', component: RecipeComponent, canActivate: [ AuthGuard] },
-  { path: 'recipe_detail', component:RecipeDetailComponent, canActivate: [ AuthGuard]},
+  { path: 'recipe_detail/:id', component:RecipeDetailComponent, canActivate: [ AuthGuard]},
   { path: 'Home', component: HomeComponent, canActivate: [ AuthGuard] },
   { path: '', redirectTo: '/Home', pathMatch: 'full' },
 ];
