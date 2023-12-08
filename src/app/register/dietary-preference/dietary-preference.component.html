@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>DietaryPreference</title>
-</head>
-<body>
-<div>
-    <h1>What is your dietary preference?</h1>
-</div>
+<div id="full-page">
+    <h1 class="text-center">What is your dietary preference?</h1>
+    <div id="allergies">
+        <button class="button-white" *ngFor="let preference of preferences" (click)="selectPreference(preference)">{{ preference.name }}</button>
+    </div>
 
-<div>
-    <button (click)="redirectToAllergiesPage()">Continue</button>
-</div>
-<div>
-    <button (click)="redirectToWelcomePage()">Back</button>
-</div>
+    <div id="bottom-buttons">
+        <button class="button-back" (click)="redirectToWelcomePage()">🡄</button>
+        <button class="button wide" (click)="redirectToAllergiesPage()">Continue</button>
+    </div>
 
+</div>
 <router-outlet></router-outlet>
-</body>
-</html>

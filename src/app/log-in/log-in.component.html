@@ -1,33 +1,26 @@
-<!-- app.component.html -->
-<main>
-<form (ngSubmit)="supabaseLogin()" [formGroup]="credentials">
-    <div class="input-group">
-    <ul>
-        <li>Login</li>
-        <li>
-        <input
-            class="ion-margin-top"
-            type="email"
-            placeholder="john@doe.com"
-            formControlName="email"
-        />
-        </li>
-        <li>
-        <input
-            class="ion-margin-top"
-            type="password"
-            placeholder="password"
-            formControlName="password"
-        />
-        </li>
-    </ul>
+<div id="full-page-wo-nav">
+    <div class="text-center" id="logo">
+        <p id="logo-title">MEALPLANND</p>
+        <p id="logo-subtitle"><span class="dark-green-text">Allergies </span>made easy.</p>
     </div>
-    <button
-    class="ion-margin"
-    type="submit"
-    >
-    Log in
-    </button>
-</form>
-</main>
-  
+
+    <form (ngSubmit)="supabaseLogin()" [formGroup]="credentials" class="text-center" id="login-form">
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="email" id="email"  formControlName="email" class="form-control" />
+            <label mdbLabel class="form-label" for="email">Email address</label>
+        </mdb-form-control>
+
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="password" id="password" class="form-control" formControlName="password"/>
+            <label mdbLabel class="form-label" for="password">Password</label>
+        </mdb-form-control>
+
+        <button mdbRipple type="submit" class="button wide">Log in</button>
+
+        <div class="text-center">
+            <p>Not a member? <a href="signup" (click)="redirectToSignUpPage()" >Register</a></p>
+        </div>
+
+    </form>
+
+</div>

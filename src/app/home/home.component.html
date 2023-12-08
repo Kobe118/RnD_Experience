@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<app-default-header [title]= "'Home'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
+<app-default-header [title]= "'Hello user'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
 <h1>Upcoming Meals</h1>
 <div class="boxes">
-    <div *ngFor="let recipe of recipes" class="recipe-small-view">
+    <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
         <div class="image-with-border">
-            <img [src]="urls[0]" alt="Image of {{ recipe.recipe }}">
+            <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}">
         </div>
         <p>{{ recipe.recipe_name }}</p>
     </div>
 </div>
 <h1>Preferred Recipes</h1>
 <div class="boxes">
-    <div *ngFor="let preferredRecipe of preferredRecipes" class="recipe-small-view">
+    <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
         <div class="image-with-border">
-            <img [src]="urls[0]" alt="Image of {{ preferredRecipe.recipe }}">
+            <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}">
         </div>
         <p>{{ preferredRecipe.name }}</p>
     </div>
 </div>
 <h1>Families</h1>
 <div class="boxes">
+
 </div>
+
+<app-bottom-navigation></app-bottom-navigation>

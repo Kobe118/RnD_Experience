@@ -37,6 +37,8 @@ export class SupabaseService {
 
     constructor() {
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
+      console.log("REFRESHTOKEN:", this.getRefreshToken());
+      console.log("USER:", this.getLocalUser());
     }
 
     get session() {
@@ -82,25 +84,52 @@ export class SupabaseService {
           const { error, data } = await this.supabase.auth.signInWithPassword(
             credentials
           );
-    
-          //pass the data to the currentUser BehaviorSubject
-          //! This was the final issue that was preventing the user from being logged in
-          //? The data was not being passed to the currentUser BehaviorSubject
-          //? This was because the data was not being passed to the currentUser BehaviorSubject
-          //? The user was able to access the list page even though they were not logged in
           this._currentUser.next(data?.user); // pass the user to the currentUser BehaviorSubject
+          console.log("USER:", this.currentUser);
     
           if (error) {
             reject(error);
           } else {
+            const refreshToken = data.session.refresh_token;
+            const account = data.user;
+            this.setRefreshToken(refreshToken);
+            this.setLocalUser(account)
+            console.log("REFRESHTOKEN:", this.getRefreshToken());
+            console.log("USERSESSION:", data.session);
+            console.log("USERDATA:", data.user);
             resolve(data);
           }
         });
     }
+    private setRefreshToken(token: string): void {
+      localStorage.setItem('token', token);
+    }
+    private setLocalUser(account: User): void{
+      const userString = JSON.stringify(account);
+      localStorage.setItem('user', userString);
+    }
+  
+    private getRefreshToken(): string | null {
+      return localStorage.getItem('token');
+    }
+    
+    private getLocalUser(): User | null {
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        return JSON.parse(userString);
+      }
+      return null;
+    }
+  
+    private clearTokens(): void {
+      localStorage.removeItem('token');
+    }
 
     signOut() {
     // Remove the stored session from LocalStorage
-    localStorage.removeItem('supabase.auth.token');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      this._currentUser.next(null);
       return this.supabase.auth.signOut();
     }
 
@@ -125,6 +154,10 @@ export class SupabaseService {
     isLoggedIn() {
         // this function is used to check if the user is logged in which will be used in auth.guard.ts to protect the routes from unauthorized access
 
+        
+        if(this.getLocalUser() !== null){
+          this._currentUser.next(this.getLocalUser());
+        }
         const user = this._currentUser.getValue(); // get the current value of the BehaviorSubject
         console.log('user: ', user);
         
