@@ -69,7 +69,7 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   navigateToGroceryList() {
-    this.router.navigate(['grocery-list']);
+    this.router.navigate(['grocerylist']);
 
   }
 }

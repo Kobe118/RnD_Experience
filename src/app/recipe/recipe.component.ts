@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from './recipe.service';
 import { Recipe } from './recipe.model';
+import { ActivatedRoute,Router } from '@angular/router';
 import {Observable} from "rxjs";
 import {SupabaseService} from "../services/supabase.service"; // Import the Recipe interface
 
@@ -22,7 +23,7 @@ export class RecipeComponent implements OnInit {
     errorMessage?: string;
     generatedrecipe: string = "";  // Initialize as empty string
     showedrecipe:string = ""
-    constructor(private recipeService: RecipeService,private supabaseService: SupabaseService) {}
+    constructor(private recipeService: RecipeService,private supabaseService: SupabaseService, private router: Router ) {}
 
     ngOnInit() {
         this.supabaseService.get_Liked_Recipes().then(recipes => {
@@ -60,6 +61,10 @@ export class RecipeComponent implements OnInit {
 
     get recipeIndices() {
         return this.liked_recipes ? Array.from({ length: this.liked_recipes.length }, (_, i) => i) : [];
+    }
+
+    navigateToRecipeDetail(id: string) {
+        this.router.navigate(['/recipe_detail', id]); // 导航到recipe_detail/:id
     }
 
 }

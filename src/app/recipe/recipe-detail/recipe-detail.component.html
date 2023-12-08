@@ -1,1 +1,28 @@
-<p>recipe-detail works!</p>
+<h1>{{ name }}</h1>
+<div class="recipe-detail-card">
+    <img
+            class="recipe-detail-image"
+            [src]="imageUrl"
+            alt="Image of {{ name }}"
+            onerror="this.onerror=null;this.src='path/to/default-image.jpg';"
+            aria-label="Recipe Image">
+
+    <section *ngIf="ingredients.length > 0">
+        <h3>Ingredients</h3>
+        <ul class="ingredients" role="list">
+            <li *ngFor="let ingredient of ingredients" role="listitem">{{ ingredient.name }}: {{ ingredient.quantity }} {{ ingredient.unit }}</li>
+        </ul>
+    </section>
+
+    <section *ngIf="allergies.length > 0">
+        <h3>Allergies</h3>
+        <ul class="allergies" role="list">
+            <li *ngFor="let allergy of allergies" role="listitem">{{ allergy }}</li>
+        </ul>
+    </section>
+
+    <section *ngIf="steps">
+        <h3>Steps</h3>
+        <p class="steps">{{ steps }}</p>
+    </section>
+</div>
