@@ -33,4 +33,9 @@ export class MealPlansHomeComponent implements OnInit{
     this.router.navigate(['MealPlansGenerate']);
 
   }
+
+  navigateToGroceryList() {
+    this.router.navigate(['grocery-list']);
+
+  }
 }
