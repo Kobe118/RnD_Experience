@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <app-default-header [title]= "'Hello user'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
-<h1>Upcoming Meals</h1>
+<h2>Upcoming Meals</h2>
 <div class="boxes">
     <div *ngIf="recipes?.length == 0;" class="empty-state">
         <p>No upcoming meals available</p>
@@ -16,7 +16,7 @@
 <div class="boxes">
     <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
         <div class="image-with-border">
-            <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}">
+            <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
         </div>
         <p>{{ preferredRecipe.name }}</p>
     </div>

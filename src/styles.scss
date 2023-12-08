@@ -142,7 +142,7 @@ app-bottom-navigation {
 .button-back {
   border: none;
   min-width: 10%;
-  padding: 4px 15px 4px 15px;
+  padding: 8px 15px 8px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -173,6 +173,10 @@ app-bottom-navigation {
 
 #full-page {
   justify-content: center;
-  height: 100%;
+  //height: 100%;
+}
+
+.bottom-element {
+  margin-bottom: 60px;
 }
 
