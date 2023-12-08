@@ -323,7 +323,6 @@ export class SupabaseService {
             .select('id, name, made_by, manual')
             .not('id', 'in', `(${excludeIds.join(',')})`)
             .limit(5);
-
         // If there's an error, throw it
         if (error) throw error;
 

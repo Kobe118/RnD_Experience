@@ -67,12 +67,12 @@ Deno.serve(async (req) => {
       "Tc2MywiZXhwIjoyMDExNTc1NzYzfQ.IOXs53-E-fFBoog9F5IDyzy2f" +
       "2xYpyAu_3SBY8gRDew";
   const supabase = createClient(
-      Deno.env.get('URL') ?? '',
-      Deno.env.get('SERVICE_ROLE_KEY') ?? '',
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { global: { headers: { Authorization: supabaseKey } } }
   )
   try {
-    console.log(Deno.env.get('SERVICE_ROLE_KEY'))
+    console.log(Deno.env.get('SUPABASE_SERVICE_ROLE_KEY'))
     //****************************data preperation**********************************
     const requestBody = await req.json();
     // // Extract allergies, preferences, and message from the request body
@@ -245,8 +245,8 @@ Deno.serve(async (req) => {
     const bucketName = 'recipes_thumbnail_and_picture';
     const fileName = recipe_insert_result[0].id+'.jpg'; // or .png, etc.
     const supabase2 = createClient(
-        Deno.env.get('URL') ?? '',
-        Deno.env.get('SERVICE_ROLE_KEY') ?? ''
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
     try {
       // Fetch the image from the URL
@@ -276,8 +276,9 @@ Deno.serve(async (req) => {
 
 
 
-    return new Response(JSON.stringify(data), {
-      headers: { 'Content-Type': 'application/json' },status:200
+    return new Response(JSON.stringify({ id: recipe_insert_result[0].id }), {
+      headers: { 'Content-Type': 'application/json' },
+      status: 200
     });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
