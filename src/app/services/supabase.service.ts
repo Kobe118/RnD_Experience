@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import {Recipe,IngredientDetail} from '../recipe/recipe.model'
+import { Recipe,IngredientDetail } from '../recipe/recipe.model'
+import { Profile } from '../profile/profile.model'
 import {
     AuthChangeEvent,
     AuthSession,
@@ -13,12 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 
 
-export interface Profile {
-    id?: string
-    name: string
-    first_name: string
-}
-
 @Injectable({
     providedIn: 'root',
 })
@@ -29,7 +24,6 @@ export class SupabaseService {
 
     constructor() {
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
-      console.log("REFRESHTOKEN:", this.getRefreshToken());
       console.log("USER:", this.getLocalUser());
     }
 
@@ -59,6 +53,13 @@ export class SupabaseService {
         });
     }
 
+    async getProfile(){
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        return JSON.parse(userString);
+      }
+    }
+
     profile(user: User) {
         return this.supabase
             .from('users')
@@ -77,7 +78,6 @@ export class SupabaseService {
             credentials
           );
           this._currentUser.next(data?.user); // pass the user to the currentUser BehaviorSubject
-          console.log("USER:", this.currentUser);
     
           if (error) {
             reject(error);
@@ -86,9 +86,6 @@ export class SupabaseService {
             const account = data.user;
             this.setRefreshToken(refreshToken);
             this.setLocalUser(account)
-            console.log("REFRESHTOKEN:", this.getRefreshToken());
-            console.log("USERSESSION:", data.session);
-            console.log("USERDATA:", data.user);
             resolve(data);
           }
         });
@@ -120,7 +117,6 @@ export class SupabaseService {
     async getUserId(){
       const userString = localStorage.getItem('user');
       if (userString) {
-        console.log("wtf: ", JSON.parse(userString));
         return JSON.parse(userString);
       }
       return null;
@@ -139,7 +135,6 @@ export class SupabaseService {
             ...profile,
             updated_at: new Date(),
         }
-
         return this.supabase.from('users').update(profile).eq('id',profile.id)
     }
 
@@ -148,7 +143,6 @@ export class SupabaseService {
             .storage
             .from('profile_pictures')
             .getPublicUrl(filename);
-
         return data.publicUrl;
     }
 
@@ -342,6 +336,66 @@ export class SupabaseService {
         return recipe;
     }
 
+    async GetLikedRecipes(date:String, family_uuid:String) {
+      let { data, error } = await this.supabase
+          .rpc('get_three_liked_recipes', {
+              date,
+              family_uuid
+          })
+      if (error) {
+          console.error(error);
+          return [];
+      } else {
+          console.log(data);
+          return Object.values(data);
+      }
+  }
+
+  async GetNonLikedRecipes(date:String, family_uuid:String) {
+      let { data, error } = await this.supabase
+          .rpc('get_three_non_liked_recipes', {
+              date,
+              family_uuid
+          })
+      if (error) {
+          console.error(error);
+          return [];
+      } else {
+          console.log(data);
+          return Object.values(data);
+      }
+  }
+  async CreateMealPlan(family_uuid:String, week:String) {
+    let { data, error } = await this.supabase
+        .rpc('create_empty_mealplan', {
+            family_uuid,
+            week
+        })
+    if (error) {
+        console.error(error);
+        return [];
+    } else {
+        console.log(data);
+        return Object.values(data);
+    }
+}
+
+async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
+    let { data, error } = await this.supabase
+        .rpc('insert_recipe_into_mealplan', {
+            day_of_week,
+            mealplan,
+            recipe
+        })
+    if (error) {
+        console.error(error);
+        return [];
+    } else {
+        console.log(data);
+        return Object.values(data);
+    }
+  }
+
     // async get_recipe_allergies( recipe_id:string){
     //     let allergies:string[] = [];
     //     let { data: recipe, error } = await this.supabase
@@ -437,7 +491,35 @@ export class SupabaseService {
         return ingredientsWithDetails;
     }
 
+    async getAllergies() {
+      let allergies: any[] = [];
 
+        try {
+            let { data: allergiesData, error: allergiesError } = await this.supabase
+                .from('allergie')
+                .select("*");
 
+            if (allergiesError) throw allergiesError;
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies); // 调试输出
+        return Object.values(allergies);
+    }
+
+  linkIngredientToUserDislikes(userId: string, ingredientId: string){
+    return this.supabase
+        .from('user_has_dislikes')
+        .insert({ user_id: userId, ingredient_id: ingredientId });
+  }
+
+  linkAllergieToUserAllergies(userId: string, allergieId: string){
+      return this.supabase
+          .from('user_has_allergies')
+          .insert({ user_id: userId, ingredient_id: allergieId });
+  }
 }
 

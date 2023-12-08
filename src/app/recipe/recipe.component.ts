@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from './recipe.service';
 import { Recipe } from './recipe.model';
 import { ActivatedRoute,Router } from '@angular/router';
-import {Observable} from "rxjs";
-import {SupabaseService} from "../services/supabase.service"; // Import the Recipe interface
+import { Observable } from "rxjs";
+import { SupabaseService } from "../services/supabase.service"; // Import the Recipe interface
 
 @Component({
     selector: 'app-recipe',

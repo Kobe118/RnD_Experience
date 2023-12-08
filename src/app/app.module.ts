@@ -4,21 +4,21 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from "@angular/material/card";
-import {MatButtonModule} from "@angular/material/button";
-import {NgOptimizedImage} from "@angular/common";
-import {HttpClientModule} from "@angular/common/http";
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatInputModule} from '@angular/material/input';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import { NgOptimizedImage } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { DefaultHeaderComponent } from './default-header/default-header.component';
-import { MealPlansHomeComponent } from './meal-plans/meal-plans-home/meal-plans-home.component';
+import { MealPlansHomeComponent } from './meal-plans/home/meal-plans-home.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
@@ -59,7 +59,6 @@ import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.comp
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
-
     RegisterComponent,
     FamilyModalComponent,
     FamilyModalAddComponent,
@@ -82,7 +81,6 @@ import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.comp
     MatButtonModule,
     NgOptimizedImage,
     HttpClientModule,
-
     MatInputModule,
     MatStepperModule,
     MatButtonModule,

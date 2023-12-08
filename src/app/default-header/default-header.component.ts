@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NavigationService} from "../services/navigation.service";
 import { SupabaseService} from "../services/supabase.service";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class DefaultHeaderComponent implements OnInit{
 
     imageurl:string = "";
     currentUser: any = {};
-    constructor(private navigationService: NavigationService, private readonly supabaseService: SupabaseService) {
+    constructor(private readonly supabaseService: SupabaseService, private router: Router) {
     }
 
     async getCurrentUser() {
@@ -47,7 +47,7 @@ export class DefaultHeaderComponent implements OnInit{
     }
 
     redirectToProfilePage() {
-        this.navigationService.redirectToPage(this.navigationService.Profile); // Use the service to navigate
+        this.router.navigate(['profile']);
     }
 
     handleImageError() {
