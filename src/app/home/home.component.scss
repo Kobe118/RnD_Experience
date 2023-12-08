@@ -1,34 +1,54 @@
-/* Styles for the liked recipes container */
+@import "../../styles";
 .boxes {
-    display: flex; /* Lays out the children in a line */
-    overflow-x: auto; /* Enables horizontal scrolling */
-    white-space: nowrap; /* Ensures the divs don't wrap */
+  display: flex; /* Lays out the children in a line */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Ensures the divs don't wrap */
   }
-  .recipe-small-view p {
-    /* other styles */
-    text-align: center; /* if you want to center the text under the image */
-    margin-top: 0; /* remove any default margin from the paragraph that could push it down */
-  }
-  /* Styles for the image containers */
-  .image-with-border {
-    position: relative; /* Needed for absolute positioning of the heart button */
-    border: 2px solid #ccc; /* Grey border */
-    border-radius: 10px;
-    background-color: #eee; /* Grey background */
-    margin: 10px; /* Spacing around each image container */
-    width: 120px; /* Fixed width */
-    height: 150px; /* Fixed height */
-    text-align: center; /* Center text */
-    display: inline-block; /* Display inline with block features */
-  }
+
+.recipe-small-view p {
+  text-align: center;
+  margin-top: 0;
+}
+
+.recipe-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  margin: 8px;
+  background-color: $light-green;
+  position: relative; /* Needed for absolute positioning of the heart button */
+  width: 150px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  display: inline-block; /* Display inline with block features */
+}
+
+.recipe-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.recipe-name {
+  padding-top: 0.5em;
+  width: 150px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-size: 0.9em;
+}
 
   .card {
     width: 90%;
     margin-left: 5%;
-    margin-bottom: 5%;
+    margin-bottom: 3%;
     margin-right: 5%;
+
   }
-  
+  .card-body {
+    background-color: $white;
+  }
   .user-container {
     display: flex;
     align-items: center;
@@ -59,5 +79,9 @@
     width:80%;
     margin-left: 10%;
   
+  }
+
+  .bottom-element {
+    padding-bottom: 70px;
   }
   

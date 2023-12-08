@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../services/supabase.service';
 import { Recipe, PreferredRecipe, Family, User } from './home.model';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -58,6 +57,7 @@ export class HomeComponent implements OnInit {
   }
   async getFamilies() {
     const user = await this.supabaseService.getUserId();
+
     console.log('user id Family: ', user.id);
     let { data, error } = await this.supabaseService.supabase
         .rpc('get_all_users_family_members', {
