@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from "./log-in/log-in.component";
-import { RegisterComponent } from "./register/register.component";
-import { AllergiesComponent } from './register/allergies/allergies.component';
+import { RegisterComponent } from "./Register/register.component";
+import { AllergiesComponent } from './Register/allergies/allergies.component';
 import { FamiliesComponent } from "./families/families.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { MealPlansHomeComponent } from "./meal-plans/home/meal-plans-home.component";
@@ -13,11 +13,15 @@ import { RecipeDetailComponent } from "./recipe/recipe-detail/recipe-detail.comp
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth-guard';
+import {DietaryPreferenceComponent} from "./Register/dietary-preference/dietary-preference.component";
+import {CongratsComponent} from "./Register/congrats/congrats.component";
  
 const routes: Routes = [
   { path: 'login', component: LogInComponent, },
   { path: 'register', component: RegisterComponent },
   { path: 'allergies', component: AllergiesComponent},
+  { path: 'dietaryPreference', component: DietaryPreferenceComponent},
+  { path: 'congrats', component: CongratsComponent},
   { path: 'families', component: FamiliesComponent, canActivate: [ AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [ AuthGuard] },
   { path: 'mealplanshome', component: MealPlansHomeComponent, canActivate: [ AuthGuard] },
