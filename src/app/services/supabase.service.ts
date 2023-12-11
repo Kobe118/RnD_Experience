@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core'
+import { Recipe,IngredientDetail } from '../recipe/recipe.model'
+import { Profile } from '../profile/profile.model'
 import {
     AuthChangeEvent,
     AuthSession,
@@ -12,21 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 
 
-export interface Profile {
-    id?: string
-    name: string
-    first_name: string
-}
-interface Recipe {
-    id: any;
-    name: any;
-    made_by: any;
-    manual: any;
-    is_liked?: boolean; // Optional property
-    image_url?:string;
-}
-
-
 @Injectable({
     providedIn: 'root',
 })
@@ -37,7 +24,6 @@ export class SupabaseService {
 
     constructor() {
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
-      console.log("REFRESHTOKEN:", this.getRefreshToken());
       console.log("USER:", this.getLocalUser());
     }
 
@@ -67,7 +53,15 @@ export class SupabaseService {
         });
     }
 
+    async getProfile(){
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        return JSON.parse(userString);
+      }
+    }
+
     profile(user: User) {
+        console.log(user.id)
         return this.supabase
             .from('users')
             .select(`name, first_name`)
@@ -85,7 +79,6 @@ export class SupabaseService {
             credentials
           );
           this._currentUser.next(data?.user); // pass the user to the currentUser BehaviorSubject
-          console.log("USER:", this.currentUser);
     
           if (error) {
             reject(error);
@@ -94,9 +87,6 @@ export class SupabaseService {
             const account = data.user;
             this.setRefreshToken(refreshToken);
             this.setLocalUser(account)
-            console.log("REFRESHTOKEN:", this.getRefreshToken());
-            console.log("USERSESSION:", data.session);
-            console.log("USERDATA:", data.user);
             resolve(data);
           }
         });
@@ -125,6 +115,14 @@ export class SupabaseService {
       localStorage.removeItem('token');
     }
 
+    async getUserId(){
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        return JSON.parse(userString);
+      }
+      return null;
+    }
+
     signOut() {
     // Remove the stored session from LocalStorage
       localStorage.removeItem('token');
@@ -138,7 +136,6 @@ export class SupabaseService {
             ...profile,
             updated_at: new Date(),
         }
-
         return this.supabase.from('users').update(profile).eq('id',profile.id)
     }
 
@@ -147,13 +144,11 @@ export class SupabaseService {
             .storage
             .from('profile_pictures')
             .getPublicUrl(filename);
-
         return data.publicUrl;
     }
 
     isLoggedIn() {
         // this function is used to check if the user is logged in which will be used in auth.guard.ts to protect the routes from unauthorized access
-
         
         if(this.getLocalUser() !== null){
           this._currentUser.next(this.getLocalUser());
@@ -267,27 +262,283 @@ export class SupabaseService {
         }
     }
 
-
-
     async get_Liked_Recipes():Promise <Recipe[]>{
+        let userId = this._currentUser.getValue().id;
+
+        let { data: recipe, error } = await this.supabase
+            .from('recipe_review')
+            .select('recipe')
+            .eq('user',userId)
+            .eq('score',5);
+        if (recipe){
+            const recipeIds = recipe.map(a=>a.recipe);
+
+            let { data: newrecipe, error } = await this.supabase
+                .from('recipe')
+                .select('id,name,made_by,manual')
+                .in('id',recipeIds)
+            console.log("recipeID")
+            console.log(newrecipe?.length)
+            return newrecipe as Recipe[];
+        }
+        if (error) throw error;
+        return []
+    }
+    async get_unLiked_Recipes():Promise <Recipe[]>{
+        let userId = this._currentUser.getValue().id;
+
+        let { data: recipe, error } = await this.supabase
+            .from('recipe_review')
+            .select('recipe')
+            .eq('user',userId)
+            .eq('score',0);
+        if (recipe){
+            const recipeIds = recipe.map(a=>a.recipe);
+
+            let { data: newrecipe, error } = await this.supabase
+                .from('recipe')
+                .select('id,name,made_by,manual')
+                .in('id',recipeIds)
+            console.log("recipeID")
+            console.log(newrecipe?.length)
+            return newrecipe as Recipe[];
+        }
+        if (error) throw error;
+        return []
+    }
+    async get_Other_Recipes(likedRecipes: Recipe[], unlikedRecipes: Recipe[]): Promise<Recipe[]> {
+        // Extracting IDs from liked and unliked recipes
+        const excludeIds = [...likedRecipes, ...unlikedRecipes].map(recipe => recipe.id);
+        console.log("excluded")
+        console.log(likedRecipes.length)
+        console.log(excludeIds[0])
+        // Querying for 5 recipes excluding the liked and unliked ones
+        let { data: otherRecipes, error } = await this.supabase
+            .from('recipe')
+            .select('id, name, made_by, manual')
+            .not('id', 'in', `(${excludeIds.join(',')})`)
+            .limit(5);
+
+        // If there's an error, throw it
+        if (error) throw error;
+
+        // Return the fetched recipes or an empty array if none were found
+        return otherRecipes as Recipe[] || [];
+    }
+
+
+
+    async get_recipe_by_id(recipe_id:string){
         let { data: recipe, error } = await this.supabase
             .from('recipe')
             .select('id,name,made_by,manual')
-            .order('id', { ascending: false })
-            .limit(5);
+            .eq('id',recipe_id)
+            .limit(1);
         if (error) throw error;
-        const { data, error:e } = await this.supabase.rpc('get_preferred_recipes')
-        return recipe as Recipe[];
-    }
-
-    async get_recipe_allergies( recipe_id:string){
-        let { data: recipe, error } = await this.supabase
-            .from('recipe')
-            .select('allergie_in_recipe(allergie(id,allergie))')
-
-        if (error) throw error;
-        console.log(recipe)
         return recipe;
     }
+
+    async GetLikedRecipes(date:String, family_uuid:String) {
+      let { data, error } = await this.supabase
+          .rpc('get_three_liked_recipes', {
+              date,
+              family_uuid
+          })
+      if (error) {
+          console.error(error);
+          return [];
+      } else {
+          console.log(data);
+          return Object.values(data);
+      }
+  }
+
+  async GetNonLikedRecipes(date:String, family_uuid:String) {
+      let { data, error } = await this.supabase
+          .rpc('get_three_non_liked_recipes', {
+              date,
+              family_uuid
+          })
+      if (error) {
+          console.error(error);
+          return [];
+      } else {
+          console.log(data);
+          return Object.values(data);
+      }
+  }
+  async CreateMealPlan(family_uuid:String, week:String) {
+    let { data, error } = await this.supabase
+        .rpc('create_empty_mealplan', {
+            family_uuid,
+            week
+        })
+    if (error) {
+        console.error(error);
+        return [];
+    } else {
+        console.log(data);
+        return Object.values(data);
+    }
+}
+
+async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
+    let { data, error } = await this.supabase
+        .rpc('insert_recipe_into_mealplan', {
+            day_of_week,
+            mealplan,
+            recipe
+        })
+    if (error) {
+        console.error(error);
+        return [];
+    } else {
+        console.log(data);
+        return Object.values(data);
+    }
+  }
+
+    // async get_recipe_allergies( recipe_id:string){
+    //     let allergies:string[] = [];
+    //     let { data: recipe, error } = await this.supabase
+    //         .from('recipe')
+    //         .select('allergie_in_recipe(allergie)')
+    //         .eq('id',recipe_id);
+    //     if(recipe&&recipe[0]){
+    //         for (let i = 0; i < recipe[0].allergie_in_recipe.length; i++) {
+    //             let { data: allergie, error } = await this.supabase
+    //                 .from('allergie')
+    //                 .select("allergie")
+    //                 // Filters
+    //                 .eq('id', recipe[0].allergie_in_recipe[i].allergie)
+    //             if (allergie&&allergie[0]){
+    //                 allergies.push(allergie[0].allergie)
+    //             }
+    //         }
+    //     }
+    //     if (error) throw error;
+    //     console.log(allergies)
+    //     return allergies;
+    // }
+    async get_recipe_allergies(recipe_id: string) {
+        let allergies: string[] = [];
+
+        try {
+            // 获取包含过敏原信息的食谱数据
+            let { data: allergies_id, error: recipeError } = await this.supabase
+                .from('allergie_in_recipe')
+                .select('allergie')
+                .eq('recipe', recipe_id);
+            if (recipeError|| !allergies_id) throw recipeError;
+            console.log("get allergies"+allergies_id.length)
+
+            const allergieIds = allergies_id.map(a=>a.allergie);
+            let { data: allergiesData, error: allergiesError } = await this.supabase
+                .from('allergie')
+                .select("allergie")
+                .in('id', allergieIds);
+
+            if (allergiesError) throw allergiesError;
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies); // 调试输出
+        return allergies;
+    }
+
+    async get_recipe_ingredients(recipe_id: string): Promise<IngredientDetail[]> {
+        let ingredientsWithDetails: IngredientDetail[] = [];
+
+        try {
+            // 获取食谱的原材料ID、数量和单位
+            let { data: ingredientsInfo, error: ingredientsError } = await this.supabase
+                .from('ingredient_in_recipe')
+                .select('ingredient, quantity, unit')
+                .eq('recipe', recipe_id);
+
+            if (ingredientsError || !ingredientsInfo) throw ingredientsError;
+            console.log("Ingredient IDs:", ingredientsInfo);
+
+            // 获取原材料名称
+            const ingredientIds = ingredientsInfo.map(a => a.ingredient);
+            let { data: ingredientsData, error: dataError } = await this.supabase
+                .from('ingredient')
+                .select("id, name")
+                .in('id', ingredientIds);
+
+            if (dataError) throw dataError;
+
+            // 组合原材料名称、数量和单位
+            if (ingredientsData && ingredientsData.length > 0) {
+                ingredientsWithDetails = ingredientsInfo.map(ingredientInfo => {
+                    // @ts-ignore
+                    const ingredientData = ingredientsData.find(i => i.id === ingredientInfo.ingredient);
+                    return {
+                        name: ingredientData ? ingredientData.name : 'Unknown', // 更直接的null检查
+                        quantity: ingredientInfo.quantity,
+                        unit: ingredientInfo.unit
+                    };
+                });
+            } else {
+                console.log("No ingredient data found");
+            }
+        } catch (error) {
+            console.error("Error fetching ingredients:", error);
+        }
+
+        console.log("Ingredients with details:", ingredientsWithDetails); // 调试输出
+        return ingredientsWithDetails;
+    }
+
+    async getAllergies() {
+      let allergies: any[] = [];
+
+        try {
+            let { data: allergiesData, error: allergiesError } = await this.supabase
+                .from('allergie')
+                .select("*");
+
+            if (allergiesError) throw allergiesError;
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies); // 调试输出
+        return Object.values(allergies);
+    }
+
+    async uploadFile(file: File,user: User): Promise<{ path: string }> {
+        try {
+            const { data, error } = await this.supabase.storage
+                .from('profile_pictures')
+                .upload(user.id+'.jpg', file, { upsert: true });
+
+            if (error) {
+                throw error;
+            } else {
+                return data; // Assuming 'data' contains the { path: string } structure
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    linkIngredientToUserDislikes(userId: string, ingredientId: string){
+    return this.supabase
+        .from('user_has_dislikes')
+        .insert({ user_id: userId, ingredient_id: ingredientId });
+  }
+
+  linkAllergieToUserAllergies(userId: string, allergieId: string){
+      return this.supabase
+          .from('user_has_allergies')
+          .insert({ user_id: userId, ingredient_id: allergieId });
+  }
 }
 
