@@ -61,6 +61,7 @@ export class SupabaseService {
     }
 
     profile(user: User) {
+        console.log(user.id)
         return this.supabase
             .from('users')
             .select(`name, first_name`)
