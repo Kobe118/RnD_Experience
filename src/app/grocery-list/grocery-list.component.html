@@ -13,4 +13,7 @@
     <div *ngIf="groceryList.length === 0 && !loadingTemplate">
         <p>No items found in the grocery list.</p>
     </div>
+    <div class="back-button-container">
+        <button class="back-button" (click)="goBack()">Confirm attendances</button>
+    </div>
 </div>

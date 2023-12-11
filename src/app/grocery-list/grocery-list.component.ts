@@ -31,13 +31,4 @@ export class GroceryListComponent implements OnInit {
   goBack(): void {
     this.router.navigate(['/MealPlansHome']); // Replace with the actual route
   }
-
-  async fetchFamily(){
-    try{
-      this.family = await this.supabaseService.getFamilies();
-      console.log('family', this.family);
-    } catch(error){
-      console.error('Error fetching family', error);
-    }
-  }
 }
