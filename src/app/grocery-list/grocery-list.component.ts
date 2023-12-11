@@ -1,42 +1,43 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {Recipe} from "../home/home.model";
-import {SupabaseService} from "../services/supabase.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SupabaseService } from '../services/supabase.service';
 
 @Component({
   selector: 'app-grocery-list',
   templateUrl: './grocery-list.component.html',
   styleUrls: ['./grocery-list.component.scss']
 })
-export class GroceryListComponent implements OnInit{
+export class GroceryListComponent implements OnInit {
 
-  recipes: Recipe[] = [];
-  urlUpcoming: string[] = [];
-  errorMessage?: string;
+  groceryList: any[] = [];
+  family : string;
+  week : string;
 
-  constructor(private router: Router, private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService, private router: Router) {}
 
   async ngOnInit() {
+    await this.fetchGroceryList();
+  }
+
+  async fetchGroceryList() {
     try {
-      const recipes = await this.supabaseService.getUpcomingRecipes();
-      if (recipes) {
-        this.recipes = recipes[0] as Recipe[];
-        console.log('upcoming: ', this.recipes);
-        this.loadImageUrls(this.recipes);
-      }
+      this.groceryList = await this.supabaseService.getIngredientsForWeek(this.family, this.week);
+      console.log('Grocery List:', this.groceryList);
     } catch (error) {
-      console.error('Error fetching recipes:', error);
-      this.errorMessage = 'Error fetching recipes';
+      console.error('Error fetching grocery list:', error);
     }
   }
 
-  async loadImageUrls(recipes:Recipe[]) {
-    for (const x in recipes) {
-      this.urlUpcoming.push(await this.supabaseService.getImageUrl(recipes[x].recipe));
-    }
-  }
   goBack(): void {
-    this.router.navigate(['/MealPlansHome']);
+    this.router.navigate(['/MealPlansHome']); // Replace with the actual route
   }
 
+  async fetchFamily(){
+    try{
+      this.family = await this.supabaseService.getFamilies();
+      console.log('family', this.family);
+    } catch(error){
+      console.error('Error fetching family', error);
+    }
+  }
 }

@@ -511,6 +511,27 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         return Object.values(allergies);
     }
 
+    async getIngredientsForWeek(family: string, week: string) {
+        try {
+            const { data, error } = await this.supabase
+                .rpc('get_shopping_list', {
+                    family,
+                    week
+                });
+
+            if (error) {
+                console.error(error);
+                throw error;
+            } else {
+                console.log(data); // You can handle the 'data' here as per your requirement
+                return data; // Returning the data from the function if needed
+            }
+        } catch (error) {
+            console.error('Error fetching shopping list:', error);
+            throw error;
+        }
+    }
+
   linkIngredientToUserDislikes(userId: string, ingredientId: string){
     return this.supabase
         .from('user_has_dislikes')
