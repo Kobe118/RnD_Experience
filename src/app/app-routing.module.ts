@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from "./log-in/log-in.component";
-import { RegisterComponent } from "./register/register.component";
-import { AllergiesComponent } from './register/allergies/allergies.component';
+import { RegisterComponent } from "./Register/register.component";
+import { AllergiesComponent } from './Register/allergies/allergies.component';
 import { FamiliesComponent } from "./families/families.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { MealPlansHomeComponent } from "./meal-plans/home/meal-plans-home.component";

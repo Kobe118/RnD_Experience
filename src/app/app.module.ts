@@ -45,7 +45,7 @@ import { FamilyModalAddComponent } from './families/family-modal-add/family-moda
 import { FamilyModalLeaveComponent } from './families/family-modal-leave/family-modal-leave.component';
 import { FamilyCreateModalComponent } from './families/family-create-modal/family-create-modal.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './Register/register.component';
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 
 @NgModule({
