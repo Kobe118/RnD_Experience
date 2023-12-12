@@ -1,52 +1,54 @@
 <!DOCTYPE html>
-<app-default-header [title]= "'Your Recipes'" [subtitle]="'Let\'s have a look at your favourites'"></app-default-header>
-<p>   </p>
-<h2>Recipe Likes</h2>
-<div class="liked-recipes">
-    <div *ngFor="let index of recipeIndices" class="recipe-small-view">
-        <div class="recipe-card">
-            <img [src]="liked_urls[index]" alt="Image of {{ liked_recipes[index].name }}" (click)="navigateToRecipeDetail(liked_recipes[index].id)" class="recipe-image">
-            <button class="button-back btn-outline-secondary" (click)="toggle_like_Heart(index)" >
-                <i [class]="liked_recipes_liked[index] ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
-            </button>
-            <p class="recipe-name">{{ liked_recipes[index].name }}</p>
+<div id="page">
+    <app-default-header [title]= "'Your Recipes'" [subtitle]="'Let\'s have a look at your favourites'"></app-default-header>
+
+    <h2>Recipe Likes</h2>
+    <div class="liked-recipes">
+        <div *ngFor="let index of recipeIndices" class="recipe-small-view">
+            <div class="recipe-card">
+                <img [src]="liked_urls[index]" alt="Image of {{ liked_recipes[index].name }}" (click)="navigateToRecipeDetail(liked_recipes[index].id)" class="recipe-image">
+                <button class="button-back btn-outline-secondary" (click)="toggle_like_Heart(index)" >
+                    <i [class]="liked_recipes_liked[index] ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
+                </button>
+                <p class="recipe-name">{{ liked_recipes[index].name }}</p>
+            </div>
         </div>
     </div>
-</div>
 
 
-<!-- Recommended Recipes -->
-<h2>Recommended for You</h2>
-<div class="liked-recipes">
-    <div *ngFor="let index of recommended_recipeIndices" class="recipe-small-view">
-        <div class="recipe-card">
-            <img [src]="recommended_urls[index]" alt="Image of {{ recommended_recipes[index].name }}" (click)="navigateToRecipeDetail(recommended_recipes[index].id)" class="recipe-image">
-            <button class="button-back btn-outline-secondary" (click)="like_recommended_recipe(index)">
-                <i [class]="recommended_recipes_liked[index] ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
-            </button>
-            <button class="button-back btn-outline-thirdly" (click)="unlike_recommended_recipe(index)">
-                <i [class]="recommended_recipes_unliked[index] ? 'bi bi bi-hand-thumbs-down-fill' : 'bi bi-hand-thumbs-down'"></i>
-            </button>
-            <p class="recipe-name">{{ recommended_recipes[index].name }}</p>
+    <!-- Recommended Recipes -->
+    <h2>Recommended for You</h2>
+    <div class="liked-recipes">
+        <div *ngFor="let index of recommended_recipeIndices" class="recipe-small-view">
+            <div class="recipe-card">
+                <img [src]="recommended_urls[index]" alt="Image of {{ recommended_recipes[index].name }}" (click)="navigateToRecipeDetail(recommended_recipes[index].id)" class="recipe-image">
+                <button class="button-back btn-outline-secondary" (click)="like_recommended_recipe(index)">
+                    <i [class]="recommended_recipes_liked[index] ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
+                </button>
+                <button class="button-back btn-outline-thirdly" (click)="unlike_recommended_recipe(index)">
+                    <i [class]="recommended_recipes_unliked[index] ? 'bi bi bi-hand-thumbs-down-fill' : 'bi bi-hand-thumbs-down'"></i>
+                </button>
+                <p class="recipe-name">{{ recommended_recipes[index].name }}</p>
+            </div>
         </div>
     </div>
-</div>
-<!-- Your nono's (Unliked Recipes) -->
-<h2>Your nono's</h2>
-<div class="liked-recipes">
-    <div *ngFor="let index of unliked_recipeIndices" class="recipe-small-view">
-        <div class="recipe-card">
-            <img [src]="unliked_urls[index]"
-                 alt="Image of {{ unliked_recipes[index].name }}"
-                 (click)="navigateToRecipeDetail(unliked_recipes[index].id)" class="recipe-image">
-            <button class="button-back btn-outline-secondary" (click)="unlike_recipe(index)">
-                <i [class]="unliked_recipe_unliked[index] ? 'bi bi bi-hand-thumbs-down-fill' : 'bi bi-hand-thumbs-down'"></i>
-            </button>
+    <!-- Your nono's (Unliked Recipes) -->
+    <h2>Your nono's</h2>
+    <div class="liked-recipes">
+        <div *ngFor="let index of unliked_recipeIndices" class="recipe-small-view">
+            <div class="recipe-card">
+                <img [src]="unliked_urls[index]"
+                     alt="Image of {{ unliked_recipes[index].name }}"
+                     (click)="navigateToRecipeDetail(unliked_recipes[index].id)" class="recipe-image">
+                <button class="button-back btn-outline-secondary" (click)="unlike_recipe(index)">
+                    <i [class]="unliked_recipe_unliked[index] ? 'bi bi bi-hand-thumbs-down-fill' : 'bi bi-hand-thumbs-down'"></i>
+                </button>
 
-            <p class="recipe-name">{{ unliked_recipes[index].name }}</p>
+                <p class="recipe-name">{{ unliked_recipes[index].name }}</p>
+            </div>
         </div>
     </div>
-</div>
+
 
 <h2>Not satisfying?</h2>
  <button class="bottom-element button recipe-generation" (click)="sendRecipeRequest()">
@@ -58,6 +60,7 @@
 </div>
 <p *ngIf="isLoading">Be patient</p>
 <p>It might take more than 1 minute</p>
+
 
 
 <!-- Similar setup for disliked recipes -->
