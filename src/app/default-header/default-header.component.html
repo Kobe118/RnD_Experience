@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
     <div class="text">
-        <h1> {{title}}</h1>
-        <p class="flush-text">{{subtitle}}</p>
+        <h1><b>{{title}}</b></h1>
+        <p>{{subtitle}}</p>
     </div>
     <div class="image">
         <img (click)="redirectToProfilePage()" [src]="imageurl" (error)="handleImageError()" class="profile-picture" alt="profile picture">
-
     </div>
+    <br>
+

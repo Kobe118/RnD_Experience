@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <div id="page">
     <app-default-header [title]= "'Hello!'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
+    <br>
     <h2>Upcoming Meals</h2>
-
     <div class="boxes">
-        <p id="not-available"><i>No upcoming meals available.</i></p>
         <div *ngIf="recipes?.length == 0;" class="empty-state">
             <p id="not-available"><i>No upcoming meals available.</i></p>
         </div>
@@ -15,6 +14,7 @@
             </div>
         </div>
     </div>
+    <br>
 
     <h2>Preferred Recipes</h2>
     <div class="boxes">
@@ -25,6 +25,7 @@
             </div>
         </div>
     </div>
+    <br>
     <h2>Families</h2>
     <div class="bottom-element">
         <div class="card" *ngFor="let family of userFamilies">

@@ -5,6 +5,14 @@
   margin-right: 5%;
 }
 
+.card-title {
+  margin-bottom: 0;
+}
+
+#family-id {
+  margin-top: 0;
+}
+
 .user-container {
   display: flex;
   align-items: center;
@@ -35,5 +43,9 @@
   width:80%;
   margin-left: 10%;
 
+}
+
+.nav {
+  margin-top: 10px;
 }
 

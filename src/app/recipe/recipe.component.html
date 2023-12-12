@@ -2,6 +2,7 @@
 <div id="page">
     <app-default-header [title]= "'Your Recipes'" [subtitle]="'Let\'s have a look at your favourites'"></app-default-header>
 
+    <br>
     <h2>Recipe Likes</h2>
     <div class="liked-recipes">
         <div *ngFor="let index of recipeIndices" class="recipe-small-view">
@@ -14,6 +15,7 @@
             </div>
         </div>
     </div>
+    <br>
 
 
     <!-- Recommended Recipes -->
@@ -32,6 +34,8 @@
             </div>
         </div>
     </div>
+    <br>
+
     <!-- Your nono's (Unliked Recipes) -->
     <h2>Your nono's</h2>
     <div class="liked-recipes">
@@ -48,6 +52,7 @@
             </div>
         </div>
     </div>
+    <br>
 
 
     <button class="bottom-element button recipe-generation" (click)="sendRecipeRequest()">
