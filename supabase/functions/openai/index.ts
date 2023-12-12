@@ -1,5 +1,4 @@
 import { serve } from 'https://deno.land/std/http/server.ts';
-import { corsHeaders } from '../../shared/cors.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js'
 import { resize } from "https://deno.land/x/deno_image/mod.ts";
 
@@ -57,9 +56,13 @@ function extractAndParseJSON(responseString) {
 
 
 Deno.serve(async (req) => {
-  // if (req.method === 'OPTIONS') {
-  //   return new Response('ok', { headers: corsHeaders })
-  // }
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  }
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
 
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
       "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0Y3FjcHR6dWF6a3F0bW" +
@@ -277,13 +280,13 @@ Deno.serve(async (req) => {
 
 
     return new Response(JSON.stringify({ id: recipe_insert_result[0].id }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders,'Content-Type': 'application/json' },
       status: 200
     });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders,'Content-Type': 'application/json' }
     });
   }
 });

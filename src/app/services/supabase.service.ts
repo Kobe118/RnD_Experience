@@ -12,7 +12,11 @@ import {
 import { environment} from "../environments/environment/environment";
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
-
+interface Recipe_new {
+    url: string;
+    name: string;
+    recipe: string; // 这里假设 recipe 是一个字符串
+}
 
 @Injectable({
     providedIn: 'root',
@@ -275,6 +279,7 @@ export class SupabaseService {
             let { data: newrecipe, error } = await this.supabase
                 .from('recipe')
                 .select('id,name,made_by,manual')
+                .order('id', { ascending: false })
                 .in('id',recipeIds)
             console.log("recipeID")
             console.log(newrecipe?.length)
@@ -297,6 +302,7 @@ export class SupabaseService {
             let { data: newrecipe, error } = await this.supabase
                 .from('recipe')
                 .select('id,name,made_by,manual')
+                .order('id', { ascending: false })
                 .in('id',recipeIds)
             console.log("recipeID")
             console.log(newrecipe?.length)
@@ -305,17 +311,26 @@ export class SupabaseService {
         if (error) throw error;
         return []
     }
+
     async get_Other_Recipes(likedRecipes: Recipe[], unlikedRecipes: Recipe[]): Promise<Recipe[]> {
+        let { data, error:e } = await this.supabase
+            .rpc('get_five_random_recipes', {
+                user_id:this._currentUser.getValue().id
+            })
+        if (e) console.error(e)
+        else console.log(data)
+        const recipeIds = data.recipes.map((recipe: Recipe_new) => recipe.recipe);
         // Extracting IDs from liked and unliked recipes
-        const excludeIds = [...likedRecipes, ...unlikedRecipes].map(recipe => recipe.id);
-        console.log("excluded")
-        console.log(likedRecipes.length)
-        console.log(excludeIds[0])
+        // const excludeIds = [...likedRecipes, ...unlikedRecipes].map(recipe => recipe.id);
+        // console.log("excluded")
+        // console.log(likedRecipes.length)
+        // console.log(excludeIds[0])
         // Querying for 5 recipes excluding the liked and unliked ones
         let { data: otherRecipes, error } = await this.supabase
             .from('recipe')
             .select('id, name, made_by, manual')
-            .not('id', 'in', `(${excludeIds.join(',')})`)
+            .order('id', { ascending: false })
+            .in('id', recipeIds)
             .limit(5);
         // If there's an error, throw it
         if (error) throw error;
