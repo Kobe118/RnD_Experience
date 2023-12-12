@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import {SupabaseService} from "../../services/supabase.service";
 
+import { Allergy } from "./allergy.model";
+
 @Component({
     selector: 'app-allergies',
     templateUrl: './allergies.component.html',
@@ -13,8 +15,8 @@ export class AllergiesComponent {
     constructor(private supabaseService: SupabaseService) {} // Inject the service
 
     async ngOnInit(): Promise<void> {
-        
-        console.log("Allergies", this.supabaseService.getAllergies());
+        this.allergies = await this.supabaseService.getAllergies();
+        console.log("Allergies :", this.supabaseService.getAllergies());
     }
 
 

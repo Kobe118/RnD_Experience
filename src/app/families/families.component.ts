@@ -33,6 +33,9 @@ export class FamiliesComponent implements OnInit {
 
   async getFamilies() {
     const user = await this.supabaseService.getUserId();
+    if (user) {
+      this.currentUser.user_id = user.id;
+    }
 
     let { data, error } = await this.supabaseService.supabase
         .rpc('get_all_users_family_members', {

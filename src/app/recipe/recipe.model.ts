@@ -1,8 +1,14 @@
-// recipe.model.ts
 export interface Recipe {
-    id: string;
-    name: string;
+    id: any;
+    name: any;
+    made_by: any;
+    manual: any;
+    is_liked?: boolean; // Optional property
+    image_url?:string;
+}
 
-    made_by:string;
-    manual:string;
+export interface IngredientDetail {
+    name: string;
+    quantity: number;
+    unit: string;
 }
