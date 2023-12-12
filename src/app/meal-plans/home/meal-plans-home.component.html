@@ -14,12 +14,9 @@
     <img class="profile-image" src="assets/profile-pic.webp" alt="Profile Image">
 </div>
 <main>
-    <section>
-        <div class="family-container">
-            <h2>Family 1</h2>
-            <button class="circular-button add" (click)="navigateToCalender()"></button>
-            <button class="circular-button plus" (click)="navigateToAddMealPlan()"></button>
-            <!--<button class="circular-button plus" (click)="navigateToGroceryList()"></button> -->
+    <section *ngFor="let family of families">        <div class="family-container">
+        <h2>{{ family.family_name }}</h2>            <button class="circular-button add" (click)="navigateToCalender(family.family_id)"></button>
+        <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan()"></button>            <!--<button class="circular-button plus" (click)="navigateToGroceryList()"></button> -->
         </div>
         <div class="container mt-4">
             <div class="card bg-light">
@@ -27,16 +24,22 @@
                     <div class="card card-container" *ngFor="let day of days">
                         <img src="{{day.recipe}}" class="card-img-top" alt="Image 1" width="250px" height="250px">
                         <div class="card-header">{{day.day_of_week}}</div>
-                        <div class="card-body">
-                            <p class="card-title">Attendees</p>
-                            <p class="card-text">{{ day.users.join(', ') || 'No attendees' }}</p>
-                        </div>
+                        <ng-container *ngIf="day.users.length > 0; else noAttendees">
+                            <p class="card-text">
+                                Attendees:
+                                <ng-container *ngFor="let user of day.users; let last = last">
+                                    {{ user.user_name }}{{ !last ? ',' : '' }}
+                                </ng-container>
+                            </p>
+                        </ng-container>
+                        <ng-template #noAttendees>
+                            <p class="card-text">No attendees</p>
+                        </ng-template>
 
                         <div class="card-footer">
                             <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
                                 {{ day.will_attend ? '✔ Attending' : '✘ Not Attending' }}
                             </span>
-                            <button class="circular-button refresh"></button>
                         </div>
                     </div>
                 </div>
