@@ -19,8 +19,9 @@ export class RecipeService {
     constructor(private http: HttpClient,private supabaseService: SupabaseService) {}
 
     async postRecipeData(input: any) {
-
-        let {data:data,error} = await this.supabase.functions.invoke('openai',{body:input})
+        console.log("sent_message");
+        console.log(JSON.stringify(input))
+        let {data:data,error} = await this.supabase.functions.invoke('openai',{body:JSON.stringify(input)})
         if (error) throw error;
         console.log(data)
         return data.id;
