@@ -79,6 +79,11 @@ export class RecipeComponent implements OnInit {
     }
     // Inside your RecipeComponent class
     async sendRecipeRequest() {
+        let user = await this.supabaseService.getUserId();
+        if (user){
+            const userid = user.id;
+
+        }
         this.generatedrecipe = await this.recipeService.postRecipeData( "");
         this.showedrecipe = this.generatedrecipe
     }
