@@ -145,6 +145,16 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  navigateToAllergies() {
+    this.router.navigate(['allergies']);
+
+  }
+
+  navigateToDietaryPreference() {
+    this.router.navigate(['dietaryPreference']);
+
+  }
+
   async signOut() {
     await this.supabaseService.signOut();
     this.router.navigate(['login']);
