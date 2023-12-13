@@ -102,6 +102,7 @@ export class RecipeDetailComponent implements OnInit {
     else {
       this.supabaseService.reviewRecipe(this.recipeId,5)
       this.liked = true
+      this.disliked = false
     }
   }
   unlike_recommended_recipe() {
@@ -112,6 +113,7 @@ export class RecipeDetailComponent implements OnInit {
     else {
       this.supabaseService.reviewRecipe(this.recipeId,5)
       this.disliked = true
+      this.liked = false
     }
   }
 }

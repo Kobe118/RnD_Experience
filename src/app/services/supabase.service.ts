@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 interface Recipe_new {
     url: string;
     name: string;
-    recipe: string; 
+    recipe: string;
 }
 
 @Injectable({
