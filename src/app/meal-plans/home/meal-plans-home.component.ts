@@ -38,8 +38,8 @@ export class MealPlansHomeComponent implements OnInit{
   constructor(private http: HttpClient, private router: Router, private supabaseService: SupabaseService) {}
   async ngOnInit(): Promise<void> {
     await this.supabaseService.GetUsersFamilies('afa97aa6-0c65-4db2-996e-2930ef3b9c1c').then((data) => {
-        this.families = data[0] as Family[];
-  });
+      this.families = data[0] as Family[];
+    });
     await this.supabaseService.MealPlansFromFamily('244f4431-3c7b-4e43-9bcd-93d93422e3ef', 'afa97aa6-0c65-4db2-996e-2930ef3b9c1c', '2023-11-20').then((data) => {
       this.days = data[0] as Day[];
       console.log('Raw data:', data);
@@ -58,6 +58,7 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   navigateToCalender(family_id:String) {
+    console.log("family_id1:", family_id);
     const navigationExtras: NavigationExtras = {
       state: {
         family_id: family_id

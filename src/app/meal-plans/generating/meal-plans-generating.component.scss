@@ -1,25 +1,31 @@
 .card {
-    position: relative;
-    border-radius: 15px; /* Adjust the border radius as needed */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .image-container {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background-color: #406E3D;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .card-image {
-    width: 30%;
-    height: auto;
-    border-radius: 50%;
-  }
+  position: relative;
+  border-radius: 15px; /* Adjust the border radius as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background-color: #406E3D;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-image {
+  width: 30%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.day-url-image {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}

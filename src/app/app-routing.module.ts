@@ -13,7 +13,6 @@ import { RecipeDetailComponent } from "./recipe/recipe-detail/recipe-detail.comp
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth-guard';
-
  
 const routes: Routes = [
   { path: 'login', component: LogInComponent, },
