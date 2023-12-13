@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { SupabaseService } from "../services/supabase.service";
 import { Profile } from './profile.model';
 import {User} from "../families/user.model";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -23,7 +24,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
       private readonly supabaseService: SupabaseService,
-      private readonly formBuilder: FormBuilder
+      private readonly formBuilder: FormBuilder,
+      private readonly router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -136,6 +138,11 @@ export class ProfileComponent implements OnInit {
 
   handleImageError(user: User) {
     user.picture_url = "\\assets\\default-user.jpg";
+  }
+
+  navigateToHome() {
+    this.router.navigate(['Home']);
+
   }
 
   async signOut() {
