@@ -26,6 +26,7 @@ export class ModalGeneratingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.supabaseService.GetLikedRecipes('2023-11-20' ,'244f4431-3c7b-4e43-9bcd-93d93422e3ef').then((data) => {
       this.liked_recipes = data[0] as Recipe[];
+      console.log("modal", this.liked_recipes);
     });
     await this.supabaseService.GetNonLikedRecipes('2023-11-20' ,'244f4431-3c7b-4e43-9bcd-93d93422e3ef').then((data) => {
       this.Nonliked_recipes = data[0] as Recipe[];

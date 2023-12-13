@@ -12,7 +12,11 @@ import {
 import { environment} from "../environments/environment/environment";
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
-
+interface Recipe_new {
+    url: string;
+    name: string;
+    recipe: string; // 这里假设 recipe 是一个字符串
+}
 
 @Injectable({
     providedIn: 'root',
@@ -120,7 +124,6 @@ export class SupabaseService {
       if (userString) {
         return JSON.parse(userString);
       }
-      return null;
     }
 
     signOut() {
@@ -276,6 +279,7 @@ export class SupabaseService {
             let { data: newrecipe, error } = await this.supabase
                 .from('recipe')
                 .select('id,name,made_by,manual')
+                .order('id', { ascending: false })
                 .in('id',recipeIds)
             console.log("recipeID")
             console.log(newrecipe?.length)
@@ -298,6 +302,7 @@ export class SupabaseService {
             let { data: newrecipe, error } = await this.supabase
                 .from('recipe')
                 .select('id,name,made_by,manual')
+                .order('id', { ascending: false })
                 .in('id',recipeIds)
             console.log("recipeID")
             console.log(newrecipe?.length)
@@ -306,19 +311,27 @@ export class SupabaseService {
         if (error) throw error;
         return []
     }
+
     async get_Other_Recipes(likedRecipes: Recipe[], unlikedRecipes: Recipe[]): Promise<Recipe[]> {
+        let { data, error:e } = await this.supabase
+            .rpc('get_five_random_recipes', {
+                user_id:this._currentUser.getValue().id
+            })
+        if (e) console.error(e)
+        else console.log(data)
+        const recipeIds = data.recipes.map((recipe: Recipe_new) => recipe.recipe);
         // Extracting IDs from liked and unliked recipes
-        const excludeIds = [...likedRecipes, ...unlikedRecipes].map(recipe => recipe.id);
-        console.log("excluded")
-        console.log(likedRecipes.length)
-        console.log(excludeIds[0])
+        // const excludeIds = [...likedRecipes, ...unlikedRecipes].map(recipe => recipe.id);
+        // console.log("excluded")
+        // console.log(likedRecipes.length)
+        // console.log(excludeIds[0])
         // Querying for 5 recipes excluding the liked and unliked ones
         let { data: otherRecipes, error } = await this.supabase
             .from('recipe')
             .select('id, name, made_by, manual')
-            .not('id', 'in', `(${excludeIds.join(',')})`)
+            .order('id', { ascending: false })
+            .in('id', recipeIds)
             .limit(5);
-
         // If there's an error, throw it
         if (error) throw error;
 
@@ -492,6 +505,69 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         console.log("Ingredients with details:", ingredientsWithDetails); // 调试输出
         return ingredientsWithDetails;
     }
+    async get_user_allergies() {
+        let allergies: string[] = [];
+        const userid = this._currentUser.getValue().id;
+        try {
+            // 获取食谱的原材料ID、数量和单位
+            let { data: allergiesInfo, error: ingredientsError } = await this.supabase
+                .from('user_has_allergie')
+                .select('allergie')
+                .eq('user', userid);
+
+            if (ingredientsError || !allergiesInfo) throw ingredientsError;
+
+            // 获取原材料名称
+            const allergieIds = allergiesInfo.map(a => a.allergie);
+            let { data: allergiesData, error: dataError } = await this.supabase
+                .from('allergie')
+                .select("allergie")
+                .in('id', allergieIds);
+
+            if (dataError) throw dataError;
+
+            if(allergiesData)
+                allergies = allergiesData.map(a => a.allergie);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(allergies);
+        return allergies;
+    }
+
+    async get_user_dislikes() {
+        let dislikes: string[] = [];
+        const userid = this._currentUser.getValue().id;
+        try {
+            // 获取食谱的原材料ID、数量和单位
+            let { data: dislikesInfo, error: ingredientsError } = await this.supabase
+                .from('user_has_dislike')
+                .select('dislike')
+                .eq('user', userid);
+
+            if (ingredientsError || !dislikesInfo) throw ingredientsError;
+
+
+            // 获取原材料名称
+            const ingredientIds = dislikesInfo.map(a => a.dislike);
+            let { data: allergiesData, error: dataError } = await this.supabase
+                .from('ingredient')
+                .select("name")
+                .in('id', ingredientIds);
+
+            if (dataError) throw dataError;
+
+            if(allergiesData)
+                dislikes = allergiesData.map(a => a.name);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(dislikes);
+        return dislikes;
+    }
+
 
     async getAllergies() {
       let allergies: any[] = [];
@@ -559,5 +635,19 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
           .from('user_has_allergies')
           .insert({ user_id: userId, ingredient_id: allergieId });
   }
+
+    async getMealPlanInfo(mealplan:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_recipes_in_mealplan_id', {
+                mealplan
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
 }
 

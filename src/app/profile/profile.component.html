@@ -1,34 +1,41 @@
-<form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
-    <!-- Input fields for first name and name -->
-    <div>
-        <label for="firstname">First Name</label>
-        <input formControlName="firstname" id="firstname" type="text" />
-    </div>
-    <div>
-        <label for="name">Name</label>
-        <input formControlName="name" id="name" type="text" />
-    </div>
+<div id="full-page-wo-nav">
+    <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget center">
+        <!-- Display user profile picture -->
+        <div *ngIf="user?.picture_url" class="center text-center">
+            <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture" />
+            <br>
+            <h2 class="text-center">{{profile.first_name}} {{profile.name}}</h2>
+        </div>
 
-    <!-- Input for uploading a profile picture -->
-    <div>
-        <label for="profilePicture">Upload Profile Picture</label>
-        <input type="file" id="profilePicture" (change)="onFileInputChange($event)" accept="image/*" />
-    </div>
+        <!-- Input for uploading a profile picture -->
+        <div>
+            <p>Upload a new profile picture</p>
+            <input class="form-control" type="file" id="profilePicture" (change)="onFileInputChange($event)" accept="image/*" />
+        </div>
+        <br>
 
-    <!-- Display user profile picture -->
-    <div *ngIf="user?.picture_url">
-        <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" />
-    </div>
+        <p>Change your information</p>
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="firstname" id="firstname" formControlName="firstname" class="form-control" />
+            <label mdbLabel class="form-label" for="firstname">First Name</label>
+        </mdb-form-control>
 
-    <!-- Button to update profile -->
-    <div>
-        <button type="submit" class="button primary block" [disabled]="loading">
-            {{ loading ? 'Loading ...' : 'Update' }}
-        </button>
-    </div>
+        <mdb-form-control class="mb-4">
+            <input mdbInput type="lastname" id="name" formControlName="name" class="form-control" />
+            <label mdbLabel class="form-label" for="name">Last Name</label>
+        </mdb-form-control>
 
-    <!-- Button to sign out -->
-    <div>
-        <button class="button block" (click)="signOut()">Sign Out</button>
-    </div>
-</form>
+        <div class="text-center">
+            <button type="submit" class="button dark-green wide primary block center" [disabled]="loading">
+                {{ loading ? 'Loading ...' : 'Update Profile' }}
+            </button>
+        </div>
+        <div class="text-center bottom-element">
+            <p>Sign out? Click <a href="register" (click)="signOut()">here</a></p>
+        </div>
+
+    </form>
+
+</div>
+<app-bottom-navigation></app-bottom-navigation>
+

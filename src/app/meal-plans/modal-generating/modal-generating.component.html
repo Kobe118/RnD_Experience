@@ -4,7 +4,6 @@
 </div>
 <div class="modal-body">
     <h2>Pick a favorite</h2>
-    {{ day }}
     <div class="recipe-cards">
         <div class="recipe-card" *ngFor="let recipe of liked_recipes" [class.selected]="recipe.isSelected" (click)="selectRecipe(recipe, combined_recipes)">
             <img [src]="recipe.url" alt="Recipe Image" class="recipe-image">

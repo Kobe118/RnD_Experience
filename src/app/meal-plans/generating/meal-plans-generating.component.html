@@ -4,9 +4,9 @@
         <p class="flush-text">Let's decide what we will have next day</p>
     </header>
     <main>
-        <div *ngFor="let day of weekdays" class="card" (click)="openModal(day)">
+        <div *ngFor="let day of days" class="card" (click)="openModal(day.day_of_the_week)">
             <div class="card-body">
-                <h5 class="card-title">{{ day }}</h5>
+                <h5 class="card-title">{{ day.day_of_the_week }}</h5>
                 <p class="card-text">Click to select a dish.</p>
             </div>
             <div class="image-container">
