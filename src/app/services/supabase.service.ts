@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 interface Recipe_new {
     url: string;
     name: string;
-    recipe: string; // 这里假设 recipe 是一个字符串
+    recipe: string; 
 }
 
 @Injectable({

@@ -1,6 +1,7 @@
 import { SupabaseService } from "../services/supabase.service";
-import {Component} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder} from '@angular/forms';
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent {
     constructor(
         private readonly supabaseService: SupabaseService,
         private readonly formBuilder: FormBuilder,
+        private readonly router: Router
     ) {}
 
     async onSubmit(): Promise<void> {
@@ -38,9 +40,9 @@ export class RegisterComponent {
             console.log(data.user)
             console.log(error)
             if (error) throw error
-            alert('Check your email for the login link!')
             const uuid = data.user?.id
             await this.supabaseService.supabase.from('users').insert([{id:uuid, name:lastname, first_name: firstname}])
+            await this.supabaseService.signIn({email,password});
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
@@ -48,6 +50,7 @@ export class RegisterComponent {
         } finally {
             this.signInForm.reset()
             this.loading = false
+            this.router.navigate(['allergies']);
         }
     }
 }

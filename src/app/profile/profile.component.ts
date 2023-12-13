@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { SupabaseService } from "../services/supabase.service";
 import { Profile } from './profile.model';
-import {User} from "../families/user.model";
-import {Router} from "@angular/router";
+import { User } from "../families/user.model";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -147,5 +147,6 @@ export class ProfileComponent implements OnInit {
 
   async signOut() {
     await this.supabaseService.signOut();
+    this.router.navigate(['login']);
   }
 }

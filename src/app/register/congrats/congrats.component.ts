@@ -10,6 +10,6 @@ export class CongratsComponent {
     constructor(private router: Router) {} // Inject the service
 
     navigateToHome() {
-        this.router.navigate(['Home']);
+        this.router.navigate(['allergies']);
     }
 }
