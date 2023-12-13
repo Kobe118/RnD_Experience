@@ -1,7 +1,7 @@
 
 $black: #041903;
 $white: #FDFFFC;
-$light-green: #EEF2ED;
+$light-green: #f6faf6;
 $medium-green: #406E3D;
 $dark-green: #204C1D;
 $dark-gray: #707070;
@@ -116,6 +116,7 @@ app-bottom-navigation {
   justify-content: center;
   align-items: center;
   padding: 0 0 0 0;
+  background-color: $white;
 }
 
 .button-white {
@@ -173,6 +174,7 @@ app-bottom-navigation {
 
 #full-page {
   justify-content: center;
+  background-color: $white;
   //height: 100%;
 }
 
@@ -183,5 +185,7 @@ app-bottom-navigation {
 #page{
   display: flex;
   flex-direction: column;
+  background-color: $white;
 }
+
 
