@@ -27,6 +27,7 @@ export class RecipeComponent implements OnInit {
     errorMessage?: string;
     generatedrecipe: string = "";  // Initialize as empty string
     showedrecipe:string = ""
+    isLoading = false;
     constructor(private recipeService: RecipeService,private supabaseService: SupabaseService, private router: Router ) {}
 
     ngOnInit() {
@@ -79,9 +80,26 @@ export class RecipeComponent implements OnInit {
     }
     // Inside your RecipeComponent class
     async sendRecipeRequest() {
-        this.generatedrecipe = await this.recipeService.postRecipeData( "");
-        this.showedrecipe = this.generatedrecipe
+        this.isLoading = true; // 开始加载
+        alert("It might take more than 1 minute");
+        try {
+            const allergies = await this.supabaseService.get_user_allergies();
+            const dislikes = await this.supabaseService.get_user_dislikes();
+            const message = "this user doesn't have preference";
+
+            console.log(allergies, dislikes); // 检查值
+
+            this.generatedrecipe = await this.recipeService.postRecipeData({allergies, preferences: dislikes, message});
+
+            this.router.navigate(['/recipe_detail', this.generatedrecipe]);
+        } catch (error) {
+            console.error('Error generating recipe:', error);
+            // 可以在这里处理错误
+        } finally {
+            this.isLoading = false; // 结束加载
+        }
     }
+
 
     toggle_like_Heart(index:number) {
         if (this.liked_recipes_liked[index]){

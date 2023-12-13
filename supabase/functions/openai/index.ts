@@ -1,5 +1,4 @@
 import { serve } from 'https://deno.land/std/http/server.ts';
-import { corsHeaders } from '../../shared/cors.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js'
 import { resize } from "https://deno.land/x/deno_image/mod.ts";
 
@@ -57,9 +56,13 @@ function extractAndParseJSON(responseString) {
 
 
 Deno.serve(async (req) => {
-  // if (req.method === 'OPTIONS') {
-  //   return new Response('ok', { headers: corsHeaders })
-  // }
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  }
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
 
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
       "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0Y3FjcHR6dWF6a3F0bW" +
@@ -67,12 +70,12 @@ Deno.serve(async (req) => {
       "Tc2MywiZXhwIjoyMDExNTc1NzYzfQ.IOXs53-E-fFBoog9F5IDyzy2f" +
       "2xYpyAu_3SBY8gRDew";
   const supabase = createClient(
-      Deno.env.get('URL') ?? '',
-      Deno.env.get('SERVICE_ROLE_KEY') ?? '',
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { global: { headers: { Authorization: supabaseKey } } }
   )
   try {
-    console.log(Deno.env.get('SERVICE_ROLE_KEY'))
+    console.log(Deno.env.get('SUPABASE_SERVICE_ROLE_KEY'))
     //****************************data preperation**********************************
     const requestBody = await req.json();
     // // Extract allergies, preferences, and message from the request body
@@ -94,7 +97,7 @@ Deno.serve(async (req) => {
         "Given the possible allergy sources from our database be aware that you dont have to a" +
         "void them but respond to me if the allergy sources exist in the recipe["+ allergie_sources.join(", ") +"] " +
         "the allergies from the user that you should avoid[" + userAllergies.join(", ") + "], " +
-        "preferences from the user [" + preferences.join(", ") +
+        "also the user dont like [" + preferences.join(", ") +
         "], and the message from the user '" + message +
         "', please generate a recipe avoiding [" + exist_recipes.join(", ") +
         "]. Format the response in JSON with the following structure: recipe name,allergySources, ingredients (amount, unit, name), and steps. " +
@@ -245,8 +248,8 @@ Deno.serve(async (req) => {
     const bucketName = 'recipes_thumbnail_and_picture';
     const fileName = recipe_insert_result[0].id+'.jpg'; // or .png, etc.
     const supabase2 = createClient(
-        Deno.env.get('URL') ?? '',
-        Deno.env.get('SERVICE_ROLE_KEY') ?? ''
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
     try {
       // Fetch the image from the URL
@@ -276,13 +279,14 @@ Deno.serve(async (req) => {
 
 
 
-    return new Response(JSON.stringify(data), {
-      headers: { 'Content-Type': 'application/json' },status:200
+    return new Response(JSON.stringify({ id: recipe_insert_result[0].id }), {
+      headers: { ...corsHeaders,'Content-Type': 'application/json' },
+      status: 200
     });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders,'Content-Type': 'application/json' }
     });
   }
 });

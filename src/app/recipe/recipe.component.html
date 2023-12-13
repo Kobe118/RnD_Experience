@@ -2,6 +2,7 @@
 <div id="page">
     <app-default-header [title]= "'Your Recipes'" [subtitle]="'Let\'s have a look at your favourites'"></app-default-header>
 
+    <br>
     <h2>Recipe Likes</h2>
     <div class="liked-recipes">
         <div *ngFor="let index of recipeIndices" class="recipe-small-view">
@@ -14,6 +15,7 @@
             </div>
         </div>
     </div>
+    <br>
 
 
     <!-- Recommended Recipes -->
@@ -32,6 +34,8 @@
             </div>
         </div>
     </div>
+    <br>
+
     <!-- Your nono's (Unliked Recipes) -->
     <h2>Your nono's</h2>
     <div class="liked-recipes">
@@ -48,19 +52,21 @@
             </div>
         </div>
     </div>
+    <br>
 
 
-    <button class="bottom-element button recipe-generation" (click)="sendRecipeRequest()">
-        Generate a recipe
-    </button>
-    <div *ngIf="showedrecipe; else noRecipe">
-        <p>{{ showedrecipe }}</p>
-    </div>
-    <ng-template #noRecipe>
-        <p>No recipe generated yet.</p>
-    </ng-template>
+<h2>Not satisfying?</h2>
+ <button class="bottom-element button recipe-generation" (click)="sendRecipeRequest()">
+     Generate a new recipe
+ </button>
 
+<div class="spinner-grow" role="status" *ngIf="isLoading">
+    <span class="visually-hidden">Loading...</span>
 </div>
+<p *ngIf="isLoading">Be patient</p>
+<p>It might take more than 1 minute</p>
+
+
 
 <!-- Similar setup for disliked recipes -->
 <app-bottom-navigation></app-bottom-navigation>

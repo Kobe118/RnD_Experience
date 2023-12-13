@@ -105,7 +105,7 @@ export class ProfileComponent implements OnInit {
         if (error) {
           throw error;
         }
-        alert('Profile updated successfully!');
+        alert('Profile updated successfully! Please note that it might take some time for changes to appear.');
       } else {
         throw new Error('User ID not found');
       }
