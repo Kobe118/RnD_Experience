@@ -177,6 +177,11 @@ app-bottom-navigation {
 }
 
 .bottom-element {
-  margin-bottom: 60px;
+  margin-bottom: 70px;
+}
+
+#page{
+  display: flex;
+  flex-direction: column;
 }
 
