@@ -18,7 +18,7 @@
         <div class="family-container">
         <h2>{{ family.family_name }}</h2>
             <button class="circular-button add" (click)="navigateToCalender(family.family_id)"></button>
-        <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan()"></button>
+        <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan(family.family_id)"></button>
             <button class="circular-button plus" (click)="navigateToGroceryList()"></button>
         </div>
         <div class="container mt-4">

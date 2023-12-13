@@ -48,6 +48,7 @@ import { FamilyCreateModalComponent } from './families/family-create-modal/famil
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { RegisterComponent } from './register/register.component';
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
+import {MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-generating.component";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.comp
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
+    MealPlansGeneratingComponent,
 
     RegisterComponent,
     FamilyModalComponent,
