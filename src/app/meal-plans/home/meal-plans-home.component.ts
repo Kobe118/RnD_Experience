@@ -1,7 +1,7 @@
 import {Component, OnInit, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Router} from '@angular/router';
-import {SupabaseService} from "../../supabase.service";
+import {NavigationExtras, Router} from '@angular/router';
+import {SupabaseService} from "../../services/supabase.service";
 
 interface Day {
   date: string;
@@ -57,8 +57,13 @@ export class MealPlansHomeComponent implements OnInit{
     return nextMondayDate.toISOString().split('T')[0];
   }
 
-  navigateToCalender() {
-    this.router.navigate(['mealplanscalender']);
+  navigateToCalender(family_id:String) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        family_id: family_id
+      }
+    };
+    this.router.navigate(['mealplanscalendar'], navigationExtras);
   }
 
   async navigateToAddMealPlan() {

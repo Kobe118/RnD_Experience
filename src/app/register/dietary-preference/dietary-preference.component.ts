@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SupabaseService } from '../../supabase.service';
-import {NavigationService} from "../../services/navigation.service";
+import { SupabaseService} from "../../services/supabase.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-dietary-preference',
@@ -8,64 +8,32 @@ import {NavigationService} from "../../services/navigation.service";
     styleUrls: ['./dietary-preference.component.scss']
 })
 export class DietaryPreferenceComponent implements OnInit {
-    preferences: any[] = [];
+    ingredients: any[] = [];
     userId: string | undefined;
 
-    constructor(private supabaseService: SupabaseService, private navigationService: NavigationService) {}
+    constructor(private supabaseService: SupabaseService, private router: Router) {}
 
     async ngOnInit(): Promise<void> {
         try {
-            this.userId = await this.supabaseService.getUserId();
-            if (!this.userId) {
-                // Redirect to login or authentication page
-                this.navigationService.redirectToPage(this.navigationService.Login);
-            } else {
-                this.loadDietaryPreferences();
-            }
+            this.ingredients = await this.supabaseService.getIngredients();
+            console.log("Ingredients:", this.ingredients);
         } catch (error) {
-            console.error('Error fetching user ID:', error);
-            // Handle the error accordingly, perhaps by redirecting to an error page or displaying a message
+            console.error("Error fetching allergies:", error);
         }
     }
 
-    loadDietaryPreferences(): void {
-        this.supabaseService.getIngredients().then(({ data, error }) => {
-            if (error) {
-                console.error('Error fetching preferences:', error);
-                // Handle error scenarios
-            } else {
-                this.preferences = data || [];
-            }
-        });
-    }
+    selectDietaryPreference(ingredients: any) {
+        const ingredientsId = ingredients.id;
 
-    // Method to handle selecting a preference
-    selectPreference(preference: any) {
-        // Assuming 'id' is the property in the preference object representing the ingredient ID
-        const ingredientId = preference.id;
-
+        console.log(ingredients.ingredient)
         if (this.userId !== undefined) {
-            // Call the function that expects a string argument
-            this.supabaseService.linkIngredientToUserDislikes(this.userId, ingredientId);
+            this.supabaseService.linkIngredientToUserDislikes(this.userId, ingredientsId);
         } else {
-            // Handle the case where userId is undefined (if applicable)
             console.error('User ID is undefined');
         }
     }
 
-    // Method to link the ingredient to the user's dislikes using SupabaseService
-    linkIngredientToUserDislikes(userId: string, ingredientId: string) {
-        this.supabaseService.linkIngredientToUserDislikes(userId, ingredientId)
-            .then(response => {
-                console.log('Ingredient linked to user dislikes:', response);
-                // Handle success (if needed)
-            })
-    }
-
-    redirectToAllergiesPage() {
-        this.navigationService.redirectToPage(this.navigationService.Allergies); // Use the service to navigate
-    }
-    redirectToWelcomePage() {
-        this.navigationService.redirectToPage(this.navigationService.Welcome); // Use the service to navigate
+    navigateToCongrats() {
+        this.router.navigate(['congrats']);
     }
 }

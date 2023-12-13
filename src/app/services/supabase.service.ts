@@ -573,19 +573,38 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
       let allergies: any[] = [];
 
         try {
-            let { data: allergiesData, error: allergiesError } = await this.supabase
+            const { data: allergiesData, error: allergiesError } = await this.supabase
                 .from('allergie')
                 .select("*");
 
-            if (allergiesError) throw allergiesError;
-            if(allergiesData)
-                allergies = allergiesData.map(a => a.allergie);
+            if (allergiesError) {throw allergiesError;}
+            if(allergiesData){
+                return allergiesData;}
         } catch (error) {
             console.error("Error fetching allergies:", error);
         }
 
         console.log(allergies); // 调试输出
-        return Object.values(allergies);
+        return [];
+    }
+
+    async getIngredients() {
+        let ingredients: any[] = [];
+
+        try {
+            const { data: ingredientsData, error: ingredientsError } = await this.supabase
+                .from('ingredient')
+                .select("*");
+
+            if (ingredientsError) {throw ingredientsError;}
+            if(ingredientsData){
+                return ingredientsData;}
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+
+        console.log(ingredients); // 调试输出
+        return [];
     }
 
     async uploadFile(file: File,user: User): Promise<{ path: string }> {
@@ -621,6 +640,56 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         let { data, error } = await this.supabase
             .rpc('get_recipes_in_mealplan_id', {
                 mealplan
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async GetMealPlan(family_uuid:String, week:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_mealplan_id', {
+                family_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async MealPlansFromFamily( family_uuid:String, user_uuid:String,  week:String ) {
+        console.log({
+            family_uuid,
+            user_uuid,
+            week
+        })
+        let { data, error } = await this.supabase
+            .rpc('get_present_users_week', {
+                family_uuid,
+                user_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async GetUsersFamilies(user_uuid:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_all_users_family', {
+                user_uuid
             })
         if (error) {
             console.error(error);

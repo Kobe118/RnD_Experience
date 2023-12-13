@@ -1,27 +1,33 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Meal Plans Home Page</title>
 </head>
+<body>
 
-<div id="page">
-    <app-default-header [title]= "'Your Meal-Plans'" [subtitle]="'What will we have today?'"> </app-default-header>
+<header>
+    <h1>Your Meal-Plans</h1>
+    <p class="flush-text">What will we have today?</p>
+</header>
 
-    <section class="bottom-element">
+<div class="profile-circle">
+    <img class="profile-image" src="assets/profile-pic.webp" alt="Profile Image">
+</div>
+<main>
+    <section>
         <div class="family-container">
             <h2>Family 1</h2>
-            <button class="circular-button add" (click)="navigateToCalender()"></button>
+            <!--<button class="circular-button add" (click)="navigateToCalender()"></button>--> 
             <button class="circular-button plus" (click)="navigateToAddMealPlan()"></button>
             <!--<button class="circular-button plus" (click)="navigateToGroceryList()"></button> -->
         </div>
         <div class="container mt-4">
             <div class="card bg-light">
                 <div class="card-body scrolling-wrapper scrollable-card-container">
-
                     <div class="card card-container" *ngFor="let day of days">
                         <img src="{{day.recipe}}" class="card-img-top" alt="Image 1" width="250px" height="250px">
                         <div class="card-header">{{day.day_of_week}}</div>
                         <div class="card-body">
-                            <p class="card-title"> {{day.weekday}}</p>
                             <p class="card-title">Attendees</p>
                             <p class="card-text">{{ day.users.join(', ') || 'No attendees' }}</p>
                         </div>
@@ -30,16 +36,13 @@
                             <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
                                 {{ day.will_attend ? '✔ Attending' : '✘ Not Attending' }}
                             </span>
-                            <button class="circular-button refresh"></button>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-</div>
-
-<app-bottom-navigation></app-bottom-navigation>
+    <app-bottom-navigation></app-bottom-navigation>
+</main>
+</body>
+</html>
