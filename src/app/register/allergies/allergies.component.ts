@@ -25,12 +25,13 @@ export class AllergiesComponent {
 
 
 
-    selectAllergies(allergies: any) {
+    async selectAllergies(allergies: any) {
         const allergieId = allergies.id;
 
         console.log(allergies.allergie)
-        if (this.userId !== undefined) {
-            this.supabaseService.linkAllergieToUserAllergies(this.userId, allergieId);
+        const user = await this.supabaseService.getUserId();
+        if (user !== undefined) {
+            this.supabaseService.linkAllergieToUserAllergies(user, allergieId);
         } else {
             console.error('User ID is undefined');
         }
