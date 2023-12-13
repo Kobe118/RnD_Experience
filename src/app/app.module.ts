@@ -47,7 +47,10 @@ import { FamilyModalLeaveComponent } from './families/family-modal-leave/family-
 import { FamilyCreateModalComponent } from './families/family-create-modal/family-create-modal.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { RegisterComponent } from './Register/register.component';
+import { AllergiesComponent } from "./Register/allergies/allergies.component";
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
+import { DietaryPreferenceComponent } from "./Register/dietary-preference/dietary-preference.component";
+import { CongratsComponent } from "./Register/congrats/congrats.component";
 
 @NgModule({
   declarations: [
@@ -67,6 +70,9 @@ import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.comp
     FamilyCreateModalComponent,
     GroceryListComponent,
     RegisterComponent,
+    AllergiesComponent,
+    DietaryPreferenceComponent,
+    CongratsComponent,
     RecipeDetailComponent,
     ModalGeneratingComponent,
   ],

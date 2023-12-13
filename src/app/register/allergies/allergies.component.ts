@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 import {SupabaseService} from "../../services/supabase.service";
+import {Router} from "@angular/router";
 
-import { Allergy } from "./allergy.model";
 
 @Component({
     selector: 'app-allergies',
@@ -12,12 +12,17 @@ import { Allergy } from "./allergy.model";
 export class AllergiesComponent {
     allergies: any[] = [];
     userId: string | undefined;
-    constructor(private supabaseService: SupabaseService) {} // Inject the service
+    constructor(private supabaseService: SupabaseService, private router: Router) {} // Inject the service
 
     async ngOnInit(): Promise<void> {
-        this.allergies = await this.supabaseService.getAllergies();
-        console.log("Allergies :", this.supabaseService.getAllergies());
+        try {
+            this.allergies = await this.supabaseService.getAllergies();
+            console.log("Allergies:", this.allergies);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
     }
+
 
 
     selectAllergies(allergies: any) {
@@ -29,5 +34,9 @@ export class AllergiesComponent {
         } else {
             console.error('User ID is undefined');
         }
+    }
+
+    navigateToDietaryPreference() {
+        this.router.navigate(['dietaryPreference']);
     }
 }

@@ -1,13 +1,12 @@
 <div id="full-page">
-    <h1 class="text-center">What is your dietary preference?</h1>
+    <h1 class="text-center">What are your dietary preferences?</h1>
     <div id="allergies">
-        <button class="button-white" *ngFor="let preference of preferences" (click)="selectPreference(preference)">{{ preference.name }}</button>
+        <button class="button-white" *ngFor="let ingredient of ingredients" (click)="selectDietaryPreference(ingredient)">
+            {{ ingredient.name }} <!-- Access the 'ingredient' property -->
+        </button>
     </div>
-
     <div id="bottom-buttons">
-        <button class="button-back" (click)="redirectToWelcomePage()">🡄</button>
-        <button class="button wide" (click)="redirectToAllergiesPage()">Continue</button>
+        <button class="button-back">🡄</button>
+        <button class="button wide" id="continue" (click)="navigateToCongrats()">Continue</button>
     </div>
-
 </div>
-<router-outlet></router-outlet>
