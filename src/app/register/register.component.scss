@@ -12,6 +12,10 @@
   pointer-events: none !important;
 }
 
+:host ::ng-deep .mat-stepper-horizontal-line,  .mat-stepper-vertical-line {
+  border-left-width: 0;
+}
+
 .center {
   display: flex;
   flex-direction: column;

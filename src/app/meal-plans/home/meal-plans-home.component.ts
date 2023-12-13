@@ -1,7 +1,7 @@
 import {Component, OnInit, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {NavigationExtras, Router} from '@angular/router';
-import {SupabaseService} from "../../supabase.service";
+import {SupabaseService} from "../../services/supabase.service";
 
 interface Day {
   date: string;

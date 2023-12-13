@@ -649,5 +649,55 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
             return Object.values(data);
         }
     }
+
+    async GetMealPlan(family_uuid:String, week:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_mealplan_id', {
+                family_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async MealPlansFromFamily( family_uuid:String, user_uuid:String,  week:String ) {
+        console.log({
+            family_uuid,
+            user_uuid,
+            week
+        })
+        let { data, error } = await this.supabase
+            .rpc('get_present_users_week', {
+                family_uuid,
+                user_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async GetUsersFamilies(user_uuid:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_all_users_family', {
+                user_uuid
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
 }
 
