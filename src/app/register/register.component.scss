@@ -13,7 +13,8 @@
 }
 
 :host ::ng-deep .mat-stepper-horizontal-line,  .mat-stepper-vertical-line {
-  border-left-width: 0;
+  display: none !important;
+  pointer-events: none !important;
 }
 
 .center {
