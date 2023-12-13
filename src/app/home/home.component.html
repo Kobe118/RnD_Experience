@@ -4,7 +4,7 @@
     <br>
     <h2>Upcoming Meals</h2>
     <div class="boxes">
-        <div *ngIf="recipes?.length == 0;" class="empty-state">
+        <div *ngIf="!recipes;" class="empty-state">
             <p id="not-available"><i>No upcoming meals available.</i></p>
         </div>
         <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
@@ -20,7 +20,7 @@
     <div class="boxes">
         <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
             <div class="recipe-card">
-                <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" class="recipe-image">
+                <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
                 <p class="recipe-name">{{ preferredRecipe.name }}</p>
             </div>
         </div>

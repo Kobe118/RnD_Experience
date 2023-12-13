@@ -13,15 +13,15 @@ import { RecipeDetailComponent } from "./recipe/recipe-detail/recipe-detail.comp
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth-guard';
-import {DietaryPreferenceComponent} from "./register/dietary-preference/dietary-preference.component";
-import {CongratsComponent} from "./register/congrats/congrats.component";
+import { DietaryPreferenceComponent } from "./register/dietary-preference/dietary-preference.component";
+import { CongratsComponent } from "./register/congrats/congrats.component";
  
 const routes: Routes = [
   { path: 'login', component: LogInComponent, },
   { path: 'register', component: RegisterComponent },
-  { path: 'allergies', component: AllergiesComponent},
-  { path: 'dietaryPreference', component: DietaryPreferenceComponent},
-  { path: 'congrats', component: CongratsComponent},
+  { path: 'allergies', component: AllergiesComponent, canActivate: [ AuthGuard] },
+  { path: 'dietaryPreference', component: DietaryPreferenceComponent, canActivate: [ AuthGuard] },
+  { path: 'congrats', component: CongratsComponent, canActivate: [ AuthGuard] },
   { path: 'families', component: FamiliesComponent, canActivate: [ AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [ AuthGuard] },
   { path: 'mealplanshome', component: MealPlansHomeComponent, canActivate: [ AuthGuard] },
