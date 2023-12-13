@@ -16,10 +16,10 @@
 <main>
     <section *ngFor="let family of families">
         <div class="family-container">
-            <h2>{{ family.family_name }}</h2>
+        <h2>{{ family.family_name }}</h2>
             <button class="circular-button add" (click)="navigateToCalender(family.family_id)"></button>
-            <button class="circular-button plus" (click)="navigateToAddMealPlan()"></button>
-            <!--<button class="circular-button plus" (click)="navigateToGroceryList()"></button> -->
+        <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan()"></button>
+            <button class="circular-button plus" (click)="navigateToGroceryList()"></button>
         </div>
         <div class="container mt-4">
             <div class="card bg-light">
@@ -29,6 +29,7 @@
                         <div class="card-header">{{day.day_of_week}}</div>
                         <ng-container *ngIf="day.users.length > 0; else noAttendees">
                             <p class="card-text">
+                                Attendees:
                                 <ng-container *ngFor="let user of day.users; let last = last">
                                     {{ user.user_name }}{{ !last ? ',' : '' }}
                                 </ng-container>

@@ -13,7 +13,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 
-import { MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-generating.component";
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
@@ -60,6 +60,7 @@ import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.comp
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
+
     RegisterComponent,
     FamilyModalComponent,
     FamilyModalAddComponent,
@@ -69,7 +70,6 @@ import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.comp
     RegisterComponent,
     RecipeDetailComponent,
     ModalGeneratingComponent,
-    MealPlansGeneratingComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +84,7 @@ import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.comp
     MatButtonModule,
     NgOptimizedImage,
     HttpClientModule,
+
     MatInputModule,
     MatStepperModule,
     MatButtonModule,
