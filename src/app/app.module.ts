@@ -19,7 +19,6 @@ import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { DefaultHeaderComponent } from './default-header/default-header.component';
 import { MealPlansHomeComponent } from './meal-plans/home/meal-plans-home.component';
-import { ModalGeneratingComponent } from './meal-plans/modal-generating/modal-generating.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
@@ -74,7 +73,6 @@ import { CongratsComponent } from "./register/congrats/congrats.component";
     DietaryPreferenceComponent,
     CongratsComponent,
     RecipeDetailComponent,
-    ModalGeneratingComponent,
   ],
   imports: [
     BrowserModule,
