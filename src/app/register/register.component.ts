@@ -50,7 +50,7 @@ export class RegisterComponent {
         } finally {
             this.signInForm.reset()
             this.loading = false
-            this.router.navigate(['allergies']);
+            this.router.navigate(['congrats']);
         }
     }
 }

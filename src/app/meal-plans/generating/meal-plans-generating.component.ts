@@ -32,8 +32,8 @@ interface Day {
 export class MealPlansGeneratingComponent implements OnInit {
   days: Day[] = [];
   modalRef: NgbModalRef | null = null;
-  family_id: String = "";
-  mealplan_id: String = "";
+  family_id: string = "";
+  mealplan_id: string = "";
 
 
   constructor(private router: Router, private modalService: NgbModal, private supabaseService: SupabaseService, private route: ActivatedRoute) {

@@ -157,6 +157,5 @@ export class ProfileComponent implements OnInit {
 
   async signOut() {
     await this.supabaseService.signOut();
-    this.router.navigate(['login']);
   }
 }

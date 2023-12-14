@@ -12,3 +12,9 @@ export interface IngredientDetail {
     quantity: number;
     unit: string;
 }
+
+export interface RecipeNew {
+    url: string;
+    name: string;
+    recipe: string;
+}

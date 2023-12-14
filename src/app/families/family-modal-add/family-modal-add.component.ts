@@ -19,7 +19,7 @@ export class FamilyModalAddComponent implements OnInit{
     picture_url: ""
   };
   family: Family | null = null;
-  title: String = "";
+  title: string = "";
 
   searchuser: boolean = true;
   userForm = this.fb.group({
