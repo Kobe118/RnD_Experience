@@ -1,7 +1,7 @@
-import {Component, OnInit, Injectable} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {NavigationExtras, Router} from '@angular/router';
-import { SupabaseService } from "../../services/supabase.service";
+import {SupabaseService} from "../../services/supabase.service";
 
 
 interface Day {
@@ -10,6 +10,7 @@ interface Day {
   day_of_week: string;
   will_attend: boolean;
   users: User[];
+  url: String;
 }
 
 interface User {
@@ -62,15 +63,22 @@ export class MealPlansHomeComponent implements OnInit{
 
       const mealPlansForFamily = data[0] as Day[];
 
-      // Check if mealPlansForFamily is null, and set an empty array if it is
+      for (const day of mealPlansForFamily) {
+        day.url = await this.getImageUrl(day.recipe);
+      }
+
       family.mealplans = mealPlansForFamily || [];
 
       console.log(`Meal plans for ${family.family_name}:`, family.mealplans);
     } catch (error) {
       console.error("Error fetching meal plans:", error);
     }
+  }
 
-
+  async getImageUrl(recipe_id: string) {
+    const url = await this.supabaseService.getImageUrl(recipe_id);
+    console.log("Image URL for recipe_id", recipe_id, ":", url);
+    return url;
   }
 
   private getNextMonday(): string {

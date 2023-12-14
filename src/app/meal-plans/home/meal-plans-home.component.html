@@ -23,7 +23,7 @@
             <h2>{{ family.family_name }}</h2>
             <button class="circular-button add" (click)="navigateToCalender(family.family_id)"></button>
             <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan(family.family_id)"></button>
-            <button class="circular-button plus" (click)="navigateToGroceryList()"></button>
+            <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToGroceryList()"></button>
         </div>
         <div class="container mt-4">
             <div class="card bg-light">
@@ -31,7 +31,7 @@
                     <ng-container *ngIf="family.mealplans && family.mealplans.length > 0; else noMealPlans">
                         <!-- Display meal plans -->
                         <div class="card card-container" *ngFor="let day of family.mealplans">
-                            <img src="{{day.recipe}}" class="card-img-top" alt="Image 1" width="250px" height="250px">
+                            <img src="{{day.url}}" class="card-img-top" alt="Image 1" width="250px" height="250px">
                             <div class="card-header">{{day.day_of_week}}</div>
                             <ng-container *ngIf="day.users.length > 0; else noAttendees">
                                 <p class="card-text">
