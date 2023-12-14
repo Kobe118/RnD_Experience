@@ -1,0 +1,26 @@
+<!-- meal-plans-generating.component.html -->
+
+<body>
+<header>
+    <h1>Generating New Plan</h1>
+    <p class="flush-text">Let's decide what we will have next day</p>
+</header>
+<main>
+    <div *ngFor="let day of days" class="card" (click)="openModal(day.day_of_week)">
+        <div class="card-body">
+            <h5 class="card-title">{{ day.day_of_week }}</h5>
+            <p class="card-text">
+                <ng-container *ngIf="day.recipe; else noRecipe">
+                    {{ day.name }}
+                </ng-container>
+                <ng-template #noRecipe>
+                    No recipe selected.
+                </ng-template>
+            </p>
+        </div>
+        <div class="image-container">
+            <img [src]="day.url ? day.url : 'assets/Add.png'" [alt]="day.url ? 'Image' : 'Add'" class="card-image" [ngClass]="{'day-url-image': day.url, 'add-image': !day.url}">
+        </div>
+    </div>
+</main>
+</body>
