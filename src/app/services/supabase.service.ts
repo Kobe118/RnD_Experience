@@ -607,6 +607,22 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         return [];
     }
 
+    async uploadFile(file: File,user: User): Promise<{ path: string }> {
+        try {
+            const { data, error } = await this.supabase.storage
+                .from('profile_pictures')
+                .upload(user.id+'.jpg', file, { upsert: true });
+
+            if (error) {
+                throw error;
+            } else {
+                return data; // Assuming 'data' contains the { path: string } structure
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async getIngredientsForWeek(family: string, week: string) {
         try {
             const { data, error } = await this.supabase
