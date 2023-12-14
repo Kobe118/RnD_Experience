@@ -55,18 +55,17 @@
     <br>
 
 
-<h2>Not satisfying?</h2>
- <button class="bottom-element button recipe-generation" (click)="sendRecipeRequest()">
-     Generate a new recipe
- </button>
+    <h2>Not satisfying?</h2>
+    <div class="recipe-generation">
+        <div class="spinner-grow bottom-element" role="status" *ngIf="isLoading ; else elseBlock">
+            <span class="visually-hidden center">Loading...</span>
+        </div>
+        <p>It might take more than 1 minute</p>
+        <ng-template #elseBlock>
+            <button id="generate-button" class="bottom-element button wide" (click)="sendRecipeRequest()">Generate a new recipe</button>
+        </ng-template>
+    </div>
 
-<div class="spinner-grow" role="status" *ngIf="isLoading">
-    <span class="visually-hidden">Loading...</span>
-</div>
-<p *ngIf="isLoading">Be patient</p>
-<p>It might take more than 1 minute</p>
 
 
-
-<!-- Similar setup for disliked recipes -->
 <app-bottom-navigation></app-bottom-navigation>

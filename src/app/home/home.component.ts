@@ -90,6 +90,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/recipe_detail', id]);
 }
 
+navigateToFamiliesPage() {
+    this.router.navigate(['/families']);
+}
+
   handleImageError(user: User) {
     user.picture_url = "\\assets\\default-user.jpg";
   }
