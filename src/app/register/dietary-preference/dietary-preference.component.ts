@@ -28,26 +28,34 @@ export class DietaryPreferenceComponent implements OnInit {
 
     async selectDietaryPreference(ingredients: any) {
         const ingredientsId = ingredients.id;
-        try{
-            this.loading= true;
+        try {
+            this.loading = true;
 
-        console.log(ingredients.ingredient)
-        const user = await this.supabaseService.getUserId();
-        console.log('userID',user);
-        if (user !== undefined) {
-            this.supabaseService.linkIngredientToUserDislikes(user.id, ingredientsId);
-            this.selectedDietaryPreference.push(ingredients.name);
-        } else {
-            console.error('User ID is undefined');
-        }
+            console.log(ingredients.name)
+            const user = await this.supabaseService.getUserId();
+            console.log('userID', user);
+            if (user !== undefined) {
+                if (this.isDietaryPreferenceSelected(ingredients)) {
+                    this.supabaseService.unlinkIngredientFromUserDislikes(user.id, ingredientsId);
+                    const index = this.selectedDietaryPreference.indexOf(ingredients.name)
+                    if (index > -1) {
+                        this.selectedDietaryPreference.splice(index, 1);
+                    }
+                }else {
+                        this.supabaseService.linkIngredientToUserDislikes(user.id, ingredientsId);
+                        this.selectedDietaryPreference.push(ingredients.name);
+                    }
+                } else {
+                    console.error('User ID is undefined');
+                }
         }catch (error) {
-            if (error instanceof Error) {
-                alert(error.message);
+                if (error instanceof Error) {
+                    alert(error.message);
+                }
+            }finally {
+                this.loading = false;
             }
-        } finally {
-            this.loading = false;
         }
-    }
 
     isDietaryPreferenceSelected(ingredients: any): boolean {
         // Check if the current allergy is already selected

@@ -38,12 +38,19 @@ export class AllergiesComponent {
             const user = await this.supabaseService.getUserId();
             console.log('userID' , user);
             if (user !== undefined) {
-                this.supabaseService.linkAllergieToUserAllergies(user.id, allergieId);
-                console.log('userIDDDD', user);
-                console.log('allergie', allergieId);
-                // Add selected allergy to the array when clicked
-                this.selectedAllergies.push(allergies.allergie);
-            } else {
+                if (this.isAllergySelected(allergies)) {
+                    // If allergy is already selected, remove it
+                    this.supabaseService.unlinkAllergieFromUserAllergies(user.id, allergieId);
+                    const index = this.selectedAllergies.indexOf(allergies.allergie);
+                    if (index > -1) {
+                        this.selectedAllergies.splice(index, 1);
+                    }
+                } else {
+                    // Add selected allergy to the array when clicked
+                    this.supabaseService.linkAllergieToUserAllergies(user.id, allergieId);
+                    this.selectedAllergies.push(allergies.allergie);
+                }
+            }  else {
                 console.error('User ID is undefined');
             }
         }catch (error) {

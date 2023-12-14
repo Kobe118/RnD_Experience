@@ -640,6 +640,25 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         }
     }
 
+    async unlinkIngredientFromUserDislikes(userId: string, ingredientId: string): Promise<any> {
+        try {
+            const { error } = await this.supabase
+                .from('user_has_dislike')
+                .delete()
+                .eq('user', userId)
+                .eq('dislike', ingredientId);
+
+            if (error) {
+                throw error;
+            }
+
+            return; // Return nothing if successful
+        } catch (error) {
+            console.error('Error unlinking from user_has_allergies:', error);
+            throw error;
+        }
+    }
+
     async linkAllergieToUserAllergies(userId: string, allergieId: string): Promise<any> {
         try {
             const { data, error } = await this.supabase
@@ -654,6 +673,25 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         } catch (error) {
             console.error('Error inserting into user_has_allergies:', error);
             throw error; // Re-throw the error to handle it where the function is called
+        }
+    }
+
+    async unlinkAllergieFromUserAllergies(userId: string, allergieId: string): Promise<any> {
+        try {
+            const { error } = await this.supabase
+                .from('user_has_allergie')
+                .delete()
+                .eq('user', userId)
+                .eq('allergie', allergieId);
+
+            if (error) {
+                throw error;
+            }
+
+            return; // Return nothing if successful
+        } catch (error) {
+            console.error('Error unlinking from user_has_allergies:', error);
+            throw error;
         }
     }
 
