@@ -20,6 +20,9 @@
 
     <h2>Preferred Recipes</h2>
     <div class="boxes">
+        <div *ngIf="!preferredRecipes;" class="empty-state">
+            <p class="not-available"><i>User has no preferred recipes.</i></p>
+        </div>
         <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
             <div class="recipe-card light-green">
                 <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">

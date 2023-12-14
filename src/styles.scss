@@ -229,7 +229,8 @@ app-bottom-navigation {
     background-color: $white;
 }
 
-#not-available {
+#not-available, .not-available {
   color: $dark-gray;
   margin-left: 1em;
 }
+
