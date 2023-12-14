@@ -1,0 +1,26 @@
+@import "../../styles";
+.mat-mdc-form-field {
+    margin-top: 16px;
+}
+
+#sub-title {
+  margin-bottom: 30%;
+}
+
+:host ::ng-deep .mat-horizontal-stepper-header{
+  display: none !important;
+  pointer-events: none !important;
+}
+
+:host ::ng-deep .mat-stepper-horizontal-line,  .mat-stepper-vertical-line {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Adjust the margin as needed */
+}

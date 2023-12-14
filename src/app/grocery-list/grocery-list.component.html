@@ -1,9 +1,19 @@
-<!DOCTYPE html>
-<header>
-    <h1>Your Meal-Plans</h1>
-    <p class="flush-text">These are the groceries you need.</p>
-</header>
-<main>
+<div>
+    <h1>Grocery List</h1>
+    <div *ngIf="groceryList.length > 0; else loadingTemplate">
+        <ul>
+            <li *ngFor="let item of groceryList">
+                {{ item | json }}
+            </li>
+        </ul>
+    </div>
+    <ng-template #loadingTemplate>
+        <p>Loading...</p>
+    </ng-template>
+    <div *ngIf="groceryList.length === 0 && !loadingTemplate">
+        <p>No items found in the grocery list.</p>
+    </div>
     <div class="back-button-container">
         <button class="back-button" (click)="goBack()">Confirm attendances</button>
-    </div></main>
+    </div>
+</div>

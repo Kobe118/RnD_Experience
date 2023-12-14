@@ -24,7 +24,7 @@
 }
 
 .recipe-card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.1);
   border-radius: 8px;
   padding: 16px;
   text-align: center;
@@ -41,6 +41,10 @@
   height: 100px;
   border-radius: 50%;
 }
+.spinner-grow {
+  width: 3rem;  /* 增大宽度 */
+  height: 3rem; /* 增大高度 */
+}
 
 .recipe-name {
   padding-top: 0.5em;
@@ -51,3 +55,13 @@
   white-space: normal;
   font-size: 0.9em;
 }
+
+.recipe-generation {
+  margin-left: 16px;
+  margin-top: 10px;
+}
+
+#generate-button {
+  width: fit-content;
+}
+

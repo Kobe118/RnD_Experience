@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div id="full-page">
 <app-default-header [title]= "'Your Famillies'" [subtitle]="'How are the families looking today?'"> </app-default-header>
-
+    <br>
     <div *ngFor="let family of userFamilies">
         <div class="card">
             <div class="card-body">
@@ -13,8 +13,6 @@
                         <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
                     </div>
                 </div>
-            </div>
-            <div class="card-header">
                 <div *ngIf="family.is_admin ; else elseBlock">
                     <ul class="nav nav-pills card-header-pills">
                         <li class="nav-item">

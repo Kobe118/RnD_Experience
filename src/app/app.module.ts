@@ -19,7 +19,6 @@ import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { DefaultHeaderComponent } from './default-header/default-header.component';
 import { MealPlansHomeComponent } from './meal-plans/home/meal-plans-home.component';
-import { ModalGeneratingComponent } from './meal-plans/modal-generating/modal-generating.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
@@ -47,8 +46,12 @@ import { FamilyModalLeaveComponent } from './families/family-modal-leave/family-
 import { FamilyCreateModalComponent } from './families/family-create-modal/family-create-modal.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { RegisterComponent } from './register/register.component';
+import { AllergiesComponent } from "./register/allergies/allergies.component";
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
-import {MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-generating.component";
+import { DietaryPreferenceComponent } from "./register/dietary-preference/dietary-preference.component";
+import { CongratsComponent } from "./register/congrats/congrats.component";
+import { ModalGeneratingComponent } from "./meal-plans/modal-generating/modal-generating.component";
+import { MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-generating.component";
 
 @NgModule({
   declarations: [
@@ -61,8 +64,6 @@ import {MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-g
     BottomNavigationComponent,
     FamiliesComponent,
     ProfileComponent,
-    MealPlansGeneratingComponent,
-
     RegisterComponent,
     FamilyModalComponent,
     FamilyModalAddComponent,
@@ -70,8 +71,12 @@ import {MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-g
     FamilyCreateModalComponent,
     GroceryListComponent,
     RegisterComponent,
+    AllergiesComponent,
+    DietaryPreferenceComponent,
+    CongratsComponent,
     RecipeDetailComponent,
     ModalGeneratingComponent,
+    MealPlansGeneratingComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +91,6 @@ import {MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-g
     MatButtonModule,
     NgOptimizedImage,
     HttpClientModule,
-
     MatInputModule,
     MatStepperModule,
     MatButtonModule,

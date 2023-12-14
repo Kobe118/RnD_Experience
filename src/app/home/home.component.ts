@@ -3,6 +3,7 @@ import { SupabaseService } from '../services/supabase.service';
 import { Recipe, PreferredRecipe, Family, User } from './home.model';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -32,10 +33,6 @@ export class HomeComponent implements OnInit {
         console.log('preferred: ', this.preferredRecipes);
         this.loadImagePreferredUrls(this.preferredRecipes);
       }
-      // const families = await this.supabaseService.getFamilies();
-      // if(preferredRecipes){
-      //   this.userFamilies = families[0] as Family[];
-      // }
       this.getFamilies().then(() => {
         this.getImageUrl().then(() => {
         });
@@ -59,7 +56,6 @@ export class HomeComponent implements OnInit {
   }
   async getFamilies() {
     const user = await this.supabaseService.getUserId();
-
     console.log('user id Family: ', user.id);
     let { data, error } = await this.supabaseService.supabase
         .rpc('get_all_users_family_members', {
@@ -92,6 +88,10 @@ export class HomeComponent implements OnInit {
 
   navigateToRecipeDetail(id: string) {
     this.router.navigate(['/recipe_detail', id]);
+}
+
+navigateToFamiliesPage() {
+    this.router.navigate(['/families']);
 }
 
   handleImageError(user: User) {
