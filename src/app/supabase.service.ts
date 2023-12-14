@@ -168,7 +168,7 @@ export class SupabaseService {
     }
 
 
-    async GetMealPlan(family_uuid:String, week:String) {
+    async getMealPlan(family_uuid:String, week:String) {
         let { data, error } = await this.supabase
             .rpc('get_mealplan_id', {
                 family_uuid,

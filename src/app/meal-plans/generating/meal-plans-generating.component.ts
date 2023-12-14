@@ -32,8 +32,16 @@ interface Day {
 export class MealPlansGeneratingComponent implements OnInit {
   days: Day[] = [];
   modalRef: NgbModalRef | null = null;
+  family_id: String = "";
+  mealplan_id: String = "";
 
-  constructor(private modalService: NgbModal, private supabaseService: SupabaseService, private route: ActivatedRoute) {}
+
+  constructor(private router: Router, private modalService: NgbModal, private supabaseService: SupabaseService, private route: ActivatedRoute) {
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    this.family_id = state?.['family_id'];
+    this.mealplan_id = state?.['mealplan_id'];
+    console.log('family_id and mealplan:', this.family_id, this.mealplan_id);
+  }
 
   async ngOnInit(): Promise<void> {
     this.days = Array.from({ length: 7 }, (_, index) => ({
@@ -43,7 +51,7 @@ export class MealPlansGeneratingComponent implements OnInit {
       day_of_week: index + 1,
     }));
 
-    const incomingdata = await this.supabaseService.getMealPlanInfo("55a0ea0f-7fc4-414b-bb35-5bb75f81195e");
+    const incomingdata = await this.supabaseService.getMealPlanInfo(this.mealplan_id);
     const data = incomingdata.flat();
     const dataArray = data as Day[];
 
@@ -54,8 +62,11 @@ export class MealPlansGeneratingComponent implements OnInit {
   }
 
   async openModal(day: number): Promise<void> {
+    console.log("familyId:", this.family_id);
     this.modalRef = this.modalService.open(ModalGeneratingComponent);
-    this.modalRef.componentInstance.day = day;
+    this.modalRef.componentInstance.day = day.toString();
     this.modalRef.componentInstance.modalRef = this.modalRef;
+    this.modalRef.componentInstance.family_id = this.family_id;
+    this.modalRef.componentInstance.mealplan_id = this.mealplan_id;
   }
 }
