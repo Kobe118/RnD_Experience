@@ -45,7 +45,9 @@ export class MealPlansHomeComponent implements OnInit{
       console.log("check");
     });
     for (const family of this.families) {
+      console.log("family_id:", family.family_id);
       console.log("it's in boys!");
+      //await this.fetchMealPlansForFamily(user.id, family);
       await this.fetchMealPlansForFamily(user.id, family);
       console.log("check 2");
     }
@@ -54,14 +56,21 @@ export class MealPlansHomeComponent implements OnInit{
   private async fetchMealPlansForFamily(userId: string, family: Family): Promise<void> {
     console.log("family_id:", family.family_id, userId)
     console.log("next:", this.getNextMonday());
-    await this.supabaseService.getMealPlansFromFamily(family.family_id, userId, this.getNextMonday()).then((data) => {
+    try {
+      const data = await this.supabaseService.getMealPlansFromFamily(family.family_id, userId, this.getNextMonday());
+      console.log("Data received from getMealPlansFromFamily:", data);
+
       const mealPlansForFamily = data[0] as Day[];
-      console.log("let's go baby");
-      console.log("data", data);
-      console.log(`Meal plans for ${family.family_name}:`, mealPlansForFamily);
-      family.mealplans = mealPlansForFamily;
-      console.log("123:", this.families)
-    });
+
+      // Check if mealPlansForFamily is null, and set an empty array if it is
+      family.mealplans = mealPlansForFamily || [];
+
+      console.log(`Meal plans for ${family.family_name}:`, family.mealplans);
+    } catch (error) {
+      console.error("Error fetching meal plans:", error);
+    }
+
+
   }
 
   private getNextMonday(): string {
