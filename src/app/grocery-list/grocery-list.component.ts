@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../services/supabase.service';
+import {Family} from "../families/family.model";
+import {User} from "../families/user.model";
 
 @Component({
   selector: 'app-grocery-list',
@@ -9,20 +11,67 @@ import { SupabaseService } from '../services/supabase.service';
 })
 export class GroceryListComponent implements OnInit {
 
+  currentUser: User = {
+    user_id: "",
+    last_name: "",
+    first_name: "",
+    picture_url: ""
+  };
+
+  userFamilies: Family[] = [];
+  userAdminFamilyId: string | undefined;
+
   groceryList: any[] = [];
-  family : string;
-  week : string;
 
   constructor(private supabaseService: SupabaseService, private router: Router) {}
 
   async ngOnInit() {
-    await this.fetchGroceryList();
+    await this.getFamilies();
+    if (this.userAdminFamilyId) {
+      await this.fetchGroceryList();
+    }
+  }
+
+  async getFamilies() {
+    const user = await this.supabaseService.getUserId();
+    if (user) {
+      this.currentUser.user_id = user.id;
+    }
+
+    let { data, error } = await this.supabaseService.supabase
+        .rpc('get_all_users_family_members', {
+          user_uuid: user.id
+        });
+
+    if (error) {
+      console.error(error);
+    } else {
+      this.userFamilies = data.families as Family[];
+      console.log(data);
+      console.log(this.userFamilies)
+    }
+    // Find the family where the current user is an admin
+    const userAdminFamily = this.userFamilies.find(family => {
+      return family.is_admin && family.users.some(u => u.user_id === user.id);
+    });
+
+    if (userAdminFamily) {
+      this.userAdminFamilyId = userAdminFamily.family_id;
+      console.log('Family where user is admin:', userAdminFamily);
+    } else {
+      console.log('User is not an admin for any family.');
+    }
   }
 
   async fetchGroceryList() {
     try {
-      this.groceryList = await this.supabaseService.getIngredientsForWeek(this.family, this.week);
-      console.log('Grocery List:', this.groceryList);
+      if (typeof this.userAdminFamilyId !== 'undefined') {
+        // Use userAdminFamilyId (string) in your function call
+        this.groceryList = await this.supabaseService.getIngredientsForWeek(this.userAdminFamilyId, '2023-11-20');
+        console.log('Grocery List:', this.groceryList);
+      } else {
+        console.log('User is not an admin for any family or family ID is undefined.');
+      }
     } catch (error) {
       console.error('Error fetching grocery list:', error);
     }
