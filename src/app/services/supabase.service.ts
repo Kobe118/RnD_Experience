@@ -528,6 +528,80 @@ export class SupabaseService {
             .insert({ user_id: userId, ingredient_id: allergieId });
     }
 
+    async linkIngredientToUserDislikes(userId: string, ingredientId: string): Promise<any> {
+        try{
+            const {data, error} = await this.supabase
+            .from('user_has_dislike')
+            .insert({ user: userId, dislike: ingredientId });
+            if (error) {
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error inserting into user_has_allergies:', error);
+            throw error; // Re-throw the error to handle it where the function is called
+        }
+    }
+
+    async unlinkIngredientFromUserDislikes(userId: string, ingredientId: string): Promise<any> {
+        try {
+            const { error } = await this.supabase
+                .from('user_has_dislike')
+                .delete()
+                .eq('user', userId)
+                .eq('dislike', ingredientId);
+
+            if (error) {
+                throw error;
+            }
+
+            return; // Return nothing if successful
+        } catch (error) {
+            console.error('Error unlinking from user_has_allergies:', error);
+            throw error;
+        }
+    }
+
+    async linkAllergieToUserAllergies(userId: string, allergieId: string): Promise<any> {
+        try {
+            const { data, error } = await this.supabase
+                .from('user_has_allergie')
+                .insert({ user: userId, allergie: allergieId });
+
+            if (error) {
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error inserting into user_has_allergies:', error);
+            throw error; // Re-throw the error to handle it where the function is called
+        }
+    }
+
+    async unlinkAllergieFromUserAllergies(userId: string, allergieId: string): Promise<any> {
+        try {
+            console.log("entering delte code");
+            const { error } = await this.supabase
+                .from('user_has_allergie')
+                .delete()
+                .eq('user', userId)
+                .eq('allergie', allergieId);
+            console.log("deleted Id", userId);
+            console.log("deleted Allergy", allergieId);
+
+            if (error) {
+                throw error;
+            }
+
+            return; // Return nothing if successful
+        } catch (error) {
+            console.error('Error unlinking from user_has_allergies:', error);
+            throw error;
+        }
+    }
+
     async getMealPlanInfo(mealplan:string) {
         let { data, error } = await this.supabase
             .rpc('get_recipes_in_mealplan_id', {
