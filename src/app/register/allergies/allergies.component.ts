@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 import {SupabaseService} from "../../services/supabase.service";
+import {Router} from "@angular/router";
 
-import { Allergy } from "./allergy.model";
 
 @Component({
     selector: 'app-allergies',
@@ -12,22 +12,32 @@ import { Allergy } from "./allergy.model";
 export class AllergiesComponent {
     allergies: any[] = [];
     userId: string | undefined;
-    constructor(private supabaseService: SupabaseService) {} // Inject the service
+    constructor(private supabaseService: SupabaseService, private router: Router) {} // Inject the service
 
     async ngOnInit(): Promise<void> {
-        this.allergies = await this.supabaseService.getAllergies();
-        console.log("Allergies :", this.supabaseService.getAllergies());
+        try {
+            this.allergies = await this.supabaseService.getAllergies();
+            console.log("Allergies:", this.allergies);
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
     }
 
 
-    selectAllergies(allergies: any) {
+
+    async selectAllergies(allergies: any) {
         const allergieId = allergies.id;
 
         console.log(allergies.allergie)
-        if (this.userId !== undefined) {
-            this.supabaseService.linkAllergieToUserAllergies(this.userId, allergieId);
+        const user = await this.supabaseService.getUserId();
+        if (user !== undefined) {
+            this.supabaseService.linkAllergieToUserAllergies(user, allergieId);
         } else {
             console.error('User ID is undefined');
         }
+    }
+
+    navigateToDietaryPreference() {
+        this.router.navigate(['dietaryPreference']);
     }
 }
