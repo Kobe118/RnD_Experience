@@ -158,6 +158,27 @@ app-bottom-navigation {
   color: $black;
 }
 
+.button-gray-border {
+  border: 1px solid #bdbdbd;
+  background-color: $light-green;
+  color: #4f4f4f;
+  width: 100%;
+  padding: 4px 15px 4px 10px;
+  text-align: left;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.button-gray-border:hover {
+  border: 2px solid $medium-green;
+  transform: scale(1.02);
+}
+
+.button-gray-border:active {
+  border: 2px solid $medium-green;
+}
+
 #allergies {
   display: flex;
   flex-wrap: wrap;

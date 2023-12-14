@@ -1,7 +1,7 @@
-<div id="full-page-wo-nav">
+<div id="full-page-center">
     <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget center">
         <!-- Display user profile picture -->
-        <div *ngIf="user?.picture_url" class="center text-center">
+        <div *ngIf="user?.picture_url" class="text-center">
             <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture" />
             <br>
             <h2 class="text-center">{{profile.first_name}} {{profile.name}}</h2>
@@ -12,6 +12,12 @@
             <p>Upload a new profile picture</p>
             <input class="form-control" type="file" id="profilePicture" (change)="onFileInputChange($event)" accept="image/*" />
         </div>
+        <br>
+
+        <p>Click to change your preferences</p>
+        <button type="button" class="button-gray-border"  href="#" (click)="navigateToAllergies()">Change your allergies</button>
+        <button type="button" class="button-gray-border" id="dietaryPreference" href="#" (click)="navigateToDietaryPreference()">Change your dietary preference</button>
+
         <br>
 
         <p>Change your information</p>
@@ -27,14 +33,10 @@
 
         <div class="text-center">
             <button type="submit" class="button dark-green wide primary block center" [disabled]="loading">
-                {{ loading ? 'Loading ...' : 'Update Profile' }}
+                {{ loading ? 'Loading ...' : 'Update Information' }}
             </button>
         </div>
-
-        <div class="text-center">
-        <button type="button" class="button" id="allergies" href="#" (click)="navigateToAllergies()">Change your allergies</button>
-        <button type="button" class="button" id="dietaryPreference" href="#" (click)="navigateToDietaryPreference()">Change your dietary preference</button>
-        </div>
+        <br>
 
         <div class="text-center bottom-element">
             <p>Sign out? Click <a href="register" (click)="signOut()">here</a></p>
