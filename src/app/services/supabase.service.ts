@@ -640,7 +640,7 @@ export class SupabaseService {
         }
     }
 
-    async getMealPlansFromFamily( family_uuid:String, user_uuid:String,  week:String ) {
+    async getMealPlansFromFamily( family_uuid:string, user_uuid:string,  week:string ) {
         console.log({
             family_uuid,
             user_uuid,

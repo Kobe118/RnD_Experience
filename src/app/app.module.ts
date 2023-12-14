@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
