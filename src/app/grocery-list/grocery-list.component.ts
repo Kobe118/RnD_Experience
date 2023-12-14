@@ -28,7 +28,8 @@ export class GroceryListComponent implements OnInit {
   async ngOnInit() {
     await this.getFamilies();
     if (this.userAdminFamilyId) {
-      await this.fetchGroceryList();
+      const nextMonday = this.getNextMonday(); // Get the next Monday date
+      await this.fetchGroceryList(nextMonday); // Pass the date to fetchGroceryList
     }
   }
 
@@ -62,12 +63,21 @@ export class GroceryListComponent implements OnInit {
       console.log('User is not an admin for any family.');
     }
   }
+  private getNextMonday(): string {
+    const currentDate = new Date();
+    const currentDayOfWeek = currentDate.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+    const daysToMonday = currentDayOfWeek === 0 ? 1 : 8 - currentDayOfWeek;
+    const nextMondayDate = new Date(currentDate);
+    nextMondayDate.setDate(currentDate.getDate() + daysToMonday);
 
-  async fetchGroceryList() {
+    return nextMondayDate.toISOString().split('T')[0];
+  }
+
+  async fetchGroceryList(date: string) {
     try {
       if (typeof this.userAdminFamilyId !== 'undefined') {
-        // Use userAdminFamilyId (string) in your function call
-        this.groceryList = await this.supabaseService.getIngredientsForWeek(this.userAdminFamilyId, '2023-11-20');
+        this.groceryList = await this.supabaseService.getIngredientsForWeek(this.userAdminFamilyId, date);
+        console.log('date'+ date);
         console.log('Grocery List:', this.groceryList);
       } else {
         console.log('User is not an admin for any family or family ID is undefined.');
