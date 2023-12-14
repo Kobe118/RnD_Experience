@@ -28,7 +28,7 @@
     <br>
     <h2>Families</h2>
     <div class="bottom-element">
-        <div class="card" *ngFor="let family of userFamilies">
+        <div class="card" *ngFor="let family of userFamilies" (click)="navigateToFamiliesPage()">
             <div class="card-body">
                 <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
                 <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>

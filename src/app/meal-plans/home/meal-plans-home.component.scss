@@ -1,79 +1,112 @@
+@import "../../../styles";
+.scrollable-card-container {
 
-  .scrollable-card-container {
-    white-space: nowrap;
-    overflow-x: auto;
-  }
-  
-  .card {
-    display: inline-block;
-    width: 18rem;
-    margin-right: 20px;
-  }
-  
-  .attend {
-    color: green; // Change color for attending
-  }
-  
-  .not-attend {
-    color: red; // Change color for not attending
-  }
-  
-  .family-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .family-container h2 {
-    margin-right: 10px;
-    align-self: center;
-    line-height: 30px;
-    margin-top: 10px;
-  }
-  
-  
-  .circular-button {
-    border: none;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #000000;
-    color: #fff;
-    background-repeat: no-repeat;
-    background-position: center;
-  
-  }
-  
-  .add {
-    margin-left: auto;
-    margin-right: 20px;
-    align-self: center;
-    background-image: url('/assets/calenderAdd.png');
-    background-size: 65% 65%;
-  }
-  
-  .plus {
-    margin-left: -10px;
-    margin-right: 20px;
-    align-self: center;
-    background-image: url('/assets/plus.png');
-    background-size: 50% 50%;
-  }
-  
-  .refresh {
-    margin-right: 20px;
-    align-self: center;
-    background-image: url('/assets/refresh.png');
-    background-size: 60% 60%;
-  }
-  
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .circular-button:hover {
-    background-color: #00ffff;
-  }
+}
+
+.meal-card{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px;
+  background-color: $white;
+  width: 300px;
+  height: 250px;
+  //display: inline-block; /* Display inline with block features */
+}
+
+.meal-card-container {
+  border-radius: 8px;
+  padding: 16px;
+  background-color: $light-green;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+}
+
+.recipe {
+  flex-wrap: wrap;
+  width: 300px;
+  margin-top: 0;
+}
+
+.text-large {
+  margin-bottom: 0;
+}
+
+.round-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.card-column {
+  width: 50%; /* Two equal-width columns */
+  box-sizing: border-box; /* Include padding and border in the total width */
+  padding: 0 10px; /* Adjust padding as needed */
+  text-align: center; /* Center the content in the column */
+}
+
+.attend {
+  color: green; // Change color for attending
+}
+
+.not-attend {
+  color: red; // Change color for not attending
+}
+
+.family-container {
+  display: flex;
+  align-items: center;
+}
+
+.family-container h2 {
+  margin-right: 10px;
+  align-self: center;
+  line-height: 30px;
+  margin-top: 10px;
+}
+
+
+.circular-button {
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #000000;
+  color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+.add {
+  margin-left: auto;
+  margin-right: 20px;
+  align-self: center;
+  background-image: url('/assets/calenderAdd.png');
+  background-size: 65% 65%;
+}
+
+.plus {
+  margin-left: -10px;
+  margin-right: 20px;
+  align-self: center;
+  background-image: url('/assets/plus.png');
+  background-size: 50% 50%;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.circular-button:hover {
+  background-color: #00ffff;
+}

@@ -1,48 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <title>Meal Plans Home Page</title>
 </head>
-<body>
 
-<header>
-    <h1>Your Meal-Plans</h1>
-    <p class="flush-text">What will we have today?</p>
-</header>
-
-<div class="profile-circle">
-    <img class="profile-image" src="assets/profile-pic.webp" alt="Profile Image">
-</div>
-<main>
-    <section>
+<div id="page" class="bottom-element">
+    <app-default-header [title]= "'Your Meal-Plans'" [subtitle]="'What will we have today?'"> </app-default-header>
+    <br>
+    <section *ngFor="let family of families">
         <div class="family-container">
-            <h2>Family 1</h2>
-            <!--<button class="circular-button add" (click)="navigateToCalender()"></button>--> 
-            <button class="circular-button plus" (click)="navigateToAddMealPlan()"></button>
-            <!--<button class="circular-button plus" (click)="navigateToGroceryList()"></button> -->
+            <h2>{{ family.family_name }}</h2>
+            <button class="circular-button add" (click)="navigateToCalender(family.family_id)"></button>
+            <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan(family.family_id)"></button>
+            <button class="circular-button plus" (click)="navigateToGroceryList()"></button>
         </div>
-        <div class="container mt-4">
-            <div class="card bg-light">
-                <div class="card-body scrolling-wrapper scrollable-card-container">
-                    <div class="card card-container" *ngFor="let day of days">
-                        <img src="{{day.recipe}}" class="card-img-top" alt="Image 1" width="250px" height="250px">
-                        <div class="card-header">{{day.day_of_week}}</div>
-                        <div class="card-body">
-                            <p class="card-title">Attendees</p>
-                            <p class="card-text">{{ day.users.join(', ') || 'No attendees' }}</p>
-                        </div>
 
-                        <div class="card-footer">
-                            <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
-                                {{ day.will_attend ? '✔ Attending' : '✘ Not Attending' }}
-                            </span>
+        <div class="scrollable-card-container">
+
+            <ng-container *ngIf="family.mealplans && family.mealplans.length > 0; else noMealPlans">
+                <div class="meal-card-container center">
+                    <div class="meal-card" *ngFor="let day of family.mealplans">
+                        <div class="card-body">
+                            <p class="text-large"><b>{{day.day_of_week}}</b></p>
+                            <p class="recipe">Cantonese Ginger Scallion Sausage Stir-fry</p>
+
+                            <div class="row">
+                                <div class="col text-center center">
+                                    <img src="{{day.recipe}}" class="round-img" (error)="handleImageError(day)">
+                                    <div>
+                                    <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
+                                    {{ day.will_attend ? '✔ Attending' : '✘ Attending' }}
+                                    </span>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+                                    <ng-container *ngIf="day.users.length > 0; else noAttendees">
+                                        <p class="card-title">Attendees:</p>
+                                        <p class="card-text">
+                                            <ng-container *ngFor="let user of day.users; let last = last">
+                                                {{ user.user_name }}{{ !last ? ',' : '' }}
+                                            </ng-container>
+                                        </p>
+
+                                    </ng-container>
+                                    <ng-template #noAttendees>
+                                        <p class="card-text">No attendees</p>
+                                    </ng-template>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+
+            </ng-container>
+        <ng-template #noMealPlans>
+            <!-- Display text when no meal plans are available -->
+            <p id="not-available">No Meal-Plan has been made yet.</p>
+        </ng-template>
+
+    </div>
+        <br>
+
     </section>
-    <app-bottom-navigation></app-bottom-navigation>
-</main>
-</body>
-</html>
+</div>
+
+<app-bottom-navigation></app-bottom-navigation>
+
+

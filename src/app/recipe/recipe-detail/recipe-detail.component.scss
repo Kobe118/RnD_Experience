@@ -1,13 +1,9 @@
-h1 {
-  text-align: center;
-  color: #333;
-}
-
+@import "../../../styles";
 .recipe-detail-card {
-  margin: 20px;
-  padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  width: 90%;
+  padding: 5% 5% 5% 5%;
+  margin-bottom: 50px;
 }
 
 .recipe-detail-image {
@@ -16,8 +12,11 @@ h1 {
   border-radius: 8px;
 }
 
+.text-center {
+  text-align: center;
+}
+
 h3 {
-  color: #555;
   margin-top: 20px;
 }
 
@@ -34,7 +33,21 @@ ul.ingredients, ul.allergies {
 }
 
 .steps {
-  margin-top: 20px;
   line-height: 1.6;
   color: #444;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }

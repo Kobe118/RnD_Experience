@@ -25,12 +25,12 @@ export class RecipeDetailComponent implements OnInit {
       this.router.navigate(['/recipes']);
       return;
     }
-    this.supabaseService.get_unLiked_Recipes();
+    this.supabaseService.getDislikedRecipes();
     this.fetchRecipeDetails(this.recipeId);
   }
 
   private fetchRecipeDetails(id: string) {
-    this.supabaseService.get_recipe_by_id(id).then(recipe => {
+    this.supabaseService.getRecipeById(id).then(recipe => {
       if (recipe && recipe[0]) {
         console.log("Recipe data:", recipe[0]); // Debug output
         this.updateRecipeDetails(recipe[0]);
