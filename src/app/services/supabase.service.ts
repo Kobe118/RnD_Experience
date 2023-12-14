@@ -678,11 +678,14 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
 
     async unlinkAllergieFromUserAllergies(userId: string, allergieId: string): Promise<any> {
         try {
+            console.log("entering delte code");
             const { error } = await this.supabase
                 .from('user_has_allergie')
                 .delete()
                 .eq('user', userId)
                 .eq('allergie', allergieId);
+            console.log("deleted Id", userId);
+            console.log("deleted Allergy", allergieId);
 
             if (error) {
                 throw error;
