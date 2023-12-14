@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 })
 export class AllergiesComponent {
     allergies: any[] = [];
+    selectedAllergies: string[] = [];
     userId: string | undefined;
     constructor(private supabaseService: SupabaseService, private router: Router) {} // Inject the service
 
@@ -18,6 +19,8 @@ export class AllergiesComponent {
         try {
             this.allergies = await this.supabaseService.getAllergies();
             console.log("Allergies:", this.allergies);
+            // Fetch selected allergies for the current user
+            this.selectedAllergies = await this.supabaseService.get_user_allergies();
         } catch (error) {
             console.error("Error fetching allergies:", error);
         }
@@ -32,9 +35,16 @@ export class AllergiesComponent {
         const user = await this.supabaseService.getUserId();
         if (user !== undefined) {
             this.supabaseService.linkAllergieToUserAllergies(user, allergieId);
+            // Add selected allergy to the array when clicked
+            this.selectedAllergies.push(allergies.allergie);
         } else {
             console.error('User ID is undefined');
         }
+    }
+
+    isAllergySelected(allergies: any): boolean {
+        // Check if the current allergy is already selected
+        return this.selectedAllergies.includes(allergies.allergie);
     }
 
     navigateToDietaryPreference() {
