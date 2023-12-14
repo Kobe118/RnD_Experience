@@ -1,7 +1,8 @@
 import {Component, OnInit, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {NavigationExtras, Router} from '@angular/router';
-import {SupabaseService} from "../../services/supabase.service";
+import { SupabaseService } from "../../services/supabase.service";
+
 
 interface Day {
   date: string;
@@ -20,6 +21,7 @@ interface Family {
   is_admin: boolean;
   family_id: string;
   family_name: string;
+  mealplans: Day[]
 }
 
 interface MealPlan {
@@ -37,14 +39,38 @@ export class MealPlansHomeComponent implements OnInit{
 
   constructor(private http: HttpClient, private router: Router, private supabaseService: SupabaseService) {}
   async ngOnInit(): Promise<void> {
-    await this.supabaseService.GetUsersFamilies('afa97aa6-0c65-4db2-996e-2930ef3b9c1c').then((data) => {
-        this.families = data[0] as Family[];
-  });
-    await this.supabaseService.MealPlansFromFamily('244f4431-3c7b-4e43-9bcd-93d93422e3ef', 'afa97aa6-0c65-4db2-996e-2930ef3b9c1c', '2023-11-20').then((data) => {
-      this.days = data[0] as Day[];
-      console.log('Raw data:', data);
+    const user = await this.supabaseService.getUserId();
+    await this.supabaseService.getUsersFamilies(user.id).then((data) => {
+      this.families = data[0] as Family[];
+      console.log("check");
+    });
+    for (const family of this.families) {
+      console.log("family_id:", family.family_id);
+      console.log("it's in boys!");
+      //await this.fetchMealPlansForFamily(user.id, family);
+      await this.fetchMealPlansForFamily(user.id, family);
+      console.log("check 2");
+    }
+  }
 
-    });console.log('Processed data:', this.days);
+  private async fetchMealPlansForFamily(userId: string, family: Family): Promise<void> {
+    console.log("family_id:", family.family_id, userId)
+    console.log("next:", this.getNextMonday());
+    try {
+      const data = await this.supabaseService.getMealPlansFromFamily(family.family_id, userId, this.getNextMonday());
+      console.log("Data received from getMealPlansFromFamily:", data);
+
+      const mealPlansForFamily = data[0] as Day[];
+
+      // Check if mealPlansForFamily is null, and set an empty array if it is
+      family.mealplans = mealPlansForFamily || [];
+
+      console.log(`Meal plans for ${family.family_name}:`, family.mealplans);
+    } catch (error) {
+      console.error("Error fetching meal plans:", error);
+    }
+
+
   }
 
   private getNextMonday(): string {
@@ -58,6 +84,7 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   navigateToCalender(family_id:String) {
+    console.log("family_id1:", family_id);
     const navigationExtras: NavigationExtras = {
       state: {
         family_id: family_id
@@ -66,21 +93,34 @@ export class MealPlansHomeComponent implements OnInit{
     this.router.navigate(['mealplanscalendar'], navigationExtras);
   }
 
-  async navigateToAddMealPlan() {
+  async navigateToAddMealPlan(family_id:String) {
     const nextMonday = this.getNextMonday();
     console.log(nextMonday);
-    await this.supabaseService.CreateMealPlan('244f4431-3c7b-4e43-9bcd-93d93422e3ef', '2023-12-11').then((data) => {
+    await this.supabaseService.createMealPlan(family_id, this.getNextMonday()).then(async (data) => {
       console.log(data);
       this.mealplan = data[0] as MealPlan[];
+      console.log("nul???:", this.mealplan);
       if (this.mealplan == null) {
-        this.supabaseService.GetMealPlan('244f4431-3c7b-4e43-9bcd-93d93422e3ef','2023-12-11').then((data) => {
-          console.log(data);
-          this.mealplan = data[0] as MealPlan[];
-        });
+        await this.getMeal(family_id)
       }
-      this.router.navigate(['mealplansgenerating']);
+      console.log("family_id1:", family_id, this.mealplan);
+      const navigationExtras: NavigationExtras = {
+        state: {
+          family_id: family_id,
+          mealplan_id: this.mealplan,
+        }
+      };
+      this.router.navigate(['mealplansgenerating'], navigationExtras);
     });
+  }
 
+  async getMeal(family_id: String) {
+    await this.supabaseService.getMealPlan(family_id,this.getNextMonday()).then((data) => {
+      console.log(data);
+      this.mealplan = data[0] as MealPlan[];
+      console.log("IT DID IT");
+      console.log(this.mealplan);
+    });
   }
 
   navigateToGroceryList() {

@@ -670,7 +670,7 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         }
     }
 
-    async GetMealPlan(family_uuid:String, week:String) {
+    async getMealPlan(family_uuid:String, week:String) {
         let { data, error } = await this.supabase
             .rpc('get_mealplan_id', {
                 family_uuid,
@@ -706,7 +706,7 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         }
     }
 
-    async GetUsersFamilies(user_uuid:String) {
+    async getUsersFamilies(user_uuid:String) {
         let { data, error } = await this.supabase
             .rpc('get_all_users_family', {
                 user_uuid
@@ -716,6 +716,75 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
             return [];
         } else {
             console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async createMealPlan(family_uuid:String, first_day_of_week:String) {
+        let { data, error } = await this.supabase
+            .rpc('create_empty_mealplan', {
+                family_uuid,
+                first_day_of_week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async addAttendance(day:String, family:String, user_id:String) {
+        const { data, error } = await this.supabase
+            .from('user_calendar')
+            .insert([
+                { date: day, family: family, user: user_id }
+            ])
+            .select()
+    }
+    async removeAttendance(day:String, family:String, user_id:String) {
+        const { error } = await this.supabase
+            .from('user_calendar')
+            .delete()
+            .eq('date', day)
+            .eq('family', family)
+            .eq('user', user_id)
+    }
+
+    async getAttendanceMonth(day:String, family:String, user_id:String) {
+        let { data, error } = await this.supabase
+            .rpc('get_dates_month', {
+                day,
+                family,
+                user_id
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async getMealPlansFromFamily( family_uuid:String, user_uuid:String,  week:String ) {
+        console.log({
+            family_uuid,
+            user_uuid,
+            week
+        })
+        let { data, error } = await this.supabase
+            .rpc('get_present_users_week', {
+                family_uuid,
+                user_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log("help:", data);
             return Object.values(data);
         }
     }

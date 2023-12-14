@@ -50,6 +50,8 @@ import { AllergiesComponent } from "./register/allergies/allergies.component";
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 import { DietaryPreferenceComponent } from "./register/dietary-preference/dietary-preference.component";
 import { CongratsComponent } from "./register/congrats/congrats.component";
+import { ModalGeneratingComponent } from "./meal-plans/modal-generating/modal-generating.component";
+import { MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-generating.component";
 
 @NgModule({
   declarations: [
@@ -73,6 +75,8 @@ import { CongratsComponent } from "./register/congrats/congrats.component";
     DietaryPreferenceComponent,
     CongratsComponent,
     RecipeDetailComponent,
+    ModalGeneratingComponent,
+    MealPlansGeneratingComponent,
   ],
   imports: [
     BrowserModule,
