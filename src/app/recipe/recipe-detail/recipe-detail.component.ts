@@ -90,9 +90,6 @@ export class RecipeDetailComponent implements OnInit {
       console.error("Error fetching allergies:", error);
     });
   }
-  goBack(): void {
-    this.location.back();
-  }
 
   like_recommended_recipe() {
     if (this.liked){

@@ -68,4 +68,8 @@ export class AllergiesComponent {
     navigateToDietaryPreference() {
         this.router.navigate(['dietaryPreference']);
     }
+
+    navigateBack(){
+        this.router.navigate(['profile']);
+    }
 }

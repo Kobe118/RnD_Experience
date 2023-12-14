@@ -65,8 +65,8 @@ export class DietaryPreferenceComponent implements OnInit {
     navigateBack(){
         this.router.navigate(['allergies'])
     }
-
-    navigateToCongrats() {
-        this.router.navigate(['home']);
+    navigateToProfile(){
+        this.router.navigate(['profile'])
     }
+
 }
