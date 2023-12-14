@@ -8,8 +8,10 @@
             <p id="not-available"><i>No upcoming meals available.</i></p>
         </div>
         <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
-            <div class="recipe-card">
-                <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}" class="recipe-image">
+            <p class="recipe-date">{{recipe.date}}</p>
+            <div class="recipe-card white">
+
+                <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(recipes[i].recipe)">
                 <p class="recipe-name">{{ recipe.recipe_name }}</p>
             </div>
         </div>
@@ -18,8 +20,11 @@
 
     <h2>Preferred Recipes</h2>
     <div class="boxes">
+        <div *ngIf="!preferredRecipes;" class="empty-state">
+            <p class="not-available"><i>User has no preferred recipes.</i></p>
+        </div>
         <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
-            <div class="recipe-card">
+            <div class="recipe-card light-green">
                 <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
                 <p class="recipe-name">{{ preferredRecipe.name }}</p>
             </div>

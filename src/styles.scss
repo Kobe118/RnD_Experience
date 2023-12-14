@@ -1,7 +1,7 @@
 
 $black: #041903;
 $white: #FDFFFC;
-$light-green: #f6faf6;
+$light-green: #e7f1e7;
 $medium-green: #406E3D;
 $dark-green: #204C1D;
 $dark-gray: #707070;
@@ -89,6 +89,14 @@ p {
 
 .white-text {
   color: $white;
+}
+
+.white {
+  background-color: $white;
+}
+
+.light-green {
+  background-color: $light-green;
 }
 
 .medium-green {
@@ -200,7 +208,6 @@ app-bottom-navigation {
 #full-page {
   justify-content: center;
   background-color: $white;
-  //height: 100%;
 }
 
 .bottom-element {
@@ -221,4 +228,8 @@ app-bottom-navigation {
     background-color: $white;
 }
 
+#not-available, .not-available {
+  color: $dark-gray;
+  margin-left: 1em;
+}
 

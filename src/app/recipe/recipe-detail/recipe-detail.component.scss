@@ -1,3 +1,4 @@
+@import "../../../styles";
 .recipe-detail-card {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 90%;
@@ -9,6 +10,10 @@
   width: 100%;
   height: auto;
   border-radius: 8px;
+}
+
+.text-center {
+  text-align: center;
 }
 
 h3 {
@@ -37,6 +42,8 @@ ul.ingredients, ul.allergies {
   flex-direction: row;
   align-content: center;
   width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttons {

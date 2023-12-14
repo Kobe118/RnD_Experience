@@ -1,38 +1,29 @@
-<!DOCTYPE html>
-<header>
-    <h1>Your Meal-Plans</h1>
-    <p class="flush-text">What will we have today?</p>
-</header>
-<main>
-    <h3> December </h3>
-    <section>
+<div id="page">
+    <h1><b>Attendences</b></h1>
+    <br>
+    <h2>December</h2>
+    <section class="month">
         <div class="calendar">
             <div *ngFor="let date of dates">
-                <div
-                        class="calendar-date"
-                        [ngClass]="{ 'clicked': isDateClicked(date), 'past': date.past }"
-                        (click)="onDateClick(date)"
-                >
+                <div class="calendar-date" [ngClass]="{ 'clicked': isDateClicked(date), 'past': date.past }" (click)="onDateClick(date)">
                     {{ getDay(date) }}
                 </div>
             </div>
         </div>
     </section>
-    <h3> January </h3>
-    <section>
+    <br>
+    <h2> January </h2>
+    <section class="month">
         <div class="calendar">
             <div *ngFor="let date of nextMonthDates">
-                <div
-                        class="calendar-date"
-                        [ngClass]="{ 'clicked': isDateClicked(date), 'past': date.past }"
-                        (click)="onDateClick(date)"
-                >
+                <div class="calendar-date" [ngClass]="{ 'clicked': isDateClicked(date), 'past': date.past }" (click)="onDateClick(date)">
                     {{ getDay(date) }}
                 </div>
             </div>
         </div>
     </section>
     <div class="back-button-container">
-        <button class="back-button" (click)="goBack()">Confirm attendances</button>
+        <button class="button" (click)="goBack()">Confirm attendances</button>
     </div>
-</main>
+
+</div>

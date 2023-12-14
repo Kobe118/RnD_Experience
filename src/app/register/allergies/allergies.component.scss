@@ -21,6 +21,10 @@
   transform: scale(0.98);
 }
 
+.button-white.selected {
+  background-color: $dark-green;
+}
+
 .button-back {
   border: none;
   min-width: 10%;

@@ -19,7 +19,7 @@ interface Day {
 export class MealPlansCalendarComponent {
   dates: Day[] = [];
   attendanceDates: Day[] = [];
-  family_id: String = "";
+  family_id: string = "";
   nextMonthDates: Day[] = [];
   nextMonthAttendance: Day[] = [];
 

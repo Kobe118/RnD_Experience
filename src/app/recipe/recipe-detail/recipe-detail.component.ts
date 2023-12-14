@@ -25,12 +25,12 @@ export class RecipeDetailComponent implements OnInit {
       this.router.navigate(['/recipes']);
       return;
     }
-    this.supabaseService.get_unLiked_Recipes();
+    this.supabaseService.getDislikedRecipes();
     this.fetchRecipeDetails(this.recipeId);
   }
 
   private fetchRecipeDetails(id: string) {
-    this.supabaseService.get_recipe_by_id(id).then(recipe => {
+    this.supabaseService.getRecipeById(id).then(recipe => {
       if (recipe && recipe[0]) {
         console.log("Recipe data:", recipe[0]); // Debug output
         this.updateRecipeDetails(recipe[0]);
@@ -60,7 +60,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private fetchIngredients(id: string) {
-    this.supabaseService.get_recipe_ingredients(id).then(ingredients => {
+    this.supabaseService.getRecipeIngredients(id).then(ingredients => {
       if (ingredients) {
         console.log("Ingredients data:", ingredients); // Debug output
         this.ingredients = ingredients;
@@ -79,7 +79,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private fetchAllergies(id: string) {
-    this.supabaseService.get_recipe_allergies(id).then(allergies => {
+    this.supabaseService.getRecipeAllergies(id).then(allergies => {
       if (allergies) {
         console.log("Allergies data:", allergies); // Debug output
         this.allergies = allergies;
@@ -89,9 +89,6 @@ export class RecipeDetailComponent implements OnInit {
     }).catch(error => {
       console.error("Error fetching allergies:", error);
     });
-  }
-  goBack(): void {
-    this.location.back();
   }
 
   like_recommended_recipe() {

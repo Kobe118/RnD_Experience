@@ -91,7 +91,7 @@ export class MealPlansHomeComponent implements OnInit{
     return nextMondayDate.toISOString().split('T')[0];
   }
 
-  navigateToCalender(family_id:String) {
+  navigateToCalender(family_id:string) {
     console.log("family_id1:", family_id);
     const navigationExtras: NavigationExtras = {
       state: {
@@ -101,7 +101,7 @@ export class MealPlansHomeComponent implements OnInit{
     this.router.navigate(['mealplanscalendar'], navigationExtras);
   }
 
-  async navigateToAddMealPlan(family_id:String) {
+  async navigateToAddMealPlan(family_id:string) {
     const nextMonday = this.getNextMonday();
     console.log(nextMonday);
     await this.supabaseService.createMealPlan(family_id, this.getNextMonday()).then(async (data) => {
@@ -122,11 +122,10 @@ export class MealPlansHomeComponent implements OnInit{
     });
   }
 
-  async getMeal(family_id: String) {
+  async getMeal(family_id: string) {
     await this.supabaseService.getMealPlan(family_id,this.getNextMonday()).then((data) => {
       console.log(data);
       this.mealplan = data[0] as MealPlan[];
-      console.log("IT DID IT");
       console.log(this.mealplan);
     });
   }
@@ -135,4 +134,9 @@ export class MealPlansHomeComponent implements OnInit{
     this.router.navigate(['grocerylist']);
 
   }
+
+  handleImageError(day: Day) {
+    day.recipe = "\\assets\\default-meal.jpg";
+  }
+
 }
