@@ -22,12 +22,13 @@ export class DietaryPreferenceComponent implements OnInit {
         }
     }
 
-    selectDietaryPreference(ingredients: any) {
+    async selectDietaryPreference(ingredients: any) {
         const ingredientsId = ingredients.id;
 
         console.log(ingredients.ingredient)
-        if (this.userId !== undefined) {
-            this.supabaseService.linkIngredientToUserDislikes(this.userId, ingredientsId);
+        const user = await this.supabaseService.getUserId();
+        if (user !== undefined) {
+            this.supabaseService.linkIngredientToUserDislikes(user, ingredientsId);
         } else {
             console.error('User ID is undefined');
         }
