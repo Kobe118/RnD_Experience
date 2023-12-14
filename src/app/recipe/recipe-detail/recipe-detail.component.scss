@@ -1,0 +1,46 @@
+.recipe-detail-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  padding: 5% 5% 5% 5%;
+  margin-bottom: 50px;
+}
+
+.recipe-detail-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+h3 {
+  margin-top: 20px;
+}
+
+ul.ingredients, ul.allergies {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ingredients li, .allergies li {
+  background-color: #f0f0f0;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.steps {
+  line-height: 1.6;
+  color: #444;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

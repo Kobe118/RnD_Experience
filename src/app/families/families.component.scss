@@ -1,0 +1,53 @@
+@import "../../styles";
+.card {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 5%;
+  margin-right: 5%;
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.1);
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+#family-id {
+  margin-top: 0;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-container-text {
+  margin-top: 13px;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+
+#family-id {
+  font-size: 0.6em;
+}
+
+#full-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#new-family, #create-family {
+  width:80%;
+  margin-left: 10%;
+}
+
+.nav {
+  margin-top: 10px;
+}
+

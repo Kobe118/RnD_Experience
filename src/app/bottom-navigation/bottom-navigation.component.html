@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<mat-tab-nav-bar >
+    <mat-tab-link
+      *ngFor="let link of navLinks"
+      [routerLink]="link.path"
+      routerLinkActive="active-link"
+    >
+      <mat-icon [fontIcon]="getIcon(link)" routerLinkActive="active-link">
+      </mat-icon>
+      {{ link.label }}
+    </mat-tab-link>
+  </mat-tab-nav-bar>

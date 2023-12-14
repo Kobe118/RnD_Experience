@@ -1,0 +1,67 @@
+@import "../../styles";
+.liked-recipes {
+    display: flex; /* Lays out the children in a line */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    white-space: nowrap; /* Ensures the divs don't wrap */
+  }
+
+  .recipe-small-view p {
+    text-align: center;
+    margin-top: 0;
+  }
+
+
+.btn-outline-secondary {
+  position: absolute; /* Absolute positioning relative to the parent */
+  top: 1px;
+  right: 1px;
+}
+
+.btn-outline-thirdly {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.recipe-card {
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  margin: 8px;
+  background-color: $white;
+  position: relative; /* Needed for absolute positioning of the heart button */
+  width: 150px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  display: inline-block; /* Display inline with block features */
+}
+
+.recipe-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.spinner-grow {
+  width: 3rem;  /* 增大宽度 */
+  height: 3rem; /* 增大高度 */
+}
+
+.recipe-name {
+  padding-top: 0.5em;
+  width: 150px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-size: 0.9em;
+}
+
+.recipe-generation {
+  margin-left: 16px;
+  margin-top: 10px;
+}
+
+#generate-button {
+  width: fit-content;
+}
+

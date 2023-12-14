@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h2><b>Create a new family</b></h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="familyForm" (ngSubmit)="onSubmitFamilyForm()">
+        <div class="mb-3">
+            <label for="familyName" class="form-label">Choose a name for your family</label>
+            <input type="text" class="form-control" id="familyName" formControlName="familyName" required>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="button dark-gray" (click)="modalRef.close()">Close</button>
+            <button type="submit" class="button dark-green">Create</button>
+        </div>
+    </form>
+</div>

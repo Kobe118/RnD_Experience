@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<header>
+    <h1>Your Meal-Plans</h1>
+    <p class="flush-text">What will we have today?</p>
+</header>
+<main>
+    <h3> December </h3>
+    <section>
+        <div class="calendar">
+            <div *ngFor="let date of dates">
+                <div
+                        class="calendar-date"
+                        [ngClass]="{ 'clicked': isDateClicked(date), 'past': date.past }"
+                        (click)="onDateClick(date)"
+                >
+                    {{ getDay(date) }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <h3> January </h3>
+    <section>
+        <div class="calendar">
+            <div *ngFor="let date of nextMonthDates">
+                <div
+                        class="calendar-date"
+                        [ngClass]="{ 'clicked': isDateClicked(date), 'past': date.past }"
+                        (click)="onDateClick(date)"
+                >
+                    {{ getDay(date) }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="back-button-container">
+        <button class="back-button" (click)="goBack()">Confirm attendances</button>
+    </div>
+</main>

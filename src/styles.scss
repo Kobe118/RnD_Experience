@@ -1,32 +1,48 @@
+
 $black: #041903;
 $white: #FDFFFC;
-$light-green: #EEF2ED;
+$light-green: #f6faf6;
 $medium-green: #406E3D;
 $dark-green: #204C1D;
 $dark-gray: #707070;
 $light-gray: #EBEBEB;
 
+$primary: $medium-green;
+$font-family-base: 'Inter';
+$body-font-family: 'Inter';
+$font-family-sans-serif: 'Inter';
+$display-font-family: 'Inter';
+$display-font-style: 'Inter';
+$form-text-font-style: 'Arial';
+$body-bg: $white;
+$highlight-bg: $light-green;
+
+@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
 * {
-  font-family: Inter, sans-serif;
+  font-family: 'Inter', sans-serif;
   max-width: 100%;
 }
 h1 {
-  font-size: 28px; //convert to em, pixels/16=em
+  font-size: 1.75em; //28px convert to em, pixels/16=em
+  color: $black;
 }
 h2 {
-  font-size: 22px;
+  font-size: 1.375em; //22px;
+  color: $black;
 }
 h3 {
-  font-size: 18px;
+  font-size: 1.125em; //18px;
+  color: $black;
 }
 p {
-
+ color: $black;
 }
 .text-large {
-  font-size: 18px;
+  font-size: 1.125em; //18px;
 }
 .text-small {
-  font-size: 18px;
+  font-size: 1.125em; //18px;
 }
 
 .flush-text {
@@ -37,7 +53,8 @@ p {
   border: none;
   color: $white;
   min-width: 10%;
-  padding: 10px 20px 10px 20px;
+
+  padding: 4px 15px 4px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -46,26 +63,162 @@ p {
   border-radius: 200px;
 }
 
+.button:active {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  color: $light-gray;
+  transform: scale(0.98);
+}
+
+.button:hover {
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+
+}
+
+.wide {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .dark-green {
   background-color: $dark-green;
 }
+
+.dark-green-text {
+  color: $dark-green;
+}
+
+.white-text {
+  color: $white;
+}
+
 .medium-green {
   background-color: $medium-green;
+}
+.dark-gray {
+  background-color: $dark-gray;
+}
+.light-gray {
+  background-color: $light-gray;
 }
 
 html, body {
   max-width: 100%;
   background-color: $white;
+  height: 100%;
+  padding: 2% 1.5% 5% 1.5%;
+  font-family: Inter, sans-serif;
 }
 
-header {
-  margin: 10% 2.5% 6% 2.5%;
+app-bottom-navigation {
+  margin-top: auto;
 }
 
-main {
-  margin: 5% 2.5% 0 2.5%;
+#full-page-wo-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 0 0;
+  background-color: $white;
 }
 
+.button-white {
+  border: none;
+  min-width: 10%;
+  padding: 4px 15px 4px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 200px;
+  background-color: $white;
+  color: $black;
+  box-shadow: 0 3px 7px 1px rgba(0, 0, 0, 0.14);
+}
 
+.button-white:active {
+  background-color: $medium-green;
+  color: $white;
+  transform: scale(0.98);
+}
+
+.button-back {
+  border: none;
+  min-width: 10%;
+  padding: 8px 15px 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 200px;
+  background-color: $white;
+  color: $black;
+}
+
+.button-gray-border {
+  border: 1px solid #bdbdbd;
+  background-color: $light-green;
+  color: #4f4f4f;
+  width: 100%;
+  padding: 4px 15px 4px 10px;
+  text-align: left;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.button-gray-border:hover {
+  border: 2px solid $medium-green;
+  transform: scale(1.02);
+}
+
+.button-gray-border:active {
+  border: 2px solid $medium-green;
+}
+
+#allergies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.text-center {
+  margin-bottom: 10%;
+}
+
+#bottom-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10%;
+  padding-bottom: 10%;
+}
+
+#full-page {
+  justify-content: center;
+  background-color: $white;
+  //height: 100%;
+}
+
+.bottom-element {
+  margin-bottom: 70px;
+}
+
+#page{
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+}
+
+#full-page-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 0 0;
+    background-color: $white;
+}
 
 

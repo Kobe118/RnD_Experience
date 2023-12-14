@@ -1,0 +1,14 @@
+<!-- allergies.component.html -->
+
+<div id="full-page">
+    <h1 class="text-center">What are your allergies?</h1>
+    <div id="allergies">
+        <button class="button-white" *ngFor="let allergy of allergies" (click)="selectAllergies(allergy)">
+            {{ allergy.allergie }} <!-- Access the 'allergie' property -->
+        </button>
+    </div>
+    <div id="bottom-buttons">
+        <button class="button-back">🡄</button>
+        <button class="button wide" id="continue" (click)="navigateToDietaryPreference()">Continue</button>
+    </div>
+</div>

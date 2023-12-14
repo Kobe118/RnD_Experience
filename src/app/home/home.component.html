@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<div id="page">
+    <app-default-header [title]= "'Hello!'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
+    <br>
+    <h2>Upcoming Meals</h2>
+    <div class="boxes">
+        <div *ngIf="!recipes;" class="empty-state">
+            <p id="not-available"><i>No upcoming meals available.</i></p>
+        </div>
+        <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
+            <div class="recipe-card">
+                <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}" class="recipe-image">
+                <p class="recipe-name">{{ recipe.recipe_name }}</p>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <h2>Preferred Recipes</h2>
+    <div class="boxes">
+        <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
+            <div class="recipe-card">
+                <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
+                <p class="recipe-name">{{ preferredRecipe.name }}</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h2>Families</h2>
+    <div class="bottom-element">
+        <div class="card" *ngFor="let family of userFamilies" (click)="navigateToFamiliesPage()">
+            <div class="card-body">
+                <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
+                <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<app-bottom-navigation></app-bottom-navigation>
