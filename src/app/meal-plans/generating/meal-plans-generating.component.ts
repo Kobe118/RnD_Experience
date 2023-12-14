@@ -69,4 +69,8 @@ export class MealPlansGeneratingComponent implements OnInit {
     this.modalRef.componentInstance.family_id = this.family_id;
     this.modalRef.componentInstance.mealplan_id = this.mealplan_id;
   }
+
+  goBack(): void {
+    this.router.navigate(['/mealplanshome']);
+  }
 }
