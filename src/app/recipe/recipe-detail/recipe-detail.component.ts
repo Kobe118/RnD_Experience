@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from "../../services/supabase.service";
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
@@ -14,8 +14,10 @@ export class RecipeDetailComponent implements OnInit {
   steps: string = "recipe steps";
   allergies: string[] = [];
   ingredients: any[] = []; // Array to store ingredient details
+  liked:boolean = false;
+  disliked:boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private supabaseService: SupabaseService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private supabaseService: SupabaseService,private location: Location) {}
 
   ngOnInit() {
     this.recipeId = this.route.snapshot.paramMap.get('id') || "";
@@ -23,7 +25,7 @@ export class RecipeDetailComponent implements OnInit {
       this.router.navigate(['/recipes']);
       return;
     }
-
+    this.supabaseService.get_unLiked_Recipes();
     this.fetchRecipeDetails(this.recipeId);
   }
 
@@ -87,5 +89,31 @@ export class RecipeDetailComponent implements OnInit {
     }).catch(error => {
       console.error("Error fetching allergies:", error);
     });
+  }
+  goBack(): void {
+    this.location.back();
+  }
+
+  like_recommended_recipe() {
+    if (this.liked){
+      this.supabaseService.reviewRecipe(this.recipeId,3)
+      this.liked = false
+    }
+    else {
+      this.supabaseService.reviewRecipe(this.recipeId,5)
+      this.liked = true
+      this.disliked = false
+    }
+  }
+  unlike_recommended_recipe() {
+    if (this.disliked){
+      this.supabaseService.reviewRecipe(this.recipeId,3)
+      this.disliked = false
+    }
+    else {
+      this.supabaseService.reviewRecipe(this.recipeId,5)
+      this.disliked = true
+      this.liked = false
+    }
   }
 }

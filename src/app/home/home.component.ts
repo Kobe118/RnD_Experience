@@ -33,10 +33,6 @@ export class HomeComponent implements OnInit {
         console.log('preferred: ', this.preferredRecipes);
         this.loadImagePreferredUrls(this.preferredRecipes);
       }
-      // const families = await this.supabaseService.getFamilies();
-      // if(preferredRecipes){
-      //   this.userFamilies = families[0] as Family[];
-      // }
       this.getFamilies().then(() => {
         this.getImageUrl().then(() => {
         });

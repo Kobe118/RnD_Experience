@@ -1,5 +1,8 @@
 <h1>{{ name }}</h1>
 <div class="bottom-element recipe-detail-card">
+    <button class="btn btn-secondary" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i> Back
+    </button>
     <img
             class="recipe-detail-image"
             [src]="imageUrl"
@@ -7,6 +10,12 @@
             onerror="this.onerror=null;this.src='path/to/default-image.jpg';"
             aria-label="Recipe Image">
 
+    <button class="button-back btn-outline-secondary" (click)="like_recommended_recipe()">
+        <i [class]="liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
+    </button>
+    <button class="button-back btn-outline-thirdly" (click)="unlike_recommended_recipe()">
+        <i [class]="disliked ? 'bi bi bi-hand-thumbs-down-fill' : 'bi bi-hand-thumbs-down'"></i>
+    </button>
     <section *ngIf="ingredients.length > 0">
         <h3>Ingredients</h3>
         <ul class="ingredients" role="list">

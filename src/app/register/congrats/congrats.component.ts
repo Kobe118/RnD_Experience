@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavigationService} from "../../services/navigation.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-congrats',
@@ -7,9 +7,9 @@ import {NavigationService} from "../../services/navigation.service";
     styleUrls: ['./congrats.component.scss']
 })
 export class CongratsComponent {
-    constructor(private navigationService: NavigationService) {} // Inject the service
+    constructor(private router: Router) {} // Inject the service
 
-    redirectToNewPage() {
-        this.navigationService.redirectToPage(this.navigationService.Main); // Use the service to navigate
+    navigateToHome() {
+        this.router.navigate(['allergies']);
     }
 }
