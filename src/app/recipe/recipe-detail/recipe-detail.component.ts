@@ -60,7 +60,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private fetchIngredients(id: string) {
-    this.supabaseService.get_recipe_ingredients(id).then(ingredients => {
+    this.supabaseService.getRecipeIngredients(id).then(ingredients => {
       if (ingredients) {
         console.log("Ingredients data:", ingredients); // Debug output
         this.ingredients = ingredients;
@@ -79,7 +79,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private fetchAllergies(id: string) {
-    this.supabaseService.get_recipe_allergies(id).then(allergies => {
+    this.supabaseService.getRecipeAllergies(id).then(allergies => {
       if (allergies) {
         console.log("Allergies data:", allergies); // Debug output
         this.allergies = allergies;

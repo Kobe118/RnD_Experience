@@ -370,7 +370,7 @@ export class SupabaseService {
         }
     }
 
-    async get_recipe_allergies(recipe_id: string) {
+    async getRecipeAllergies(recipe_id: string) {
         let allergies: string[] = [];
 
         try {
@@ -395,7 +395,7 @@ export class SupabaseService {
         return allergies;
     }
 
-    async get_recipe_ingredients(recipe_id: string): Promise<IngredientDetail[]> {
+    async getRecipeIngredients(recipe_id: string): Promise<IngredientDetail[]> {
         let ingredientsWithDetails: IngredientDetail[] = [];
         try {
             let { data: ingredientsInfo, error: ingredientsError } = await this.supabase

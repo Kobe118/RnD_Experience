@@ -23,8 +23,6 @@ export class AllergiesComponent {
         }
     }
 
-
-
     async selectAllergies(allergies: any) {
         const allergieId = allergies.id;
 
