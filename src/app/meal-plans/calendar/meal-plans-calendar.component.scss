@@ -1,3 +1,4 @@
+@import "../../../styles";
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* 7 columns for days of the week */
@@ -5,20 +6,20 @@
 }
 
 .calendar-date {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: lightblue;
+  background-color: $light-gray;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  margin: 6px 4px;
+  margin: 5px 3px;
 }
 
 .clicked {
-  background-color: green;
-  color: white;
+  background-color: $medium-green;
+  color: $white;
 }
 
 .calendar-date:nth-child(7n + 1) {
@@ -33,17 +34,7 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
-}
-
-.back-button {
-  display: block;
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #000000;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
+  margin-bottom: 30px;
 }
 
 .back-button:hover {
@@ -53,4 +44,19 @@
 .past {
 opacity: 0.5;  /* Adjust the opacity or any other styling as needed for past dates */
 pointer-events: none;  /* Make past dates non-clickable */
+}
+
+.month {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#page {
+  height: 100%;
+}
+
+body, html {
+  padding:0;
+  margin: 0;
 }
