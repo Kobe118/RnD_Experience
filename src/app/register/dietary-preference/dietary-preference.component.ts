@@ -34,6 +34,6 @@ export class DietaryPreferenceComponent implements OnInit {
     }
 
     navigateToCongrats() {
-        this.router.navigate(['congrats']);
+        this.router.navigate(['home']);
     }
 }
