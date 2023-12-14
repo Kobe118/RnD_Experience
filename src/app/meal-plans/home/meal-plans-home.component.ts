@@ -118,7 +118,6 @@ export class MealPlansHomeComponent implements OnInit{
     await this.supabaseService.getMealPlan(family_id,this.getNextMonday()).then((data) => {
       console.log(data);
       this.mealplan = data[0] as MealPlan[];
-      console.log("IT DID IT");
       console.log(this.mealplan);
     });
   }
@@ -127,4 +126,9 @@ export class MealPlansHomeComponent implements OnInit{
     this.router.navigate(['grocerylist']);
 
   }
+
+  handleImageError(day: Day) {
+    day.recipe = "\\assets\\default-meal.jpg";
+  }
+
 }

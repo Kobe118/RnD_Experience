@@ -1,7 +1,7 @@
 
 $black: #041903;
 $white: #FDFFFC;
-$light-green: #f6faf6;
+$light-green: #dbe8db;
 $medium-green: #406E3D;
 $dark-green: #204C1D;
 $dark-gray: #707070;
@@ -221,4 +221,7 @@ app-bottom-navigation {
     background-color: $white;
 }
 
-
+#not-available {
+  color: $dark-gray;
+  margin-left: 1em;
+}
