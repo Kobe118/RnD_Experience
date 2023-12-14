@@ -624,17 +624,39 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
     }
 
 
-    linkIngredientToUserDislikes(userId: string, ingredientId: string){
-    return this.supabase
-        .from('user_has_dislikes')
-        .insert({ user_id: userId, ingredient_id: ingredientId });
-  }
+    async linkIngredientToUserDislikes(userId: string, ingredientId: string): Promise<any> {
+        try{
+            const {data, error} = await this.supabase
+            .from('user_has_dislike')
+            .insert({ user: userId, dislike: ingredientId });
+            if (error) {
+                throw error;
+            }
 
-  linkAllergieToUserAllergies(userId: string, allergieId: string){
-      return this.supabase
-          .from('user_has_allergies')
-          .insert({ user_id: userId, ingredient_id: allergieId });
-  }
+            return data;
+        } catch (error) {
+            console.error('Error inserting into user_has_allergies:', error);
+            throw error; // Re-throw the error to handle it where the function is called
+        }
+    }
+
+    async linkAllergieToUserAllergies(userId: string, allergieId: string): Promise<any> {
+        try {
+            const { data, error } = await this.supabase
+                .from('user_has_allergie')
+                .insert({ user: userId, allergie: allergieId });
+
+            if (error) {
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error inserting into user_has_allergies:', error);
+            throw error; // Re-throw the error to handle it where the function is called
+        }
+    }
+
 
     async getMealPlanInfo(mealplan:String) {
         let { data, error } = await this.supabase

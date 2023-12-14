@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
     styleUrls: ['./allergies.component.scss']
 })
 export class AllergiesComponent {
+    loading = false;
     allergies: any[] = [];
     selectedAllergies: string[] = [];
     userId: string | undefined;
@@ -30,15 +31,27 @@ export class AllergiesComponent {
 
     async selectAllergies(allergies: any) {
         const allergieId = allergies.id;
+        try {
+            this.loading = true;
 
-        console.log(allergies.allergie)
-        const user = await this.supabaseService.getUserId();
-        if (user !== undefined) {
-            this.supabaseService.linkAllergieToUserAllergies(user, allergieId);
-            // Add selected allergy to the array when clicked
-            this.selectedAllergies.push(allergies.allergie);
-        } else {
-            console.error('User ID is undefined');
+            console.log(allergies.allergie)
+            const user = await this.supabaseService.getUserId();
+            console.log('userID' , user);
+            if (user !== undefined) {
+                this.supabaseService.linkAllergieToUserAllergies(user.id, allergieId);
+                console.log('userIDDDD', user);
+                console.log('allergie', allergieId);
+                // Add selected allergy to the array when clicked
+                this.selectedAllergies.push(allergies.allergie);
+            } else {
+                console.error('User ID is undefined');
+            }
+        }catch (error) {
+            if (error instanceof Error) {
+                alert(error.message);
+            }
+        } finally {
+            this.loading = false;
         }
     }
 
