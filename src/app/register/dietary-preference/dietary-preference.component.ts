@@ -36,7 +36,7 @@ export class DietaryPreferenceComponent implements OnInit {
         console.log('userID',user);
         if (user !== undefined) {
             this.supabaseService.linkIngredientToUserDislikes(user.id, ingredientsId);
-            this.selectedDietaryPreference.push(ingredients.ingredient);
+            this.selectedDietaryPreference.push(ingredients.name);
         } else {
             console.error('User ID is undefined');
         }
@@ -51,7 +51,7 @@ export class DietaryPreferenceComponent implements OnInit {
 
     isDietaryPreferenceSelected(ingredients: any): boolean {
         // Check if the current allergy is already selected
-        return this.selectedDietaryPreference.includes(ingredients.ingredient);
+        return this.selectedDietaryPreference.includes(ingredients.name);
     }
 
     navigateBack(){
