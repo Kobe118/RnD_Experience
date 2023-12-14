@@ -87,6 +87,10 @@ p {
   color: $dark-green;
 }
 
+.white-text {
+  color: $white;
+}
+
 .medium-green {
   background-color: $medium-green;
 }
@@ -186,6 +190,14 @@ app-bottom-navigation {
   display: flex;
   flex-direction: column;
   background-color: $white;
+}
+
+#full-page-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 0 0;
+    background-color: $white;
 }
 
 
