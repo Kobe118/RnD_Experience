@@ -448,6 +448,23 @@ export class SupabaseService {
         }
     }
 
+    async getAllergies() {
+        let allergies: any[] = [];
+          try {
+              const { data: allergiesData, error: allergiesError } = await this.supabase
+                  .from('allergie')
+                  .select("*");
+  
+              if (allergiesError) {throw allergiesError;}
+              if(allergiesData){
+                  return allergiesData;}
+          } catch (error) {
+              console.error("Error fetching allergies:", error);
+          }
+          console.log(allergies); 
+          return [];
+      }
+
     async getUserAllergies() {
         let allergies: string[] = [];
         const userid = this._currentUser.getValue().id;
@@ -491,29 +508,10 @@ export class SupabaseService {
             if(allergiesData)
                 dislikes = allergiesData.map(a => a.name);
         } catch (error) {
-            console.error("Error fetching allergies:", error);
+            console.error("Error fetching userdislikes:", error);
         }
         console.log(dislikes);
         return dislikes;
-    }
-
-
-    async getAllergies() {
-      let allergies: any[] = [];
-
-        try {
-            const { data: allergiesData, error: allergiesError } = await this.supabase
-                .from('allergie')
-                .select("*");
-
-            if (allergiesError) {throw allergiesError;}
-            if(allergiesData){
-                return allergiesData;}
-        } catch (error) {
-            console.error("Error fetching allergies:", error);
-        }
-        console.log(allergies); 
-        return [];
     }
 
     async linkIngredientToUserDislikes(userId: string, ingredientId: string): Promise<any> {
@@ -534,15 +532,15 @@ export class SupabaseService {
 
     async unlinkIngredientFromUserDislikes(userId: string, ingredientId: string): Promise<any> {
         try {
-            const { error } = await this.supabase
+            const {error } = await this.supabase
                 .from('user_has_dislike')
                 .delete()
                 .eq('user', userId)
                 .eq('dislike', ingredientId);
-
             if (error) {
                 throw error;
             }
+
 
             return; // Return nothing if successful
         } catch (error) {
