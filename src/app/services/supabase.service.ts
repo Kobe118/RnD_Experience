@@ -516,18 +516,6 @@ export class SupabaseService {
         return [];
     }
 
-    linkIngredientToUserDislikes(userId: string, ingredientId: string){
-        return this.supabase
-            .from('user_has_dislikes')
-            .insert({ user_id: userId, ingredient_id: ingredientId });
-    }
-
-    linkAllergieToUserAllergies(userId: string, allergieId: string){
-        return this.supabase
-            .from('user_has_allergies')
-            .insert({ user_id: userId, ingredient_id: allergieId });
-    }
-
     async linkIngredientToUserDislikes(userId: string, ingredientId: string): Promise<any> {
         try{
             const {data, error} = await this.supabase

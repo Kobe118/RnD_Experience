@@ -19,7 +19,7 @@ export class DietaryPreferenceComponent implements OnInit {
         try {
             this.ingredients = await this.supabaseService.getIngredients();
             console.log("Ingredients:", this.ingredients);
-            this.selectedDietaryPreference = await this.supabaseService.get_user_dislikes();
+            this.selectedDietaryPreference = await this.supabaseService.getUserDislikes();
             console.log("user dislike", this.selectedDietaryPreference);
         } catch (error) {
             console.error("Error fetching allergies:", error);

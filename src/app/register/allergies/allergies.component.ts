@@ -21,7 +21,7 @@ export class AllergiesComponent {
             this.allergies = await this.supabaseService.getAllergies();
             console.log("Allergies:", this.allergies);
             // Fetch selected allergies for the current user
-            this.selectedAllergies = await this.supabaseService.get_user_allergies();
+            this.selectedAllergies = await this.supabaseService.getUserAllergies();
         } catch (error) {
             console.error("Error fetching allergies:", error);
         }
