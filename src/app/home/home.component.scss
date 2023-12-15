@@ -21,12 +21,11 @@
 }
 
 .recipe-card {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.2);
   border-radius: 8px;
   padding: 16px;
   text-align: center;
-  margin: 8px;
-  background-color: $light-green;
+  margin: 0 8px 8px;
   position: relative; /* Needed for absolute positioning of the heart button */
   width: 150px; /* Fixed width */
   height: 200px; /* Fixed height */
@@ -49,53 +48,56 @@
   font-size: 0.9em;
 }
 
-  .card {
-    width: 90%;
-    margin-left: 5%;
-    margin-bottom: 3%;
-    margin-right: 5%;
-    box-shadow: 0 4px 10px rgba(4, 25, 3, 0.1);
+.recipe-date {
+  margin: 0 0 2px;
+  color: $dark-gray;
+  font-size: 0.8em;
+}
 
-  }
-  .card-body {
-    background-color: $white;
-    border-radius: 8px;
-  }
-  .user-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-container-text {
-    margin-top: 0;
-  }
-  
-  .profile-picture {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-  }
-  
-  
-  #family-id {
-    font-size: 0.6em;
-    margin-bottom: 0;
-  }
-  
-  #full-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  #new-family, #create-family {
-    width:80%;
-    margin-left: 10%;
-  
-  }
+.card {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 15px;
+  margin-right: 5%;
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.2);
 
-  #not-available {
-    color: $dark-gray;
-    margin-left: 1em;
-  }
-  
+}
+.card-body {
+  background-color: $white;
+  border-radius: 8px;
+}
+.user-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-container-text {
+  margin-top: 0;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+
+#family-id {
+  font-size: 0.6em;
+  margin-bottom: 0;
+}
+
+#full-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#new-family, #create-family {
+  width:80%;
+  margin-left: 10%;
+
+}
+
+
+

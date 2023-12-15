@@ -1,24 +1,32 @@
 <div class="modal-header">
-    <h1 class="modal-title" id="exampleModalLabel">Choose a dish for {{ day }}</h1>
-    <button type="button" class="btn-close" aria-label="Close"></button>
+  <h2>Pick a favorite</h2>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 <div class="modal-body">
-    <h2>Pick a favorite</h2>
-    <div class="recipe-cards">
-        <div class="recipe-card" *ngFor="let recipe of liked_recipes" [class.selected]="recipe.isSelected" (click)="selectRecipe(recipe, combined_recipes)">
-            <img [src]="recipe.url" alt="Recipe Image" class="recipe-image">
-            <p class="recipe-name">{{ recipe.name }}</p>
-        </div>
+  <div class="recipe-cards">
+    <div class="recipe-card-outer text-center" *ngFor="let recipe of liked_recipes" >
+      <div class="recipe-card" [class.selected]="recipe.isSelected"  (click)="selectRecipe(recipe, combined_recipes)">
+        <img [src]="recipe.url" alt="Recipe Image" class="recipe-image">
+      </div>
+      <p class="recipe-name">{{ recipe.name }}</p>
     </div>
-    <h2>Or try something new</h2>
-    <div class="recipe-cards">
-        <div class="recipe-card" *ngFor="let recipe of Nonliked_recipes" [class.selected]="recipe.isSelected" (click)="selectRecipe(recipe, combined_recipes)">
-            <img [src]="recipe.url" alt="Recipe Image" class="recipe-image">
-            <p class="recipe-name">{{ recipe.name }}</p>
-        </div>
+  </div>
+
+  <h2>Or try something new</h2>
+  <div class="recipe-cards">
+    <div class="recipe-card-outer text-center" *ngFor="let recipe of Nonliked_recipes" >
+      <div *ngIf="!Nonliked_recipes;" class="empty-state">
+        <p class="not-available"><i>Select that you will attend this day</i></p>
     </div>
+      <div class="recipe-card" [class.selected]="recipe.isSelected"  (click)="selectRecipe(recipe, combined_recipes)">
+
+      <img [src]="recipe.url" alt="Recipe Image" class="recipe-image">
+      </div>
+      <p class="recipe-name">{{ recipe.name }}</p>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" aria-label="Close" (click)="closeModal()">Close</button>
-    <button type="button" class="btn btn-primary" (click)="submitSelection(combined_recipes)">Save changes</button>
+  <button type="button" class="button dark-gray" aria-label="Close" (click)="closeModal()">Close</button>
+  <button type="button" class="button dark-green" (click)="submitSelection(combined_recipes)">Save changes</button>
 </div>

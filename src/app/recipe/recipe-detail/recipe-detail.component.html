@@ -1,8 +1,6 @@
 <div id="full-page-center">
     <div id="header">
-        <button class="button-back col-2" (click)="goBack()">🡄</button>
-        <h2 class="text-center col-8">{{ name }}</h2>
-        <span class="col-2"></span>
+        <h2 class="text-center">{{ name }}</h2>
     </div>
 
     <div class="recipe-detail-card center">
@@ -25,7 +23,7 @@
         <section *ngIf="ingredients.length > 0">
             <h3><b>Ingredients</b></h3>
             <ul class="ingredients" role="list">
-                <li *ngFor="let ingredient of ingredients" role="listitem">{{ ingredient.name }}: {{ ingredient.quantity }} {{ ingredient.unit }}</li>
+                <li *ngFor="let ingredient of ingredients" role="listitem">{{ formatName(ingredient.name) }}: {{ ingredient.quantity }} {{ ingredient.unit }}</li>
             </ul>
         </section>
 
@@ -41,5 +39,6 @@
             <p class="steps">{{ steps }}</p>
         </section>
     </div>
-
+    
 </div>
+<app-bottom-navigation></app-bottom-navigation>

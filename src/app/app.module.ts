@@ -1,14 +1,12 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
-import { NgOptimizedImage } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
@@ -50,6 +48,8 @@ import { AllergiesComponent } from "./register/allergies/allergies.component";
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 import { DietaryPreferenceComponent } from "./register/dietary-preference/dietary-preference.component";
 import { CongratsComponent } from "./register/congrats/congrats.component";
+import { ModalGeneratingComponent } from "./meal-plans/modal-generating/modal-generating.component";
+import { MealPlansGeneratingComponent} from "./meal-plans/generating/meal-plans-generating.component";
 
 @NgModule({
   declarations: [
@@ -73,6 +73,8 @@ import { CongratsComponent } from "./register/congrats/congrats.component";
     DietaryPreferenceComponent,
     CongratsComponent,
     RecipeDetailComponent,
+    ModalGeneratingComponent,
+    MealPlansGeneratingComponent,
   ],
   imports: [
     BrowserModule,
