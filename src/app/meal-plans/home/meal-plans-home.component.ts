@@ -7,6 +7,8 @@ import {SupabaseService} from "../../services/supabase.service";
 interface Day {
   date: string;
   recipe: string;
+  recipe_name: string;
+  picture_url: string;
   day_of_week: string;
   will_attend: boolean;
   users: User[];
@@ -51,6 +53,7 @@ export class MealPlansHomeComponent implements OnInit{
       //await this.fetchMealPlansForFamily(user.id, family);
       await this.fetchMealPlansForFamily(user.id, family);
       console.log("check 2");
+      await this.getImageUrl(family);
     }
   }
 
@@ -137,6 +140,18 @@ export class MealPlansHomeComponent implements OnInit{
 
   handleImageError(day: Day) {
     day.recipe = "\\assets\\default-meal.jpg";
+  }
+
+  async getImageUrl(family: Family) {
+    for (const day of family.mealplans || []) {
+      if (day && day.recipe) {
+        try {
+          day.picture_url = await this.supabaseService.getImageUrl(`${day.recipe}`);
+        } catch (error) {
+          day.picture_url = '';
+        }
+      }
+    }
   }
 
 }
