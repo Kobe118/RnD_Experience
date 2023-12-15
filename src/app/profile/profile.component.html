@@ -9,6 +9,7 @@
             </label>
         </div>
         <h2 class="text-center">{{profile.first_name}} {{profile.name}}</h2>
+        <a class="text-center button-back" (click)="copyText()">{{currentUser.user_id}}</a>
         <p>Click to change your preferences</p>
         <button type="button" class="button-gray-border"  href="#" (click)="navigateToAllergies()">Change your allergies</button>
         <button type="button" class="button-gray-border" id="dietaryPreference" href="#" (click)="navigateToDietaryPreference()">Change your dietary preference</button>

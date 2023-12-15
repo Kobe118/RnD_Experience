@@ -16,6 +16,13 @@ export class ProfileComponent implements OnInit {
   profile: Profile = {name: "", first_name: ""};
   user: any = {};
 
+  currentUser: User = {
+    user_id: '',
+    first_name: '',
+    last_name: '',
+    picture_url: ''
+  };
+
 
   updateProfileForm = this.formBuilder.group({
     firstname: '',
@@ -44,7 +51,10 @@ export class ProfileComponent implements OnInit {
   async getProfile() {
     try {
       this.loading = true;
-      const user = await this.supabaseService.getUserId(); // Retrieve the user 
+      const user = await this.supabaseService.getUserId(); // Retrieve the user
+      if (user) {
+        this.currentUser.user_id = user.id;
+      }
       console.log("profile user: ", user);
       if (user) {
         const userProfile = await this.supabaseService.profile(user);
@@ -161,4 +171,11 @@ export class ProfileComponent implements OnInit {
     await this.supabaseService.signOut();
     this.router.navigate(['Login']);
   }
+
+  copyText(): void {
+    navigator.clipboard.writeText(this.currentUser.user_id).catch(() => {
+      console.error("Unable to copy text");
+    });
+  }
+
 }
