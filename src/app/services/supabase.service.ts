@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Recipe,IngredientDetail } from '../recipe/recipe.model'
+import { Recipe,IngredientDetail, RecipeNew } from '../recipe/recipe.model'
 import { Profile } from '../profile/profile.model'
 import {
     AuthChangeEvent,
@@ -10,8 +10,7 @@ import {
     User,
 } from '@supabase/supabase-js'
 import { environment} from "../environments/environment/environment";
-import { BehaviorSubject } from 'rxjs';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -20,11 +19,22 @@ import { Observable } from 'rxjs';
 export class SupabaseService {
     supabase: SupabaseClient
     _session: AuthSession | null = null
-    private _currentUser: BehaviorSubject<any> = new BehaviorSubject<any>(null); // this is a BehaviorSubject from rxjs that is used to store the current user and is initialized with null as the default value
+    private _currentUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     constructor() {
       this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
       console.log("USER:", this.getLocalUser());
+    }
+    //User Authentication
+    async signUp(credentials: { email: string; password: string; options: object}) {
+        return new Promise(async (resolve, reject) => {
+          const { error, data } = await this.supabase.auth.signUp(credentials);
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
     }
 
     get session() {
@@ -42,25 +52,8 @@ export class SupabaseService {
         return this._currentUser.value;
     }
 
-    async signUp(credentials: { email: string; password: string; options: object}) {
-        return new Promise(async (resolve, reject) => {
-          const { error, data } = await this.supabase.auth.signUp(credentials);
-          if (error) {
-            reject(error);
-          } else {
-            resolve(data);
-          }
-        });
-    }
-
-    async getProfile(){
-      const userString = localStorage.getItem('user');
-      if (userString) {
-        return JSON.parse(userString);
-      }
-    }
-
     profile(user: User) {
+        console.log(user.id)
         return this.supabase
             .from('users')
             .select(`name, first_name`)
@@ -90,16 +83,13 @@ export class SupabaseService {
           }
         });
     }
+
     private setRefreshToken(token: string): void {
       localStorage.setItem('token', token);
     }
     private setLocalUser(account: User): void{
       const userString = JSON.stringify(account);
       localStorage.setItem('user', userString);
-    }
-  
-    private getRefreshToken(): string | null {
-      return localStorage.getItem('token');
     }
     
     private getLocalUser(): User | null {
@@ -109,17 +99,12 @@ export class SupabaseService {
       }
       return null;
     }
-  
-    private clearTokens(): void {
-      localStorage.removeItem('token');
-    }
 
     async getUserId(){
       const userString = localStorage.getItem('user');
       if (userString) {
         return JSON.parse(userString);
       }
-      return null;
     }
 
     signOut() {
@@ -131,10 +116,6 @@ export class SupabaseService {
     }
 
     updateProfile(profile: Profile) {
-        const update = {
-            ...profile,
-            updated_at: new Date(),
-        }
         return this.supabase.from('users').update(profile).eq('id',profile.id)
     }
 
@@ -148,7 +129,6 @@ export class SupabaseService {
 
     isLoggedIn() {
         // this function is used to check if the user is logged in which will be used in auth.guard.ts to protect the routes from unauthorized access
-        
         if(this.getLocalUser() !== null){
           this._currentUser.next(this.getLocalUser());
         }
@@ -177,6 +157,7 @@ export class SupabaseService {
         }
       }
 
+    //Recipes
     async getPreferredRecipes(){
       try {
         console.log('Preferred userID: ', this._currentUser.getValue().id);
@@ -196,30 +177,11 @@ export class SupabaseService {
       }
     }
 
-    async getFamilies(){
-      try {
-        const { data, error } = await this.supabase
-          .rpc('get_all_users_family', {
-            user_uuid: this._currentUser.getValue().id
-          });
-          if (error) {
-            console.error(error);
-            throw error;
-          } else {     
-            return Object.values(data); // Assuming data is an array of Recipe objects
-          }
-      } catch (error) {
-        console.error('Error fetching recipes:', error);
-        throw error;
-      }
-    }
-
     async getImageUrl(id: string) {
       const { data } = this.supabase
           .storage
           .from('recipes_thumbnail_and_picture')
           .getPublicUrl(id+'.jpg')
-
       return data.publicUrl;
     }
 
@@ -231,14 +193,11 @@ export class SupabaseService {
             .eq('recipe', recipeId)
             .eq('user', userId);
 
-        // 检查是否存在错误
         if (selectError) {
             console.error(selectError);
             return;
         }
-        // 检查是否有现有的记录
         if (existingReviews && existingReviews.length > 0) {
-            // 更新现有记录的评分
             const { data: updatedData, error: updateError } = await this.supabase
                 .from('recipe_review')
                 .update({ score: score })
@@ -249,8 +208,7 @@ export class SupabaseService {
                 console.error(updateError);
             }
         } else {
-            // 没有现有记录，插入新记录
-            const { data: insertedData, error: insertError } = await this.supabase
+            const { error: insertError } = await this.supabase
                 .from('recipe_review')
                 .insert([{ recipe: recipeId, user: userId, score: score }]);
 
@@ -261,7 +219,32 @@ export class SupabaseService {
         }
     }
 
-    async get_Liked_Recipes():Promise <Recipe[]>{
+    async postRecipeData(input: any) {
+        console.log("sent_message");
+        console.log(JSON.stringify(input))
+        let {data,error} = await this.supabase.functions.invoke('openai',{body:JSON.stringify(input)})
+        if (error) throw error;
+        console.log(data)
+        return data.id;
+    }
+
+    async get_recipe_review(recipeId:string):Promise<number>{
+        let { data: recipe, error } = await this.supabase
+            .from('recipe_review')
+            .select('score')
+            .eq('recipe',recipeId);
+
+        if (recipe){
+            console.log("recipe review")
+            console.log(recipe)
+            const recipeScores = recipe.map(a=>a.score);
+            return recipeScores[0]
+        }
+        else {
+            return 3
+        }
+    }
+    async getLikedRecipes():Promise <Recipe[]>{
         let userId = this._currentUser.getValue().id;
 
         let { data: recipe, error } = await this.supabase
@@ -272,9 +255,10 @@ export class SupabaseService {
         if (recipe){
             const recipeIds = recipe.map(a=>a.recipe);
 
-            let { data: newrecipe, error } = await this.supabase
+            let { data: newrecipe } = await this.supabase
                 .from('recipe')
                 .select('id,name,made_by,manual')
+                .order('id', { ascending: false })
                 .in('id',recipeIds)
             console.log("recipeID")
             console.log(newrecipe?.length)
@@ -283,7 +267,8 @@ export class SupabaseService {
         if (error) throw error;
         return []
     }
-    async get_unLiked_Recipes():Promise <Recipe[]>{
+
+    async getDislikedRecipes():Promise <Recipe[]>{
         let userId = this._currentUser.getValue().id;
 
         let { data: recipe, error } = await this.supabase
@@ -294,9 +279,10 @@ export class SupabaseService {
         if (recipe){
             const recipeIds = recipe.map(a=>a.recipe);
 
-            let { data: newrecipe, error } = await this.supabase
+            let { data: newrecipe } = await this.supabase
                 .from('recipe')
                 .select('id,name,made_by,manual')
+                .order('id', { ascending: false })
                 .in('id',recipeIds)
             console.log("recipeID")
             console.log(newrecipe?.length)
@@ -305,19 +291,21 @@ export class SupabaseService {
         if (error) throw error;
         return []
     }
-    async get_Other_Recipes(likedRecipes: Recipe[], unlikedRecipes: Recipe[]): Promise<Recipe[]> {
-        // Extracting IDs from liked and unliked recipes
-        const excludeIds = [...likedRecipes, ...unlikedRecipes].map(recipe => recipe.id);
-        console.log("excluded")
-        console.log(likedRecipes.length)
-        console.log(excludeIds[0])
-        // Querying for 5 recipes excluding the liked and unliked ones
+
+    async getOtherRecipes(likedRecipes: Recipe[], unlikedRecipes: Recipe[]): Promise<Recipe[]> {
+        let { data, error:e } = await this.supabase
+            .rpc('get_five_random_recipes', {
+                user_id:this._currentUser.getValue().id
+            })
+        if (e) console.error(e)
+        else console.log(data)
+        const recipeIds = data.recipes.map((recipe: RecipeNew) => recipe.recipe);
         let { data: otherRecipes, error } = await this.supabase
             .from('recipe')
             .select('id, name, made_by, manual')
-            .not('id', 'in', `(${excludeIds.join(',')})`)
+            .order('id', { ascending: false })
+            .in('id', recipeIds)
             .limit(5);
-
         // If there's an error, throw it
         if (error) throw error;
 
@@ -325,9 +313,7 @@ export class SupabaseService {
         return otherRecipes as Recipe[] || [];
     }
 
-
-
-    async get_recipe_by_id(recipe_id:string){
+    async getRecipeById(recipe_id:string){
         let { data: recipe, error } = await this.supabase
             .from('recipe')
             .select('id,name,made_by,manual')
@@ -337,146 +323,114 @@ export class SupabaseService {
         return recipe;
     }
 
-    async GetLikedRecipes(date:String, family_uuid:String) {
-      let { data, error } = await this.supabase
-          .rpc('get_three_liked_recipes', {
-              date,
-              family_uuid
-          })
-      if (error) {
-          console.error(error);
-          return [];
-      } else {
-          console.log(data);
-          return Object.values(data);
-      }
+    async GetLikedRecipes(date:string, family_uuid:string) {
+        let { data, error } = await this.supabase
+            .rpc('get_three_liked_recipes', {
+                date,
+                family_uuid
+            })
+        if (error) {
+             console.error(error);
+            return [];
+         } else {
+             console.log(data);
+            return Object.values(data);
+         }
   }
 
-  async GetNonLikedRecipes(date:String, family_uuid:String) {
-      let { data, error } = await this.supabase
-          .rpc('get_three_non_liked_recipes', {
-              date,
-              family_uuid
-          })
-      if (error) {
-          console.error(error);
-          return [];
-      } else {
-          console.log(data);
-          return Object.values(data);
-      }
-  }
-  async CreateMealPlan(family_uuid:String, week:String) {
-    let { data, error } = await this.supabase
-        .rpc('create_empty_mealplan', {
-            family_uuid,
-            week
-        })
-    if (error) {
-        console.error(error);
-        return [];
-    } else {
-        console.log(data);
-        return Object.values(data);
+    async GetNonLikedRecipes(date:string, family_uuid:string) {
+        let { data, error } = await this.supabase
+            .rpc('get_three_non_liked_recipes', {
+                 date,
+                 family_uuid
+             })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
     }
-}
 
-async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
-    let { data, error } = await this.supabase
-        .rpc('insert_recipe_into_mealplan', {
-            day_of_week,
-            mealplan,
-            recipe
-        })
-    if (error) {
-        console.error(error);
-        return [];
-    } else {
-        console.log(data);
-        return Object.values(data);
+    //MealPlan
+    async CreateMealPlan(family_uuid:string, week:string) {
+        let { data, error } = await this.supabase
+            .rpc('create_empty_mealplan', {
+                family_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
     }
-  }
 
-    // async get_recipe_allergies( recipe_id:string){
-    //     let allergies:string[] = [];
-    //     let { data: recipe, error } = await this.supabase
-    //         .from('recipe')
-    //         .select('allergie_in_recipe(allergie)')
-    //         .eq('id',recipe_id);
-    //     if(recipe&&recipe[0]){
-    //         for (let i = 0; i < recipe[0].allergie_in_recipe.length; i++) {
-    //             let { data: allergie, error } = await this.supabase
-    //                 .from('allergie')
-    //                 .select("allergie")
-    //                 // Filters
-    //                 .eq('id', recipe[0].allergie_in_recipe[i].allergie)
-    //             if (allergie&&allergie[0]){
-    //                 allergies.push(allergie[0].allergie)
-    //             }
-    //         }
-    //     }
-    //     if (error) throw error;
-    //     console.log(allergies)
-    //     return allergies;
-    // }
-    async get_recipe_allergies(recipe_id: string) {
+    async AddToMealPlan(day_of_week:string, mealplan:string, recipe:string) {
+        let { data, error } = await this.supabase
+            .rpc('insert_recipe_into_mealplan', {
+                day_of_week,
+                mealplan,
+                recipe
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async getRecipeAllergies(recipe_id: string) {
         let allergies: string[] = [];
 
         try {
-            // 获取包含过敏原信息的食谱数据
             let { data: allergies_id, error: recipeError } = await this.supabase
                 .from('allergie_in_recipe')
                 .select('allergie')
                 .eq('recipe', recipe_id);
             if (recipeError|| !allergies_id) throw recipeError;
             console.log("get allergies"+allergies_id.length)
-
             const allergieIds = allergies_id.map(a=>a.allergie);
             let { data: allergiesData, error: allergiesError } = await this.supabase
                 .from('allergie')
                 .select("allergie")
                 .in('id', allergieIds);
-
             if (allergiesError) throw allergiesError;
             if(allergiesData)
                 allergies = allergiesData.map(a => a.allergie);
         } catch (error) {
             console.error("Error fetching allergies:", error);
         }
-
-        console.log(allergies); // 调试输出
+        console.log(allergies); 
         return allergies;
     }
 
-    async get_recipe_ingredients(recipe_id: string): Promise<IngredientDetail[]> {
+    async getRecipeIngredients(recipe_id: string): Promise<IngredientDetail[]> {
         let ingredientsWithDetails: IngredientDetail[] = [];
-
         try {
-            // 获取食谱的原材料ID、数量和单位
             let { data: ingredientsInfo, error: ingredientsError } = await this.supabase
                 .from('ingredient_in_recipe')
                 .select('ingredient, quantity, unit')
                 .eq('recipe', recipe_id);
-
             if (ingredientsError || !ingredientsInfo) throw ingredientsError;
             console.log("Ingredient IDs:", ingredientsInfo);
-
-            // 获取原材料名称
             const ingredientIds = ingredientsInfo.map(a => a.ingredient);
             let { data: ingredientsData, error: dataError } = await this.supabase
                 .from('ingredient')
                 .select("id, name")
                 .in('id', ingredientIds);
-
             if (dataError) throw dataError;
-
-            // 组合原材料名称、数量和单位
             if (ingredientsData && ingredientsData.length > 0) {
                 ingredientsWithDetails = ingredientsInfo.map(ingredientInfo => {
                     // @ts-ignore
                     const ingredientData = ingredientsData.find(i => i.id === ingredientInfo.ingredient);
                     return {
-                        name: ingredientData ? ingredientData.name : 'Unknown', // 更直接的null检查
+                        name: ingredientData ? ingredientData.name : 'Unknown', 
                         quantity: ingredientInfo.quantity,
                         unit: ingredientInfo.unit
                     };
@@ -487,40 +441,356 @@ async AddToMealPlan(day_of_week:String, mealplan:String, recipe:String) {
         } catch (error) {
             console.error("Error fetching ingredients:", error);
         }
-
         console.log("Ingredients with details:", ingredientsWithDetails); // 调试输出
         return ingredientsWithDetails;
     }
 
-    async getAllergies() {
-      let allergies: any[] = [];
-
+    //User Profile
+    async uploadFile(file: File,user: User): Promise<{ path: string }> {
         try {
-            let { data: allergiesData, error: allergiesError } = await this.supabase
-                .from('allergie')
-                .select("*");
+            const { data, error } = await this.supabase.storage
+                .from('profile_pictures')
+                .upload(user.id+'.jpg', file, { upsert: true });
 
-            if (allergiesError) throw allergiesError;
+            if (error) {
+                throw error;
+            } else {
+                return data; // Assuming 'data' contains the { path: string } structure
+            }
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            throw error;
+        }
+    }
+
+    async getAllergies() {
+        let allergies: any[] = [];
+          try {
+              const { data: allergiesData, error: allergiesError } = await this.supabase
+                  .from('allergie')
+                  .select("*");
+  
+              if (allergiesError) {throw allergiesError;}
+              if(allergiesData){
+                  return allergiesData;}
+          } catch (error) {
+              console.error("Error fetching allergies:", error);
+          }
+          console.log(allergies); 
+          return [];
+      }
+
+    async getUserAllergies() {
+        let allergies: string[] = [];
+        const userid = this._currentUser.getValue().id;
+        try {
+            let { data: allergiesInfo, error: ingredientsError } = await this.supabase
+                .from('user_has_allergie')
+                .select('allergie')
+                .eq('user', userid);
+            if (ingredientsError || !allergiesInfo) throw ingredientsError;
+            const allergieIds = allergiesInfo.map(a => a.allergie);
+            let { data: allergiesData, error: dataError } = await this.supabase
+                .from('allergie')
+                .select("allergie")
+                .in('id', allergieIds);
+            if (dataError) throw dataError;
             if(allergiesData)
                 allergies = allergiesData.map(a => a.allergie);
         } catch (error) {
             console.error("Error fetching allergies:", error);
         }
-
-        console.log(allergies); // 调试输出
-        return Object.values(allergies);
+        console.log(allergies);
+        return allergies;
     }
 
-  linkIngredientToUserDislikes(userId: string, ingredientId: string){
-    return this.supabase
-        .from('user_has_dislikes')
-        .insert({ user_id: userId, ingredient_id: ingredientId });
-  }
+    async getUserDislikes() {
+        let dislikes: string[] = [];
+        const userid = this._currentUser.getValue().id;
+        try {
+            let { data: dislikesInfo, error: ingredientsError } = await this.supabase
+                .from('user_has_dislike')
+                .select('dislike')
+                .eq('user', userid);
 
-  linkAllergieToUserAllergies(userId: string, allergieId: string){
-      return this.supabase
-          .from('user_has_allergies')
-          .insert({ user_id: userId, ingredient_id: allergieId });
-  }
+            if (ingredientsError || !dislikesInfo) throw ingredientsError;
+            const ingredientIds = dislikesInfo.map(a => a.dislike);
+            let { data: allergiesData, error: dataError } = await this.supabase
+                .from('ingredient')
+                .select("name")
+                .in('id', ingredientIds);
+            if (dataError) throw dataError;
+            if(allergiesData)
+                dislikes = allergiesData.map(a => a.name);
+        } catch (error) {
+            console.error("Error fetching userdislikes:", error);
+        }
+        console.log(dislikes);
+        return dislikes;
+    }
+
+    async linkIngredientToUserDislikes(userId: string, ingredientId: string): Promise<any> {
+        try{
+            const {data, error} = await this.supabase
+            .from('user_has_dislike')
+            .insert({ user: userId, dislike: ingredientId });
+            if (error) {
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error inserting into user_has_allergies:', error);
+            throw error; // Re-throw the error to handle it where the function is called
+        }
+    }
+
+    async unlinkIngredientFromUserDislikes(userId: string, ingredientId: string): Promise<any> {
+        try {
+            const {error } = await this.supabase
+                .from('user_has_dislike')
+                .delete()
+                .eq('user', userId)
+                .eq('dislike', ingredientId);
+            if (error) {
+                throw error;
+            }
+
+
+            return; // Return nothing if successful
+        } catch (error) {
+            console.error('Error unlinking from user_has_allergies:', error);
+            throw error;
+        }
+    }
+
+    async linkAllergieToUserAllergies(userId: string, allergieId: string): Promise<any> {
+        try {
+            const { data, error } = await this.supabase
+                .from('user_has_allergie')
+                .insert({ user: userId, allergie: allergieId });
+
+            if (error) {
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error inserting into user_has_allergies:', error);
+            throw error; // Re-throw the error to handle it where the function is called
+        }
+    }
+
+    async unlinkAllergieFromUserAllergies(userId: string, allergieId: string): Promise<any> {
+        try {
+            console.log("entering delte code");
+            const { error } = await this.supabase
+                .from('user_has_allergie')
+                .delete()
+                .eq('user', userId)
+                .eq('allergie', allergieId);
+            console.log("deleted Id", userId);
+            console.log("deleted Allergy", allergieId);
+
+            if (error) {
+                throw error;
+            }
+
+            return; // Return nothing if successful
+        } catch (error) {
+            console.error('Error unlinking from user_has_allergies:', error);
+            throw error;
+        }
+    }
+
+    async getMealPlanInfo(mealplan:string) {
+        let { data, error } = await this.supabase
+            .rpc('get_recipes_in_mealplan_id', {
+                mealplan
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async getMealPlan(family_uuid:string, week:string) {
+        let { data, error } = await this.supabase
+            .rpc('get_mealplan_id', {
+                family_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async MealPlansFromFamily( family_uuid:string, user_uuid:string,  week:string ) {
+        console.log({
+            family_uuid,
+            user_uuid,
+            week
+        })
+        let { data, error } = await this.supabase
+            .rpc('get_present_users_week', {
+                family_uuid,
+                user_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async getUsersFamilies(user_uuid:string) {
+        let { data, error } = await this.supabase
+            .rpc('get_all_users_family', {
+                user_uuid
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async createMealPlan(family_uuid:string, first_day_of_week:string) {
+        let { data, error } = await this.supabase
+            .rpc('create_empty_mealplan', {
+                family_uuid,
+                first_day_of_week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async addAttendance(day:string, family:string, user_id:string) {
+        const { data, error } = await this.supabase
+            .from('user_calendar')
+            .insert([
+                { date: day, family: family, user: user_id }
+            ])
+            .select()
+    }
+    async removeAttendance(day:string, family:string, user_id:string) {
+        const { error } = await this.supabase
+            .from('user_calendar')
+            .delete()
+            .eq('date', day)
+            .eq('family', family)
+            .eq('user', user_id)
+    }
+
+    async getAttendanceMonth(day:string, family:string, user_id:string) {
+        let { data, error } = await this.supabase
+            .rpc('get_dates_month', {
+                day,
+                family,
+                user_id
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log(data);
+            return Object.values(data);
+        }
+    }
+
+    async getMealPlansFromFamily( family_uuid:string, user_uuid:string,  week:string ) {
+        console.log({
+            family_uuid,
+            user_uuid,
+            week
+        })
+        let { data, error } = await this.supabase
+            .rpc('get_present_users_week', {
+                family_uuid,
+                user_uuid,
+                week
+            })
+        if (error) {
+            console.error(error);
+            return [];
+        } else {
+            console.log("help:", data);
+            return Object.values(data);
+        }
+    }
+
+    async getFamilies(){
+        try {
+          const { data, error } = await this.supabase
+            .rpc('get_all_users_family', {
+              user_uuid: this._currentUser.getValue().id
+            });
+            if (error) {
+              console.error(error);
+              throw error;
+            } else {     
+              return Object.values(data); // Assuming data is an array of Recipe objects
+            }
+        } catch (error) {
+          console.error('Error fetching recipes:', error);
+          throw error;
+        }
+    }
+
+    //Grocery List
+    async getIngredients() {
+        let ingredients: any[] = [];
+        try {
+            const { data: ingredientsData, error: ingredientsError } = await this.supabase
+                .from('ingredient')
+                .select("*");
+
+            if (ingredientsError) {throw ingredientsError;}
+            if(ingredientsData){
+                return ingredientsData;}
+        } catch (error) {
+            console.error("Error fetching allergies:", error);
+        }
+        console.log(ingredients); 
+        return [];
+    }
+
+    async getIngredientsForWeek(family: string, week: string) {
+        try {
+            const { data, error } = await this.supabase
+                .rpc('get_shopping_list', {
+                    family,
+                    week
+                });
+
+            if (error) {
+                console.error(error);
+                throw error;
+            } else {
+                console.log(data); // You can handle the 'data' here as per your requirement
+                return data; // Returning the data from the function if needed
+            }
+        } catch (error) {
+            console.error('Error fetching shopping list:', error);
+            throw error;
+        }
+    }
 }
 

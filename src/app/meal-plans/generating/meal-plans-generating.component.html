@@ -1,17 +1,32 @@
-<body>
-    <header>
-        <h1>Generating New Plan</h1>
-        <p class="flush-text">Let's decide what we will have next day</p>
-    </header>
-    <main>
-        <div *ngFor="let day of weekdays" class="card" (click)="openModal(day)">
-            <div class="card-body">
-                <h5 class="card-title">{{ day }}</h5>
-                <p class="card-text">Click to select a dish.</p>
-            </div>
-            <div class="image-container">
-                <img src="assets/Add.png" alt="Image" class="card-image">
-            </div>
+
+<h1><b>Generating New Plan</b></h1>
+<p id="header">Let's decide what we will have next week.</p>
+<br>
+    <div *ngFor="let day of days" class="card" (click)="openModal(day.day_of_week)">
+        <div class="card-body col-9">
+
+            <p class="card-title" *ngIf="day?.day_of_week == 1"><b>Monday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 2"><b>Tuesday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 3"><b>Wednesday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 4"><b>Thursday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 5"><b>Friday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 6"><b>Saturday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 7"><b>Sunday</b></p>
+
+            <ng-container *ngIf="day.recipe; else noRecipe">
+                    <p class="card-text"></p>{{ day.name }}
+                </ng-container>
+                <ng-template #noRecipe>
+                    <p id="not-available">Click on the + icon to select a recipe.</p>
+
+                </ng-template>
+
         </div>
-    </main>
-</body>
+        <div class="image-container">
+            <img [src]="day.url ? day.url : 'assets/Add.png'" [alt]="day.url ? 'Image' : 'Add'" class="card-image" [ngClass]="{'day-url-image': day.url, 'add-image': !day.url}">
+        </div>
+    </div>
+
+<button (click)="goBack()" class="button bottom-element">Confirm</button>
+
+

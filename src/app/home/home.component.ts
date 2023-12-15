@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
         this.recipes = recipes[0] as Recipe[];
         console.log('upcoming: ', this.recipes);
         this.loadImageUrls(this.recipes);
+        console.log("Image URL for recipe_id:", this.urlUpcoming[1]);
       }
       const preferredRecipes = await this.supabaseService.getPreferredRecipes();
       if(preferredRecipes){
@@ -33,10 +34,6 @@ export class HomeComponent implements OnInit {
         console.log('preferred: ', this.preferredRecipes);
         this.loadImagePreferredUrls(this.preferredRecipes);
       }
-      // const families = await this.supabaseService.getFamilies();
-      // if(preferredRecipes){
-      //   this.userFamilies = families[0] as Family[];
-      // }
       this.getFamilies().then(() => {
         this.getImageUrl().then(() => {
         });
@@ -92,6 +89,10 @@ export class HomeComponent implements OnInit {
 
   navigateToRecipeDetail(id: string) {
     this.router.navigate(['/recipe_detail', id]);
+}
+
+navigateToFamiliesPage() {
+    this.router.navigate(['/families']);
 }
 
   handleImageError(user: User) {

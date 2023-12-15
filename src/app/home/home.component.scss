@@ -1,25 +1,8 @@
-/* Styles for the liked recipes container */
+@import "../../styles";
 .boxes {
-    display: flex; /* Lays out the children in a line */
-    overflow-x: auto; /* Enables horizontal scrolling */
-    white-space: nowrap; /* Ensures the divs don't wrap */
-  }
-  .recipe-small-view p {
-    /* other styles */
-    text-align: center; /* if you want to center the text under the image */
-    margin-top: 0; /* remove any default margin from the paragraph that could push it down */
-  }
-  /* Styles for the image containers */
-  .image-with-border {
-    position: relative; /* Needed for absolute positioning of the heart button */
-    border: 2px solid #ccc; /* Grey border */
-    border-radius: 10px;
-    background-color: #eee; /* Grey background */
-    margin: 10px; /* Spacing around each image container */
-    width: 150px; /* Fixed width */
-    height: 200px; /* Fixed height */
-    text-align: center; /* Center text */
-    display: inline-block; /* Display inline with block features */
+  display: flex; /* Lays out the children in a line */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Ensures the divs don't wrap */
   }
   
   /* Styles for the images */
@@ -32,42 +15,89 @@
     display: inline-block; /* This will allow the image to be centered by text-align */
   }
 
-  .card {
-    width: 90%;
-    margin-left: 5%;
-    margin-bottom: 5%;
-    margin-right: 5%;
-  }
-  
-  .user-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-container-text {
-    margin-top: 13px;
-  }
-  
-  .profile-picture {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-  }
-  
-  
-  #family-id {
-    font-size: 0.6em;
-  }
-  
-  #full-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  #new-family, #create-family {
-    width:80%;
-    margin-left: 10%;
-  
-  }
-  
+.recipe-small-view p {
+  text-align: center;
+  margin-top: 0;
+}
+
+.recipe-card {
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  margin: 0 8px 8px;
+  position: relative; /* Needed for absolute positioning of the heart button */
+  width: 150px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  display: inline-block; /* Display inline with block features */
+}
+
+.recipe-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.recipe-name {
+  padding-top: 0.5em;
+  width: 150px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-size: 0.9em;
+}
+
+.recipe-date {
+  margin: 0 0 2px;
+  color: $dark-gray;
+  font-size: 0.8em;
+}
+
+.card {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 15px;
+  margin-right: 5%;
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.2);
+
+}
+.card-body {
+  background-color: $white;
+  border-radius: 8px;
+}
+.user-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-container-text {
+  margin-top: 0;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+
+#family-id {
+  font-size: 0.6em;
+  margin-bottom: 0;
+}
+
+#full-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#new-family, #create-family {
+  width:80%;
+  margin-left: 10%;
+
+}
+
+
+

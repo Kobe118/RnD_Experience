@@ -9,7 +9,7 @@ mat-tab-nav-bar {
   width: 100%;
   z-index: 1000;
   background-color: $white;
-  padding-top: 6px;
+  border-top: 2px solid $light-gray;
 }
   
 mat-tab-link {
@@ -18,10 +18,12 @@ mat-tab-link {
   align-items: center;
   justify-content: center;
   width: 21%;
+  border-bottom: 3px solid $white;
 }
   
  mat-icon {
-  margin-bottom: 4px; /* Adjust the spacing as needed */
+  margin-bottom: 4px;
+   margin-top: 6px;
 }
 
 .active-link {

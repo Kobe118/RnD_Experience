@@ -9,7 +9,7 @@
     </div>
   </mat-step>
   <mat-step>
-    <h1 class="text-center" id="title-2"><b>Sign in via magic link</b></h1>
+    <h1 class="text-center" id="title-2"><b>Sign up</b></h1>
     <p id="sub-title-2" class="text-center">Enter your email below.</p>
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="text-center">
       <mdb-form-control class="mb-4">
@@ -33,22 +33,8 @@
       </mdb-form-control>
 
       <button mdbRipple type="submit" class="button" [disabled]="loading">
-        {{ loading ? 'Loading' : 'Send magic link' }}
+        {{ loading ? 'Loading' : 'Register' }}
       </button>
-    </form>
-
-    <div>
-      <p>Go to a different step to see the error state</p>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
-    </div>
-    
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-    </div>
+    </form> 
   </mat-step>
 </mat-stepper>

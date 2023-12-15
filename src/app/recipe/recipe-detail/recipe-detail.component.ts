@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from "../../services/supabase.service";
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
@@ -14,21 +14,31 @@ export class RecipeDetailComponent implements OnInit {
   steps: string = "recipe steps";
   allergies: string[] = [];
   ingredients: any[] = []; // Array to store ingredient details
-
-  constructor(private route: ActivatedRoute, private router: Router, private supabaseService: SupabaseService) {}
+  liked:boolean = false;
+  disliked:boolean = false;
+  constructor(private route: ActivatedRoute, private router: Router, private supabaseService: SupabaseService,private location: Location) {}
 
   ngOnInit() {
     this.recipeId = this.route.snapshot.paramMap.get('id') || "";
+    this.supabaseService.get_recipe_review(this.recipeId).then(score=>{
+      if (score == 5) this.liked = true;
+      else if (score == 0) this.disliked = true;
+    });
     if (!this.recipeId) {
       this.router.navigate(['/recipes']);
       return;
     }
-
+    this.supabaseService.getDislikedRecipes();
     this.fetchRecipeDetails(this.recipeId);
   }
 
+  formatName(name: string): string {
+    // Custom formatting logic
+    return name.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+}
+
   private fetchRecipeDetails(id: string) {
-    this.supabaseService.get_recipe_by_id(id).then(recipe => {
+    this.supabaseService.getRecipeById(id).then(recipe => {
       if (recipe && recipe[0]) {
         console.log("Recipe data:", recipe[0]); // Debug output
         this.updateRecipeDetails(recipe[0]);
@@ -58,7 +68,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private fetchIngredients(id: string) {
-    this.supabaseService.get_recipe_ingredients(id).then(ingredients => {
+    this.supabaseService.getRecipeIngredients(id).then(ingredients => {
       if (ingredients) {
         console.log("Ingredients data:", ingredients); // Debug output
         this.ingredients = ingredients;
@@ -77,7 +87,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private fetchAllergies(id: string) {
-    this.supabaseService.get_recipe_allergies(id).then(allergies => {
+    this.supabaseService.getRecipeAllergies(id).then(allergies => {
       if (allergies) {
         console.log("Allergies data:", allergies); // Debug output
         this.allergies = allergies;
@@ -87,5 +97,28 @@ export class RecipeDetailComponent implements OnInit {
     }).catch(error => {
       console.error("Error fetching allergies:", error);
     });
+  }
+
+  like_recommended_recipe() {
+    if (this.liked){
+      this.supabaseService.reviewRecipe(this.recipeId,3)
+      this.liked = false
+    }
+    else {
+      this.supabaseService.reviewRecipe(this.recipeId,5)
+      this.liked = true
+      this.disliked = false
+    }
+  }
+  unlike_recommended_recipe() {
+    if (this.disliked){
+      this.supabaseService.reviewRecipe(this.recipeId,3)
+      this.disliked = false
+    }
+    else {
+      this.supabaseService.reviewRecipe(this.recipeId,5)
+      this.disliked = true
+      this.liked = false
+    }
   }
 }

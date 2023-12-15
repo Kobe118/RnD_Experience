@@ -1,56 +1,50 @@
 <!DOCTYPE html>
-<app-default-header [title]= "'Hello user'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
-<h2>Upcoming Meals</h2>
-<div class="boxes">
-    <div *ngIf="recipes?.length == 0;" class="empty-state">
-        <p>No upcoming meals available</p>
-    </div>
-    <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
-        <div class="image-with-border">
-            <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}">
+<div id="page">
+    <app-default-header [title]= "'Hello!'" [subtitle]="'Let\'s setup some healthy meals'"> </app-default-header>
+    <br>
+    <h2>Upcoming Meals</h2>
+    <div class="boxes">
+        <div *ngIf="!recipes;" class="empty-state">
+            <p id="not-available"><i>No upcoming meals available.</i></p>
         </div>
-        <p>{{ recipe.recipe_name }}</p>
-    </div>
-</div>
-<h1>Preferred Recipes</h1>
-<div class="boxes">
-    <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
-        <div class="image-with-border">
-            <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
-        </div>
-        <p>{{ preferredRecipe.name }}</p>
-    </div>
-</div>
-<h1>Families</h1>
-<div *ngFor="let family of userFamilies">
-    <div class="card">
-        <div class="card-body">
-            <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
-            <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>
-            <div *ngFor="let user of family.users">
-                <div class="user-container">
-                    <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture">
-                    <p class="user-container-text">{{ user.first_name }} {{ user.last_name }}</p>
-                </div>
+        <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
+            <p class="recipe-date ">{{recipe.date}}</p>
+            <div class="recipe-card red">
+
+                <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(recipes[i].recipe)">
+                <p class="recipe-name">{{ recipe.recipe_name }}</p>
             </div>
         </div>
-        <div class="card-header">
-            <div *ngIf="family.is_admin ; else elseBlock">
-                <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                    </li>
-                    <li class="nav-item">
-                    </li>
-                </ul>
+    </div>
+    <br>
+
+    <h2>Preferred Recipes</h2>
+    <div class="boxes">
+        <div *ngIf="!preferredRecipes;" class="empty-state">
+            <p class="not-available"><i>You has no preferred recipes.</i></p>
+        </div>
+        <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
+            <div class="recipe-card">
+                <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
+                <p class="recipe-name">{{ preferredRecipe.name }}</p>
             </div>
-            <ng-template #elseBlock>
-                <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                    </li>
-                </ul>
-            </ng-template>
         </div>
     </div>
+    <br>
+    <h2>Families</h2>
+    <div class="bottom-element">
+        <div *ngIf="!userFamilies;" class="empty-state">
+            <p class="not-available"><i>You have not set any families. Go to the families page to setup your families</i></p>
+        </div>
+        <div class="card" *ngFor="let family of userFamilies" (click)="navigateToFamiliesPage()">
+            <div class="card-body">
+                <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
+                <p class="user-container-text" id="family-id"><i>{{ family.family_id }}</i></p>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 
 <app-bottom-navigation></app-bottom-navigation>
