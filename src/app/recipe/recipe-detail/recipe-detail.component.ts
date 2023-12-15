@@ -16,11 +16,14 @@ export class RecipeDetailComponent implements OnInit {
   ingredients: any[] = []; // Array to store ingredient details
   liked:boolean = false;
   disliked:boolean = false;
-
   constructor(private route: ActivatedRoute, private router: Router, private supabaseService: SupabaseService,private location: Location) {}
 
   ngOnInit() {
     this.recipeId = this.route.snapshot.paramMap.get('id') || "";
+    this.supabaseService.get_recipe_review(this.recipeId).then(score=>{
+      if (score == 5) this.liked = true;
+      else if (score == 0) this.disliked = true;
+    });
     if (!this.recipeId) {
       this.router.navigate(['/recipes']);
       return;
