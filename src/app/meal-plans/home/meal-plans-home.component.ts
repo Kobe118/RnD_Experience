@@ -76,13 +76,13 @@ export class MealPlansHomeComponent implements OnInit{
     console.log("family_id1:", family_id);
     const navigationExtras: NavigationExtras = {
       state: {
-        family_id: family_id
+        family_id: family_id,
       }
     };
     this.router.navigate(['mealplanscalendar'], navigationExtras);
   }
 
-  async navigateToAddMealPlan(family_id:string) {
+  async navigateToAddMealPlan(family_id:string, family_name:string) {
     const nextMonday = this.getNextMonday();
     console.log(nextMonday);
     await this.supabaseService.createMealPlan(family_id, this.getNextMonday()).then(async (data) => {
@@ -92,11 +92,12 @@ export class MealPlansHomeComponent implements OnInit{
       if (this.mealplan == null) {
         await this.getMeal(family_id)
       }
-      console.log("family_id1:", family_id, this.mealplan);
+      console.log("family_id1:", family_id, this.mealplan, family_name);
       const navigationExtras: NavigationExtras = {
         state: {
           family_id: family_id,
           mealplan_id: this.mealplan,
+          family_name: family_name
         }
       };
       this.router.navigate(['mealplansgenerating'], navigationExtras);
