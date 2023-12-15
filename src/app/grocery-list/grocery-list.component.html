@@ -1,12 +1,10 @@
-<div>
-    <h1>Grocery List</h1>
+<div id="page">
+    <h1><b>Grocery List</b></h1>
     <div *ngIf="groceryList && groceryList.length > 0">
         <ul>
-            <li *ngFor="let item of groceryList">
-                <p>ID: {{ item.id }}</p>
-                <p>Name: {{ item.name }}</p>
-                <p>Unit: {{ item.unit }}</p>
-                <p>Quantity: {{ item.quantity }}</p>
+            <li *ngFor="let groceryItem of groceryList">
+                {{ groceryItem.name }}: {{ groceryItem.quantity}} {{ groceryItem.unit }}
+                <!-- Add additional properties if needed -->
             </li>
         </ul>
     </div>

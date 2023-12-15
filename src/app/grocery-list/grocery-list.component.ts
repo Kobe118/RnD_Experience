@@ -21,7 +21,7 @@ export class GroceryListComponent implements OnInit {
   userFamilies: Family[] = [];
   userAdminFamilyId: string | undefined;
 
-  groceryList: any[] = [];
+  public groceryList: any[] = [];
 
   constructor(private supabaseService: SupabaseService, private router: Router) {}
 
