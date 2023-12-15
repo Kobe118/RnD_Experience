@@ -20,11 +20,10 @@
                     <div class="meal-card" *ngFor="let day of family.mealplans">
                         <div class="card-body">
                             <p class="text-large"><b>{{day.day_of_week}}</b></p>
-                            <p class="recipe">Cantonese Ginger Scallion Sausage Stir-fry</p>
-
+                            <p class="recipe">{{day.name}}</p>
                             <div class="row">
                                 <div class="col text-center center">
-                                    <img src="{{day.recipe}}" class="round-img" (error)="handleImageError(day)">
+                                    <img src="{{day.url}}" class="round-img ">
                                     <div>
                                     <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
                                     {{ day.will_attend ? '✔ Attending' : '✘ Attending' }}

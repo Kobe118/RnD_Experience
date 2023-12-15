@@ -7,10 +7,11 @@ import {SupabaseService} from "../../services/supabase.service";
 interface Day {
   date: string;
   recipe: string;
+  name: string;
   day_of_week: string;
   will_attend: boolean;
   users: User[];
-  url: String;
+  url: string;
 }
 
 interface User {
@@ -65,6 +66,10 @@ export class MealPlansHomeComponent implements OnInit{
 
       for (const day of mealPlansForFamily) {
         day.url = await this.getImageUrl(day.recipe);
+      }
+
+      for (const day of mealPlansForFamily) {
+        day.name = await this.getImageUrl(day.recipe);
       }
 
       family.mealplans = mealPlansForFamily || [];
@@ -136,7 +141,7 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   handleImageError(day: Day) {
-    day.recipe = "\\assets\\default-meal.jpg";
+    day.url = "\\assets\\default-meal.jpg";
   }
 
 }

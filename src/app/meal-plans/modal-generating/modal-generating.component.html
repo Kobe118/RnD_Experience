@@ -15,6 +15,9 @@
   <h2>Or try something new</h2>
   <div class="recipe-cards">
     <div class="recipe-card-outer text-center" *ngFor="let recipe of Nonliked_recipes" >
+      <div *ngIf="!Nonliked_recipes;" class="empty-state">
+        <p class="not-available"><i>Select that you will attend this day</i></p>
+    </div>
       <div class="recipe-card" [class.selected]="recipe.isSelected"  (click)="selectRecipe(recipe, combined_recipes)">
 
       <img [src]="recipe.url" alt="Recipe Image" class="recipe-image">

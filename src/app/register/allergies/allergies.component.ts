@@ -20,11 +20,17 @@ export class AllergiesComponent {
         try {
             this.allergies = await this.supabaseService.getAllergies();
             console.log("Allergies:", this.allergies);
+            this.allergies.sort((a, b) => a.allergie.localeCompare(b.allergie));
             // Fetch selected allergies for the current user
             this.selectedAllergies = await this.supabaseService.getUserAllergies();
         } catch (error) {
             console.error("Error fetching allergies:", error);
         }
+    }
+
+    formatName(name: string): string {
+        // Custom formatting logic
+        return name.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
     }
 
     async selectAllergies(allergies: any) {

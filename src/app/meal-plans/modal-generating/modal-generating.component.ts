@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SupabaseService} from "../../services/supabase.service";
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnInit } from '@angular/core';
+import { SupabaseService } from "../../services/supabase.service";
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 interface Recipe {
   recipe: string;

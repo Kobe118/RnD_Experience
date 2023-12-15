@@ -5,13 +5,13 @@
     <div *ngFor="let day of days" class="card" (click)="openModal(day.day_of_week)">
         <div class="card-body col-9">
 
-            <p class="card-title" *ngIf="day.day_of_week == 1"><b>Monday</b></p>
-            <p class="card-title" *ngIf="day.day_of_week == 2"><b>Tuesday</b></p>
-            <p class="card-title" *ngIf="day.day_of_week == 3"><b>Wednesday</b></p>
-            <p class="card-title" *ngIf="day.day_of_week == 4"><b>Thursday</b></p>
-            <p class="card-title" *ngIf="day.day_of_week == 5"><b>Friday</b></p>
-            <p class="card-title" *ngIf="day.day_of_week == 6"><b>Saturday</b></p>
-            <p class="card-title" *ngIf="day.day_of_week == 7"><b>Sunday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 1"><b>Monday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 2"><b>Tuesday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 3"><b>Wednesday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 4"><b>Thursday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 5"><b>Friday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 6"><b>Saturday</b></p>
+            <p class="card-title" *ngIf="day?.day_of_week == 7"><b>Sunday</b></p>
 
             <ng-container *ngIf="day.recipe; else noRecipe">
                     <p class="card-text"></p>{{ day.name }}

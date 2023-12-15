@@ -182,7 +182,6 @@ export class SupabaseService {
           .storage
           .from('recipes_thumbnail_and_picture')
           .getPublicUrl(id+'.jpg')
-
       return data.publicUrl;
     }
 

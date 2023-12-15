@@ -59,6 +59,7 @@ export class MealPlansGeneratingComponent implements OnInit {
       const dayIndex = dayFromSupabase.day_of_week - 1;
       this.days[dayIndex] = { ...this.days[dayIndex], ...dayFromSupabase };
     }
+    console.log(this.days);
   }
 
   async openModal(day: number): Promise<void> {
