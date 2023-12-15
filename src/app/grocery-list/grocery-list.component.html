@@ -1,19 +1,17 @@
-<div>
-    <h1>Grocery List</h1>
-    <div *ngIf="groceryList.length > 0; else loadingTemplate">
+<div id="page">
+    <h1><b>Grocery List</b></h1>
+    <div *ngIf="groceryList && groceryList.length > 0">
         <ul>
-            <li *ngFor="let item of groceryList">
-                {{ item | json }}
+            <li *ngFor="let groceryItem of groceryList">
+                {{ groceryItem.name }}: {{ groceryItem.quantity}} {{ groceryItem.unit }}
+                <!-- Add additional properties if needed -->
             </li>
         </ul>
     </div>
-    <ng-template #loadingTemplate>
-        <p>Loading...</p>
-    </ng-template>
-    <div *ngIf="groceryList.length === 0 && !loadingTemplate">
+    <div *ngIf="!groceryList || groceryList.length === 0">
         <p>No items found in the grocery list.</p>
     </div>
-    <div class="back-button-container">
-        <button class="back-button" (click)="goBack()">Confirm attendances</button>
+    <div class="text-center bottom-element">
+        <button class="button wide primary block center" (click)="goBack()">Go back</button>
     </div>
 </div>
