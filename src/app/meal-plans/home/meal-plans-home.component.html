@@ -23,13 +23,12 @@
                             <p class="recipe">{{day.recipe_name}}</p>
                             <div class="row">
                                 <div class="col text-center center">
-                                    <img src="{{day.url}}" class="round-img ">
+                                    <img src="{{day.url}}" class="round-img " (error)="handleImageError(day)" >
                                     <div>
                                     <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
                                     {{ day.will_attend ? '✔ Attending' : '✘ Attending' }}
                                     </span>
                                     </div>
-
                                 </div>
                                 <div class="col">
                                     <ng-container *ngIf="day.users.length > 0; else noAttendees">
