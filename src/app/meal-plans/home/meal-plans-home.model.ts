@@ -1,7 +1,7 @@
 export  interface Day {
     date: string;
     recipe: string;
-    name: string;
+    recipe_name: string;
     day_of_week: string;
     will_attend: boolean;
     users: User[];

@@ -44,10 +44,6 @@ export class MealPlansHomeComponent implements OnInit{
         day.url = await this.getImageUrl(day.recipe);
       }
 
-      for (const day of mealPlansForFamily) {
-        day.name = await this.getImageUrl(day.recipe);
-      }
-
       family.mealplans = mealPlansForFamily || [];
 
       console.log(`Meal plans for ${family.family_name}:`, family.mealplans);
