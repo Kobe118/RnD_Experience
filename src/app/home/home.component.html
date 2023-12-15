@@ -8,7 +8,7 @@
             <p id="not-available"><i>No upcoming meals available.</i></p>
         </div>
         <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
-            <p class="recipe-date">{{recipe.date}}</p>
+            <p class="recipe-date ">{{recipe.date}}</p>
             <div class="recipe-card white">
 
                 <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(recipes[i].recipe)">
@@ -21,7 +21,7 @@
     <h2>Preferred Recipes</h2>
     <div class="boxes">
         <div *ngIf="!preferredRecipes;" class="empty-state">
-            <p class="not-available"><i>User has no preferred recipes.</i></p>
+            <p class="not-available"><i>You has no preferred recipes.</i></p>
         </div>
         <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
             <div class="recipe-card light-green">
@@ -33,6 +33,9 @@
     <br>
     <h2>Families</h2>
     <div class="bottom-element">
+        <div *ngIf="!userFamilies;" class="empty-state">
+            <p class="not-available"><i>You have not set any families. Go to the families page to setup your families</i></p>
+        </div>
         <div class="card" *ngFor="let family of userFamilies" (click)="navigateToFamiliesPage()">
             <div class="card-body">
                 <h2 class="card-title"><b>{{ family.family_name }}</b></h2>
@@ -42,6 +45,4 @@
     </div>
 
 </div>
-
-
 <app-bottom-navigation></app-bottom-navigation>

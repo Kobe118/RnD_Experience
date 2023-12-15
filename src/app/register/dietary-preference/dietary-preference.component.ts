@@ -19,11 +19,17 @@ export class DietaryPreferenceComponent implements OnInit {
         try {
             this.ingredients = await this.supabaseService.getIngredients();
             console.log("Ingredients:", this.ingredients);
+            this.ingredients.sort((a, b) => a.name.localeCompare(b.name));
             this.selectedDietaryPreference = await this.supabaseService.getUserDislikes();
             console.log("user dislike", this.selectedDietaryPreference);
         } catch (error) {
             console.error("Error fetching allergies:", error);
         }
+    }
+
+    formatName(name: string): string {
+        // Custom formatting logic
+        return name.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
     }
 
     async selectDietaryPreference(ingredients: any) {

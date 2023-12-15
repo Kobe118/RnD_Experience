@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
         this.recipes = recipes[0] as Recipe[];
         console.log('upcoming: ', this.recipes);
         this.loadImageUrls(this.recipes);
+        console.log("Image URL for recipe_id:", this.urlUpcoming[1]);
       }
       const preferredRecipes = await this.supabaseService.getPreferredRecipes();
       if(preferredRecipes){

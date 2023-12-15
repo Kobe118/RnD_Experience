@@ -101,6 +101,14 @@
   background-size: 50% 50%;
 }
 
+.cart {
+  margin-left: -10px;
+  margin-right: 20px;
+  align-self: center;
+  background-image: url('/assets/cart.png');
+  background-size: 65% 65%;
+}
+
 .card-footer {
   display: flex;
   justify-content: space-between;

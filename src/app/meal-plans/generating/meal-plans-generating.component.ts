@@ -34,13 +34,15 @@ export class MealPlansGeneratingComponent implements OnInit {
   modalRef: NgbModalRef | null = null;
   family_id: string = "";
   mealplan_id: string = "";
+  family_name: string= "";
 
 
   constructor(private router: Router, private modalService: NgbModal, private supabaseService: SupabaseService, private route: ActivatedRoute) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     this.family_id = state?.['family_id'];
     this.mealplan_id = state?.['mealplan_id'];
-    console.log('family_id and mealplan:', this.family_id, this.mealplan_id);
+    this.family_name = state?.['family_name'];
+    console.log('family_id and mealplan:', this.family_id, this.mealplan_id, this.family_name);
   }
 
   async ngOnInit(): Promise<void> {
@@ -59,6 +61,7 @@ export class MealPlansGeneratingComponent implements OnInit {
       const dayIndex = dayFromSupabase.day_of_week - 1;
       this.days[dayIndex] = { ...this.days[dayIndex], ...dayFromSupabase };
     }
+    console.log(this.days);
   }
 
   async openModal(day: number): Promise<void> {

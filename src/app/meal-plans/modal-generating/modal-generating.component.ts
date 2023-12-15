@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SupabaseService} from "../../services/supabase.service";
-import {MdbModalRef} from "mdb-angular-ui-kit/modal";
+import { Component, Input, OnInit } from '@angular/core';
+import { SupabaseService } from "../../services/supabase.service";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 interface Recipe {
   recipe: string;
   name: string;
@@ -29,11 +29,11 @@ export class ModalGeneratingComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     console.log("family_id:", this.family_id)
-    await this.supabaseService.GetLikedRecipes(this.getCurrentDate() ,this.family_id).then((data) => {
+    await this.supabaseService.GetLikedRecipes(this.getDate(this.day) ,this.family_id).then((data) => {
       this.liked_recipes = data[0] as Recipe[];
       console.log("liked", this.liked_recipes);
     });
-    await this.supabaseService.GetNonLikedRecipes(this.getCurrentDate() ,this.family_id).then((data) => {
+    await this.supabaseService.GetNonLikedRecipes(this.getDate(this.day) ,this.family_id).then((data) => {
       this.Nonliked_recipes = data[0] as Recipe[];
       console.log("Nonliked", this.Nonliked_recipes);
 
@@ -77,9 +77,19 @@ export class ModalGeneratingComponent implements OnInit {
       this.modalRef.close();
     }
   }
-  private getCurrentDate(): string {
-    const currentDate = new Date();
-    return currentDate.toISOString().split('T')[0];
+  private getCurrentDate(): Date {
+    return new Date();
   }
+
+  private getDate(day: string): string {
+    const int = +day - 1;
+    const currentDate = new Date();
+    const daysToMonday = (8 - currentDate.getDay()) % 7;
+    const correctDay = new Date(currentDate.getTime() + daysToMonday * 24 * 60 * 60 * 1000 + int * 24 * 60 * 60 * 1000);
+    console.log(correctDay);
+    return correctDay.toISOString().split('T')[0];
+  }
+
+
 }
 

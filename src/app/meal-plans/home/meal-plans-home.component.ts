@@ -1,34 +1,10 @@
-import {Component, OnInit, Injectable} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {NavigationExtras, Router} from '@angular/router';
-import { SupabaseService } from "../../services/supabase.service";
+import {SupabaseService} from "../../services/supabase.service";
+import { MealPlan, User, Family, Day } from './meal-plans-home.model';
 
 
-interface Day {
-  date: string;
-  recipe: string;
-  recipe_name: string;
-  picture_url: string;
-  day_of_week: string;
-  will_attend: boolean;
-  users: User[];
-}
-
-interface User {
-  user_id: string;
-  user_name: string;
-}
-
-interface Family {
-  is_admin: boolean;
-  family_id: string;
-  family_name: string;
-  mealplans: Day[]
-}
-
-interface MealPlan {
-  mealplan: string;
-}
 @Component({
   selector: 'MealPlansHome',
   templateUrl: './meal-plans-home.component.html',
@@ -52,7 +28,6 @@ export class MealPlansHomeComponent implements OnInit{
       //await this.fetchMealPlansForFamily(user.id, family);
       await this.fetchMealPlansForFamily(user.id, family);
       console.log("check 2");
-      await this.getImageUrl(family);
     }
   }
 
@@ -65,15 +40,22 @@ export class MealPlansHomeComponent implements OnInit{
 
       const mealPlansForFamily = data[0] as Day[];
 
-      // Check if mealPlansForFamily is null, and set an empty array if it is
+      for (const day of mealPlansForFamily) {
+        day.url = await this.getImageUrl(day.recipe);
+      }
+
       family.mealplans = mealPlansForFamily || [];
 
       console.log(`Meal plans for ${family.family_name}:`, family.mealplans);
     } catch (error) {
       console.error("Error fetching meal plans:", error);
     }
+  }
 
-
+  async getImageUrl(recipe_id: string) {
+    const url = await this.supabaseService.getImageUrl(recipe_id);
+    console.log("Image URL for recipe_id", recipe_id, ":", url);
+    return url;
   }
 
   private getNextMonday(): string {
@@ -90,13 +72,13 @@ export class MealPlansHomeComponent implements OnInit{
     console.log("family_id1:", family_id);
     const navigationExtras: NavigationExtras = {
       state: {
-        family_id: family_id
+        family_id: family_id,
       }
     };
     this.router.navigate(['mealplanscalendar'], navigationExtras);
   }
 
-  async navigateToAddMealPlan(family_id:string) {
+  async navigateToAddMealPlan(family_id:string, family_name:string) {
     const nextMonday = this.getNextMonday();
     console.log(nextMonday);
     await this.supabaseService.createMealPlan(family_id, this.getNextMonday()).then(async (data) => {
@@ -106,11 +88,12 @@ export class MealPlansHomeComponent implements OnInit{
       if (this.mealplan == null) {
         await this.getMeal(family_id)
       }
-      console.log("family_id1:", family_id, this.mealplan);
+      console.log("family_id1:", family_id, this.mealplan, family_name);
       const navigationExtras: NavigationExtras = {
         state: {
           family_id: family_id,
           mealplan_id: this.mealplan,
+          family_name: family_name
         }
       };
       this.router.navigate(['mealplansgenerating'], navigationExtras);
@@ -131,19 +114,7 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   handleImageError(day: Day) {
-    day.recipe = "\\assets\\default-meal.jpg";
-  }
-
-  async getImageUrl(family: Family) {
-    for (const day of family.mealplans || []) {
-      if (day && day.recipe) {
-        try {
-          day.picture_url = await this.supabaseService.getImageUrl(`${day.recipe}`);
-        } catch (error) {
-          day.picture_url = '';
-        }
-      }
-    }
+    day.url = "\\assets\\default-meal.jpg";
   }
 
 }

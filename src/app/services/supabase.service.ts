@@ -182,7 +182,6 @@ export class SupabaseService {
           .storage
           .from('recipes_thumbnail_and_picture')
           .getPublicUrl(id+'.jpg')
-
       return data.publicUrl;
     }
 
@@ -229,6 +228,22 @@ export class SupabaseService {
         return data.id;
     }
 
+    async get_recipe_review(recipeId:string):Promise<number>{
+        let { data: recipe, error } = await this.supabase
+            .from('recipe_review')
+            .select('score')
+            .eq('recipe',recipeId);
+
+        if (recipe){
+            console.log("recipe review")
+            console.log(recipe)
+            const recipeScores = recipe.map(a=>a.score);
+            return recipeScores[0]
+        }
+        else {
+            return 3
+        }
+    }
     async getLikedRecipes():Promise <Recipe[]>{
         let userId = this._currentUser.getValue().id;
 

@@ -17,12 +17,14 @@
 
 .button-white:active {
   background-color: $medium-green;
-  color: $white;
   transform: scale(0.98);
+  color: $white;
 }
 
 .button-white.selected {
-  background-color: $dark-green;
+  background-color: $medium-green;
+  transform: scale(0.98);
+  color: $white;
 }
 
 .button-back {

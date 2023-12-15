@@ -23,7 +23,7 @@
         <section *ngIf="ingredients.length > 0">
             <h3><b>Ingredients</b></h3>
             <ul class="ingredients" role="list">
-                <li *ngFor="let ingredient of ingredients" role="listitem">{{ ingredient.name }}: {{ ingredient.quantity }} {{ ingredient.unit }}</li>
+                <li *ngFor="let ingredient of ingredients" role="listitem">{{ formatName(ingredient.name) }}: {{ ingredient.quantity }} {{ ingredient.unit }}</li>
             </ul>
         </section>
 
