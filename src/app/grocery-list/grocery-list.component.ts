@@ -21,7 +21,7 @@ export class GroceryListComponent implements OnInit {
   userFamilies: Family[] = [];
   userAdminFamilyId: string | undefined;
 
-  groceryList: any[] = [];
+  public groceryList: any[] = [];
 
   constructor(private supabaseService: SupabaseService, private router: Router) {}
 
@@ -77,7 +77,7 @@ export class GroceryListComponent implements OnInit {
     try {
       if (typeof this.userAdminFamilyId !== 'undefined') {
         this.groceryList = await this.supabaseService.getIngredientsForWeek(this.userAdminFamilyId, date);
-        console.log('date'+ date);
+        console.log('date', date);
         console.log('Grocery List:', this.groceryList);
       } else {
         console.log('User is not an admin for any family or family ID is undefined.');

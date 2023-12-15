@@ -5,11 +5,13 @@
 <div id="page" class="bottom-element">
     <app-default-header [title]= "'Your Meal-Plans'" [subtitle]="'What will we have today?'"> </app-default-header>
     <br>
+    <br>
+    <p class="not-available">{{message}}</p>
     <section *ngFor="let family of families">
         <div class="family-container">
             <h2>{{ family.family_name }}</h2>
             <button class="circular-button add" (click)="navigateToCalender(family.family_id)"></button>
-            <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan(family.family_id)"></button>
+            <button *ngIf="family.is_admin" class="circular-button plus" (click)="navigateToAddMealPlan(family.family_id, family.family_name)"></button>
             <button *ngIf="family.is_admin" class="circular-button cart" (click)="navigateToGroceryList()"></button>
         </div>
 
@@ -23,13 +25,12 @@
                             <p class="recipe">{{day.recipe_name}}</p>
                             <div class="row">
                                 <div class="col text-center center">
-                                    <img src="{{day.url}}" class="round-img ">
+                                    <img src="{{day.url}}" class="round-img " (error)="handleImageError(day)" >
                                     <div>
                                     <span [ngClass]="{'attend': day.will_attend, 'not-attend': !day.will_attend}">
                                     {{ day.will_attend ? '✔ Attending' : '✘ Attending' }}
                                     </span>
                                     </div>
-
                                 </div>
                                 <div class="col">
                                     <ng-container *ngIf="day.users.length > 0; else noAttendees">

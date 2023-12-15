@@ -33,7 +33,8 @@ export class DefaultHeaderComponent implements OnInit{
         }
     }
     async getImageUrl() {
-        this.imageurl = await this.supabaseService.getUserPictureUrl(`${this.currentUser.id}.jpg`);
+        const randomNumber = Math.random();
+        this.imageurl = await this.supabaseService.getUserPictureUrl(`${this.currentUser.id}.jpg?${randomNumber}`);
     }
     ngOnInit() {
         this.getCurrentUser().then(()=>{

@@ -14,6 +14,7 @@ export class MealPlansHomeComponent implements OnInit{
   days: Day[] = [];
   families: Family[] = [];
   mealplan: MealPlan[] = [];
+  message: string = "";
 
   constructor(private http: HttpClient, private router: Router, private supabaseService: SupabaseService) {}
   async ngOnInit(): Promise<void> {
@@ -22,10 +23,11 @@ export class MealPlansHomeComponent implements OnInit{
       this.families = data[0] as Family[];
       console.log("check");
     });
+    if (this.families == null) {
+      this.message = "Please first create or join a family";
+    }
     for (const family of this.families) {
       console.log("family_id:", family.family_id);
-      console.log("it's in boys!");
-      //await this.fetchMealPlansForFamily(user.id, family);
       await this.fetchMealPlansForFamily(user.id, family);
       console.log("check 2");
     }
@@ -72,13 +74,13 @@ export class MealPlansHomeComponent implements OnInit{
     console.log("family_id1:", family_id);
     const navigationExtras: NavigationExtras = {
       state: {
-        family_id: family_id
+        family_id: family_id,
       }
     };
     this.router.navigate(['mealplanscalendar'], navigationExtras);
   }
 
-  async navigateToAddMealPlan(family_id:string) {
+  async navigateToAddMealPlan(family_id:string, family_name:string) {
     const nextMonday = this.getNextMonday();
     console.log(nextMonday);
     await this.supabaseService.createMealPlan(family_id, this.getNextMonday()).then(async (data) => {
@@ -88,11 +90,12 @@ export class MealPlansHomeComponent implements OnInit{
       if (this.mealplan == null) {
         await this.getMeal(family_id)
       }
-      console.log("family_id1:", family_id, this.mealplan);
+      console.log("family_id1:", family_id, this.mealplan, family_name);
       const navigationExtras: NavigationExtras = {
         state: {
           family_id: family_id,
           mealplan_id: this.mealplan,
+          family_name: family_name
         }
       };
       this.router.navigate(['mealplansgenerating'], navigationExtras);
