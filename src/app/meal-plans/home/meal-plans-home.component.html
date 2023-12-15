@@ -5,6 +5,8 @@
 <div id="page" class="bottom-element">
     <app-default-header [title]= "'Your Meal-Plans'" [subtitle]="'What will we have today?'"> </app-default-header>
     <br>
+    <br>
+    <p class="not-available">{{message}}</p>
     <section *ngFor="let family of families">
         <div class="family-container">
             <h2>{{ family.family_name }}</h2>

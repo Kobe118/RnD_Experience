@@ -22,6 +22,7 @@ export class ModalGeneratingComponent implements OnInit {
   Nonliked_recipes: Recipe[] = [];
   combined_recipes: Recipe[] = [];
   modalRef: NgbModalRef | null = null;
+  message: string = "";
 
   constructor(private supabaseService: SupabaseService, private modalService: NgbModal) {
 
@@ -43,8 +44,10 @@ export class ModalGeneratingComponent implements OnInit {
     } else {
       this.combined_recipes = this.Nonliked_recipes.concat(this.liked_recipes);
     }
+    if (this.combined_recipes == null) {
+      this.message = "Please first select your attendances"
+    }
     console.log("combined:", this.combined_recipes)
-
   }
 
   selectRecipe(selectedRecipe: Recipe, recipes: Recipe[]): void {
