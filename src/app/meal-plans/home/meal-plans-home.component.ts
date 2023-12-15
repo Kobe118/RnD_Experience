@@ -2,32 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {NavigationExtras, Router} from '@angular/router';
 import {SupabaseService} from "../../services/supabase.service";
+import { MealPlan, User, Family, Day } from './meal-plans-home.model';
 
 
-interface Day {
-  date: string;
-  recipe: string;
-  day_of_week: string;
-  will_attend: boolean;
-  users: User[];
-  url: String;
-}
-
-interface User {
-  user_id: string;
-  user_name: string;
-}
-
-interface Family {
-  is_admin: boolean;
-  family_id: string;
-  family_name: string;
-  mealplans: Day[]
-}
-
-interface MealPlan {
-  mealplan: string;
-}
 @Component({
   selector: 'MealPlansHome',
   templateUrl: './meal-plans-home.component.html',
@@ -65,6 +42,10 @@ export class MealPlansHomeComponent implements OnInit{
 
       for (const day of mealPlansForFamily) {
         day.url = await this.getImageUrl(day.recipe);
+      }
+
+      for (const day of mealPlansForFamily) {
+        day.name = await this.getImageUrl(day.recipe);
       }
 
       family.mealplans = mealPlansForFamily || [];
@@ -136,7 +117,7 @@ export class MealPlansHomeComponent implements OnInit{
   }
 
   handleImageError(day: Day) {
-    day.recipe = "\\assets\\default-meal.jpg";
+    day.url = "\\assets\\default-meal.jpg";
   }
 
 }

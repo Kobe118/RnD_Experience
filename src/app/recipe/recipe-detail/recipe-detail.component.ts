@@ -29,6 +29,11 @@ export class RecipeDetailComponent implements OnInit {
     this.fetchRecipeDetails(this.recipeId);
   }
 
+  formatName(name: string): string {
+    // Custom formatting logic
+    return name.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+}
+
   private fetchRecipeDetails(id: string) {
     this.supabaseService.getRecipeById(id).then(recipe => {
       if (recipe && recipe[0]) {

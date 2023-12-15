@@ -4,7 +4,7 @@
     <h1 class="text-center">What are your allergies?</h1>
     <div id="allergies">
         <button class="button-white" *ngFor="let allergy of allergies" (click)="selectAllergies(allergy)" [class.selected]="isAllergySelected(allergy)">
-            {{ allergy.allergie }} <!-- Access the 'allergie' property -->
+            {{ formatName(allergy.allergie) }} <!-- Access the 'allergie' property -->
         </button>
     </div>
     <div id="bottom-buttons">

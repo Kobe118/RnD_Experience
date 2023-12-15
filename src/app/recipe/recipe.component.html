@@ -6,7 +6,7 @@
     <h2>Recipe Likes</h2>
     <div class="liked-recipes">
         <div *ngFor="let index of recipeIndices" class="recipe-small-view">
-            <div class="recipe-card">
+            <div class="recipe-card light-green">
                 <img [src]="liked_urls[index]" alt="Image of {{ liked_recipes[index].name }}" (click)="navigateToRecipeDetail(liked_recipes[index].id)" class="recipe-image">
                 <button class="button-back btn-outline-secondary" (click)="toggle_like_Heart(index)" >
                     <i [class]="liked_recipes_liked[index] ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
@@ -38,7 +38,7 @@
 
     <!-- Your nono's (Unliked Recipes) -->
     <h2>Your nono's</h2>
-    <div class="liked-recipes">
+    <div class="liked-recipes ">
         <div *ngFor="let index of unliked_recipeIndices" class="recipe-small-view">
             <div class="recipe-card">
                 <img [src]="unliked_urls[index]"

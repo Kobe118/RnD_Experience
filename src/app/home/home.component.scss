@@ -54,50 +54,50 @@
   font-size: 0.8em;
 }
 
-  .card {
-    width: 90%;
-    margin-left: 5%;
-    margin-bottom: 15px;
-    margin-right: 5%;
-    box-shadow: 0 4px 10px rgba(4, 25, 3, 0.2);
+.card {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 15px;
+  margin-right: 5%;
+  box-shadow: 0 4px 10px rgba(4, 25, 3, 0.2);
 
-  }
-  .card-body {
-    background-color: $white;
-    border-radius: 8px;
-  }
-  .user-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-container-text {
-    margin-top: 0;
-  }
-  
-  .profile-picture {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-  }
-  
-  
-  #family-id {
-    font-size: 0.6em;
-    margin-bottom: 0;
-  }
-  
-  #full-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  #new-family, #create-family {
-    width:80%;
-    margin-left: 10%;
-  
-  }
+}
+.card-body {
+  background-color: $white;
+  border-radius: 8px;
+}
+.user-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-container-text {
+  margin-top: 0;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
 
 
-  
+#family-id {
+  font-size: 0.6em;
+  margin-bottom: 0;
+}
+
+#full-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#new-family, #create-family {
+  width:80%;
+  margin-left: 10%;
+
+}
+
+
+

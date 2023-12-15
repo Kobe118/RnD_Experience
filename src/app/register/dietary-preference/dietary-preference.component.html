@@ -1,8 +1,8 @@
 <div id="full-page">
-    <h1 class="text-center">What are your dietary preferences?</h1>
+    <h1 class="text-center">What are your dislike ingredients?</h1>
     <div id="allergies">
         <button class="button-white" *ngFor="let ingredient of ingredients" (click)="selectDietaryPreference(ingredient)" [class.selected]="isDietaryPreferenceSelected(ingredient)">
-            {{ ingredient.name }} <!-- Access the 'ingredient' property -->
+            {{ formatName(ingredient.name) }} <!-- Access the 'ingredient' property -->
         </button>
     </div>
     <div id="bottom-buttons">

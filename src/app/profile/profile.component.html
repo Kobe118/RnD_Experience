@@ -1,24 +1,17 @@
 <div id="full-page-center">
     <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget center">
         <!-- Display user profile picture -->
-        <div *ngIf="user?.picture_url" class="text-center">
-            <img [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture" />
-            <br>
-            <h2 class="text-center">{{profile.first_name}} {{profile.name}}</h2>
+        <div class="text-center">
+            <label for="profilePicture" class="profile-picture-label">
+                <img *ngIf="user?.picture_url" [src]="user.picture_url" (error)="handleImageError(user)" alt="Profile Picture" class="profile-picture" />
+                <input style="display: none;" type="file" id="profilePicture" (change)="onFileInputChange($event)" accept="image/*" />
+            </label>
         </div>
-
-        <!-- Input for uploading a profile picture -->
-        <div>
-            <p>Upload a new profile picture</p>
-            <input class="form-control" type="file" id="profilePicture" (change)="onFileInputChange($event)" accept="image/*" />
-        </div>
-        <br>
+        <h2 class="text-center">{{profile.first_name}} {{profile.name}}</h2>
 
         <p>Click to change your preferences</p>
         <button type="button" class="button-gray-border"  href="#" (click)="navigateToAllergies()">Change your allergies</button>
         <button type="button" class="button-gray-border" id="dietaryPreference" href="#" (click)="navigateToDietaryPreference()">Change your dietary preference</button>
-
-        <br>
 
         <p>Change your information</p>
         <mdb-form-control class="mb-4">
@@ -36,10 +29,9 @@
                 {{ loading ? 'Loading ...' : 'Update Information' }}
             </button>
         </div>
-        <br>
-
+        
         <div class="text-center bottom-element">
-            <p>Sign out? Click <a href="login" (click)="signOut()">here</a></p>
+            <button type="button" class="button wide primary block center" (click)="signOut()">Sign out</button>
         </div>
 
     </form>
