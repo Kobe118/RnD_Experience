@@ -14,6 +14,7 @@ export class MealPlansHomeComponent implements OnInit{
   days: Day[] = [];
   families: Family[] = [];
   mealplan: MealPlan[] = [];
+  message: string = "";
 
   constructor(private http: HttpClient, private router: Router, private supabaseService: SupabaseService) {}
   async ngOnInit(): Promise<void> {
@@ -22,10 +23,11 @@ export class MealPlansHomeComponent implements OnInit{
       this.families = data[0] as Family[];
       console.log("check");
     });
+    if (this.families == null) {
+      this.message = "Please first create or join a family";
+    }
     for (const family of this.families) {
       console.log("family_id:", family.family_id);
-      console.log("it's in boys!");
-      //await this.fetchMealPlansForFamily(user.id, family);
       await this.fetchMealPlansForFamily(user.id, family);
       console.log("check 2");
     }
