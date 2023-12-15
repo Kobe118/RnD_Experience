@@ -1,3 +1,4 @@
+@import "../../../styles";
 .recipe-cards {
   display: flex;
   flex-direction: row;
@@ -59,4 +60,8 @@
 .button {
   margin-bottom: 0;
   padding: 4px 15px 4px 15px;
+}
+#not-selected {
+  color: $light-gray;
+  margin-bottom: 0;
 }

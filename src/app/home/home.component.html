@@ -9,7 +9,7 @@
         </div>
         <div *ngFor="let recipe of recipes; let i = index" class="recipe-small-view">
             <p class="recipe-date ">{{recipe.date}}</p>
-            <div class="recipe-card red">
+            <div class="recipe-card white">
 
                 <img [src]="urlUpcoming[i]" alt="Image of {{ recipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(recipes[i].recipe)">
                 <p class="recipe-name">{{ recipe.recipe_name }}</p>
@@ -24,7 +24,7 @@
             <p class="not-available"><i>You has no preferred recipes.</i></p>
         </div>
         <div *ngFor="let preferredRecipe of preferredRecipes; let i = index" class="recipe-small-view">
-            <div class="recipe-card">
+            <div class="recipe-card light-green">
                 <img [src]="urlPreferred[i]" alt="Image of {{ preferredRecipe.recipe }}" class="recipe-image" (click)="navigateToRecipeDetail(preferredRecipes[i].recipe)">
                 <p class="recipe-name">{{ preferredRecipe.name }}</p>
             </div>
@@ -45,6 +45,4 @@
     </div>
 
 </div>
-
-
 <app-bottom-navigation></app-bottom-navigation>
